@@ -55,12 +55,12 @@ height = 5.7366
 script = ExtResource( 3 )
 walk_speed = 50.0
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="KinematicBody2D"]
+[node name="PlayerSprite" type="AnimatedSprite" parent="KinematicBody2D"]
 frames = SubResource( 8 )
 animation = "hero_walking"
 playing = true
 script = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+[node name="PlayerCollision" type="CollisionShape2D" parent="KinematicBody2D"]
 position = Vector2( 0.128159, 1.15331 )
 shape = SubResource( 9 )

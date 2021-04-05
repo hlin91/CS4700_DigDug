@@ -15,11 +15,11 @@ func get_input():
 	velocity = Vector2()
 	if Input.is_action_pressed("move_right"):
 		velocity = Vector2(1, 0)
-	if Input.is_action_pressed("move_left"):
+	elif Input.is_action_pressed("move_left"):
 		velocity = Vector2(-1, 0)
-	if Input.is_action_pressed("move_down"):
+	elif Input.is_action_pressed("move_down"):
 		velocity = Vector2(0, 1)
-	if Input.is_action_pressed("move_up"):
+	elif Input.is_action_pressed("move_up"):
 		velocity = Vector2(0, -1)
 	velocity = velocity.normalized() * walk_speed
 
