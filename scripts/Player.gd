@@ -23,8 +23,15 @@ func get_input():
 		velocity = Vector2(0, -1)
 	velocity = velocity.normalized() * walk_speed
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	get_input()
-	velocity = move_and_slide(velocity)
+	var collision = move_and_collide(velocity)
+	# Get specific tile player has collided with
+	if collision and collision.collider is TileMap:
+		var tile_pos = collision.collider.world_to_map(position)
+		tile_pos -= collision.normal
+		var tile_id = collision.collider.get_cellv(tile_pos)
+		# For testing
+		print(tile_id)
+	

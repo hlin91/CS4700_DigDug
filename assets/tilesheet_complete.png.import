@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sprite_base_addon_2012_12_14.png-9c213139173520d79804511e1c0b6bf3.stex"
+path="res://.import/tilesheet_complete.png-5f14f2929ff3d9b1c136ce3cca4823a1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprite_base_addon_2012_12_14.png"
-dest_files=[ "res://.import/sprite_base_addon_2012_12_14.png-9c213139173520d79804511e1c0b6bf3.stex" ]
+source_file="res://assets/tilesheet_complete.png"
+dest_files=[ "res://.import/tilesheet_complete.png-5f14f2929ff3d9b1c136ce3cca4823a1.stex" ]
 
 [params]
 
