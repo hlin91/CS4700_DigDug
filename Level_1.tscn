@@ -486,18 +486,19 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [node name="Node2D" type="Node2D"]
 
-[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+[node name="Player" type="KinematicBody2D" parent="."]
 scale = Vector2( 10, 10 )
 script = ExtResource( 3 )
 walk_speed = 50.0
 
-[node name="PlayerCollision" type="CollisionShape2D" parent="KinematicBody2D"]
+[node name="PlayerCollision" type="CollisionShape2D" parent="Player"]
 position = Vector2( 0.612473, 1.1879 )
 shape = SubResource( 25 )
 
-[node name="PlayerSprite" type="AnimatedSprite" parent="KinematicBody2D"]
+[node name="PlayerSprite" type="AnimatedSprite" parent="Player"]
 frames = SubResource( 9 )
 animation = "hero_walking"
+frame = 2
 playing = true
 script = ExtResource( 2 )
 

@@ -27,14 +27,6 @@ func get_input():
 func _physics_process(delta):
 	get_input()
 	move_and_slide(velocity)
-	# Get specific tile player has collided with
-#	if collision and collision.collider is TileMap:
-#		var tile_pos = collision.collider.world_to_map(position)
-#		tile_pos -= collision.normal
-#		var tile_id = collision.collider.get_cellv(tile_pos)
-#		collision.collider.set_cellv(tile_pos, -1) # Delete the tile
-#		# For testing
-#		print(tile_id)
 	for i in range(get_slide_count()):
 		var collision = get_slide_collision(i)
 		if collision.collider is TileMap:
