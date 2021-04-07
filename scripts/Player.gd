@@ -33,3 +33,8 @@ func _physics_process(delta):
 			var tile_pos = collision.collider.world_to_map(collision.position - collision.normal)
 			collision.collider.set_cellv(tile_pos, -1)
 			print(tile_pos)
+
+
+func _on_PlayerHurtbox_area_entered(area):
+	pass # Replace with function body.
+	#do some kind of logic related to life and restarting (somehow)
