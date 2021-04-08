@@ -1,24 +1,20 @@
 extends KinematicBody2D
 
-
 # Declare member variables here. Examples:
 export (float) var walk_speed = 1
-var velocity = Vector2(1, 0)
-
+var velocity = Vector2(walk_speed, 0)
+var collision_info
+var sprite
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
-func process_collision(collision_normal):
-	pass
-	#Here, use the collision normal to determine new cardinal velocity.
-	#Hit the ceiling, set velocity downward, and so on.
+	sprite = get_node("./RedBaddieSprite")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	move_and_slide(velocity)
-#	for i in range(get_slide_count()):
-#		var collision = get_slide_collision(0)
-#		if collision.collider is TileMap:
-#			process_collision(collision.normal)
+func _process(delta):
+	collision_info = move_and_collide(velocity)
+	if (collision_info != null):
+		velocity = collision_info.normal * abs(velocity.length())
+		print(velocity)
+		sprite.play_walking_animation(collision_info.normal)
+		

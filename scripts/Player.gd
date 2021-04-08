@@ -16,6 +16,7 @@ var epsilon = 1
 var move_tiles
 var sprite
 var in_transit = false
+var game_over = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -84,10 +85,10 @@ func get_input():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	get_input()
-	update_position()
+	if (!game_over):
+		get_input()
+		update_position()
 
 
 func _on_PlayerHurtbox_area_entered(area):
-	pass # Replace with function body.
-	#do some kind of logic related to life and restarting (somehow)
+	game_over = true
