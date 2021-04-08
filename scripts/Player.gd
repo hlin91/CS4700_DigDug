@@ -14,14 +14,17 @@ var target_cell = Vector2()
 var start_cell = Vector2()
 var epsilon = 1
 var move_tiles
+var dirt_tiles
 var sprite
 var in_transit = false
 var game_over = false
+var safe_margin = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	move_tiles = get_node("../MoveTiles")
 	sprite = get_node("./PlayerSprite")
+	dirt_tiles = get_node("../DirtTiles")
 	move_to_cell(start_cell)
 
 func move(position):
@@ -38,7 +41,10 @@ func move_and_dig(velocity):
 	for i in range(get_slide_count()):
 		var collision = get_slide_collision(i)
 		if collision.collider is TileMap:
-			var tile_pos = collision.collider.world_to_map(collision.position - collision.normal)
+			var collision_pos = collision.position - collision.normal * 1.0
+			print("Collision pos:" + str(collision_pos))
+			var tile_pos = collision.collider.world_to_map(collision_pos)
+			print("Tile pos: " + str(tile_pos))
 			collision.collider.set_cellv(tile_pos, -1)
 
 func update_position():
