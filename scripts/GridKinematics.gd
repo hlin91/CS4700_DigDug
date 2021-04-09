@@ -5,6 +5,8 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 export (float) var walk_speed = 1
+export var move_tiles_path = "../MoveTiles"
+export var sprite_path = "./PlayerSprite"
 var velocity = Vector2()
 var current_position = Vector2()
 var target_position = Vector2()
@@ -19,8 +21,8 @@ var in_transit = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	move_tiles = get_node("../MoveTiles")
-	sprite = get_node("./PlayerSprite")
+	move_tiles = get_node(move_tiles_path)
+	sprite = get_node(sprite_path)
 	move_to_cell(start_cell)
 	
 func move(position):
@@ -30,6 +32,7 @@ func move(position):
 
 func move_to_cell(cell):
 	target_cell = cell
+	move_tiles.add_dug_cell(cell)
 	move(move_tiles.map_to_world(cell) + (move_tiles.cell_size / 2))
 	
 func move_and_dig(velocity):
@@ -38,9 +41,9 @@ func move_and_dig(velocity):
 		var collision = get_slide_collision(i)
 		if collision.collider is TileMap:
 			var collision_pos = collision.position - collision.normal * 1.0
-			print("Collision pos:" + str(collision_pos))
+#			print("Collision pos:" + str(collision_pos))
 			var tile_pos = collision.collider.world_to_map(collision_pos)
-			print("Tile pos: " + str(tile_pos))
+#			print("Tile pos: " + str(tile_pos))
 			collision.collider.set_cellv(tile_pos, -1)
 
 func update_position():
