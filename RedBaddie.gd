@@ -15,6 +15,6 @@ func _process(delta):
 	collision_info = move_and_collide(velocity)
 	if (collision_info != null):
 		velocity = velocity * -1
-		print(velocity)
+		#print(velocity)
 		sprite.play_walking_animation(velocity.normalized())
 		

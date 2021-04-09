@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://assets/Standard sprites upd.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Hero.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Area2D.gd" type="Script" id=6]
 [ext_resource path="res://RedBaddieSprite.gd" type="Script" id=7]
 [ext_resource path="res://scripts/MoveTiles.gd" type="Script" id=8]
+[ext_resource path="res://PlayerProjectile.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.02862
@@ -534,6 +535,7 @@ shape = SubResource( 1 )
 [node name="PlayerSprite" type="AnimatedSprite" parent="Player"]
 frames = SubResource( 9 )
 animation = "hero_walking"
+frame = 2
 playing = true
 script = ExtResource( 2 )
 
@@ -543,6 +545,9 @@ script = ExtResource( 6 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/PlayerHurtbox"]
 position = Vector2( 0, 1.2 )
 shape = SubResource( 10 )
+
+[node name="Muzzle" type="Position2D" parent="Player"]
+position = Vector2( 10.3, 0 )
 
 [node name="DirtTiles" type="TileMap" parent="."]
 tile_set = SubResource( 24 )
@@ -559,7 +564,7 @@ script = ExtResource( 5 )
 [node name="RedBaddieSprite" type="AnimatedSprite" parent="RedBaddie"]
 frames = SubResource( 31 )
 animation = "walking"
-frame = 4
+frame = 3
 playing = true
 script = ExtResource( 7 )
 
@@ -574,4 +579,6 @@ shape = SubResource( 33 )
 [node name="MoveTiles" type="TileMap" parent="."]
 format = 1
 script = ExtResource( 8 )
+
+[node name="PlayerProjectile" parent="." instance=ExtResource( 9 )]
 [connection signal="area_entered" from="Player/PlayerHurtbox" to="Player" method="_on_PlayerHurtbox_area_entered"]

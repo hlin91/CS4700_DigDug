@@ -4,6 +4,7 @@ extends AnimatedSprite
 # var a = 2
 # var b = "text"
 var moving = false
+var facing # Direction the sprite is currently facing
 enum DIR {
 	UP,
 	DOWN,
@@ -18,21 +19,15 @@ func _ready():
 func play_walking_animation(direction):
 	match direction:
 		DIR.RIGHT:
-			set_flip_h(false)
-			rotation_degrees = 0
+			set_flip_v(false)
+			facing = DIR.RIGHT
 		DIR.LEFT:
-			set_flip_h(true)
-			rotation_degrees = 0
+			set_flip_v(true)
+			facing = DIR.LEFT
 		DIR.DOWN:
-			if flip_h:
-				rotation_degrees = -90
-			else:
-				rotation_degrees = 90
+			facing = DIR.DOWN
 		DIR.UP:
-			if flip_h:
-				rotation_degrees = 90
-			else:
-				rotation_degrees = -90
+			facing = DIR.UP
 	play("hero_walking")
 
 func clear_animation():

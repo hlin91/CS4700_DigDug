@@ -15,9 +15,9 @@ var current_cell = Vector2()
 var target_cell = Vector2()
 var start_cell = Vector2()
 var epsilon = 1
-var move_tiles
-var sprite
-var in_transit = false
+var move_tiles # Tile map that represents the move grid
+var sprite # Reference to the player sprite
+var in_transit = false # Is the player currently moving to a cell
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -60,21 +60,6 @@ func update_position():
 		move(target_position)
 	velocity = move_direction.normalized() * walk_speed
 	move_and_dig(velocity)
-	
-func get_input():
-	if Input.is_action_pressed("move_right"):
-		move_to_cell(Vector2(current_cell.x+1, current_cell.y))
-		sprite.move_animation(sprite.DIR.RIGHT)
-	elif Input.is_action_pressed("move_left"):
-		move_to_cell(Vector2(current_cell.x-1, current_cell.y))
-		sprite.move_animation(sprite.DIR.LEFT)
-	elif Input.is_action_pressed("move_down"):
-		move_to_cell(Vector2(current_cell.x, current_cell.y+1))
-		sprite.move_animation(sprite.DIR.DOWN)
-	elif Input.is_action_pressed("move_up"):
-		move_to_cell(Vector2(current_cell.x,current_cell.y-1))
-		sprite.move_animation(sprite.DIR.UP)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
