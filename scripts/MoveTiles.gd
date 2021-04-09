@@ -11,6 +11,8 @@ func add_dug_cell(cell):
 	print("Added cell " + str(cell))
 	
 func is_cell_dug(cell):
+	if cell.y == 0: # Topmost level is always dug out
+		return true
 	return cell in movable_cells
 
 # Called when the node enters the scene tree for the first time.
