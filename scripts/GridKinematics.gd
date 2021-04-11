@@ -41,17 +41,21 @@ func move_and_process(velocity): # Move and slide the body and process all colli
 func update_position():
 	current_position = position
 	current_cell = move_tiles.world_to_map(position)
-	if (target_position - current_position).length() <= epsilon:
+	if arrived():
 		in_transit = false
 		move_direction = Vector2()
 		sprite.moving = false
-		if !(Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left") ||
-		 Input.is_action_pressed("move_down") || Input.is_action_pressed("move_up")):
-			sprite.clear_animation()
+		arrived_hook()
 	else:
 		move(target_position)
 	velocity = move_direction.normalized() * walk_speed
 	move_and_process(velocity)
+
+func arrived():
+	return (target_position - current_position).length() <= epsilon
+
+func arrived_hook():
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

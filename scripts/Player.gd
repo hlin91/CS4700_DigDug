@@ -66,5 +66,10 @@ func get_input():
 			sprite.move_animation(sprite.DIR.UP)
 			set_rotation_degrees(-90)
 
+func arrived_hook():
+	if !(Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left") ||
+		 Input.is_action_pressed("move_down") || Input.is_action_pressed("move_up")):
+			sprite.clear_animation()
+
 func _on_PlayerHurtbox_area_entered(area):
 	game_over = true
