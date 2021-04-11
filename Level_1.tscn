@@ -563,7 +563,7 @@ script = ExtResource( 5 )
 [node name="RedBaddieSprite" type="AnimatedSprite" parent="RedBaddie"]
 frames = SubResource( 31 )
 animation = "walking"
-frame = 4
+frame = 1
 playing = true
 script = ExtResource( 7 )
 

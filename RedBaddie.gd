@@ -15,14 +15,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-<<<<<<< HEAD
 	if (inflation == 0):
 		collision_info = move_and_collide(velocity)
 		if (collision_info != null):
 			velocity = velocity * -1
 			print(velocity)
 			sprite.play_walking_animation(velocity.normalized())
-			self.queue_free()
 		#At some point, every so often, get the player's position
 		#Locate a cell somewhat near the player that has been dug out.
 		#Move to that cell, using some custom movement function that halts _process
@@ -40,12 +38,4 @@ func _on_RedBaddieHurtArea_area_shape_entered(area_id, area, area_shape, self_sh
 		#increment inflation
 		#check if inflation meets threshold for death
 			#self.queue_free()
-
-=======
-	collision_info = move_and_collide(velocity)
-	if (collision_info != null):
-		velocity = velocity * -1
-		#print(velocity)
-		sprite.play_walking_animation(velocity.normalized())
 		
->>>>>>> 82c5153b4c0791127f5bcc9a4773dc83cb55d3d4
