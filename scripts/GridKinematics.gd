@@ -44,7 +44,6 @@ func update_position():
 	if arrived():
 		in_transit = false
 		move_direction = Vector2()
-		sprite.moving = false
 		arrived_hook()
 	else:
 		move(target_position)

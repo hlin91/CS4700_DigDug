@@ -67,6 +67,7 @@ func get_input():
 			set_rotation_degrees(-90)
 
 func arrived_hook():
+	sprite.moving = false
 	if !(Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left") ||
 		 Input.is_action_pressed("move_down") || Input.is_action_pressed("move_up")):
 			sprite.clear_animation()
