@@ -4,12 +4,13 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export (float) var speed = 100.0
+export (float) var speed = 300.0
 var velocity = Vector2(speed, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$PlayerProjectileSprite.set_rotation_degrees(90)
+	add_to_group("bullets")
 
 func start(pos, dir):
 	rotation = dir

@@ -7,6 +7,7 @@ extends "res://scripts/GridKinematics.gd"
 
 var game_over = false
 var bullet = preload("res://PlayerProjectile.tscn")
+var max_bullets = 1
 	
 #func get_input():
 #	velocity = Vector2()
@@ -29,10 +30,11 @@ func _physics_process(delta):
 			shoot()
 
 func shoot():
-	var b = bullet.instance()
-	print(rotation)
-	b.start($Muzzle.global_position, rotation)
-	get_parent().add_child(b)
+	if get_tree().get_nodes_in_group("bullets").size() < max_bullets:
+		var b = bullet.instance()
+		print(rotation)
+		b.start($Muzzle.global_position, rotation)
+		get_parent().add_child(b)
 
 func get_input():
 	if !in_transit:

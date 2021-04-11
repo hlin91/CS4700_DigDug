@@ -529,12 +529,12 @@ script = ExtResource( 3 )
 walk_speed = 50.0
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="Player"]
-position = Vector2( 0, 1.2 )
 shape = SubResource( 1 )
 
 [node name="PlayerSprite" type="AnimatedSprite" parent="Player"]
 frames = SubResource( 9 )
 animation = "hero_walking"
+frame = 2
 playing = true
 script = ExtResource( 2 )
 
@@ -542,7 +542,6 @@ script = ExtResource( 2 )
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/PlayerHurtbox"]
-position = Vector2( 0, 1.2 )
 shape = SubResource( 10 )
 
 [node name="Muzzle" type="Position2D" parent="Player"]
