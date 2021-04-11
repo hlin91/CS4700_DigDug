@@ -29,6 +29,17 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("shoot"):
 			shoot()
 
+func move_and_process(velocity):
+	move_and_slide(velocity)
+	for i in range(get_slide_count()):
+		var collision = get_slide_collision(i)
+		if collision.collider is TileMap:
+			var collision_pos = collision.position - collision.normal * 1.0
+#			print("Collision pos:" + str(collision_pos))
+			var tile_pos = collision.collider.world_to_map(collision_pos)
+#			print("Tile pos: " + str(tile_pos))
+			collision.collider.set_cellv(tile_pos, -1)
+
 func shoot():
 	if get_tree().get_nodes_in_group("bullets").size() < max_bullets:
 		var b = bullet.instance()

@@ -25,26 +25,18 @@ func _ready():
 	sprite = get_node(sprite_path)
 	move_to_cell(start_cell)
 	
-func move(position):
+func move(position): # Sets the target position
 	in_transit = true
 	target_position = position
 	move_direction = (target_position - current_position).normalized()
 
-func move_to_cell(cell):
+func move_to_cell(cell): # Sets the target position based on cell
 	target_cell = cell
 	move_tiles.add_dug_cell(cell)
 	move(move_tiles.map_to_world(cell) + (move_tiles.cell_size / 2))
 	
-func move_and_dig(velocity):
-	move_and_slide(velocity)
-	for i in range(get_slide_count()):
-		var collision = get_slide_collision(i)
-		if collision.collider is TileMap:
-			var collision_pos = collision.position - collision.normal * 1.0
-#			print("Collision pos:" + str(collision_pos))
-			var tile_pos = collision.collider.world_to_map(collision_pos)
-#			print("Tile pos: " + str(tile_pos))
-			collision.collider.set_cellv(tile_pos, -1)
+func move_and_process(velocity): # Move and slide the body and process all collisions
+	pass
 
 func update_position():
 	current_position = position
@@ -59,7 +51,7 @@ func update_position():
 	else:
 		move(target_position)
 	velocity = move_direction.normalized() * walk_speed
-	move_and_dig(velocity)
+	move_and_process(velocity)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
