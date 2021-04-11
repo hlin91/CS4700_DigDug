@@ -13,30 +13,32 @@ func _ready():
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)
 	player = get_node("../Player")
-	velocity = Vector2(1,0)
+	velocity = Vector2(100,0)
 	print(player)
 	in_transit = false
 	walk_speed = 50
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if (in_transit == false):
-		collision_info = move_and_collide(velocity)
-		if (collision_info != null):
-			velocity = velocity * -1
-			print(velocity)
-			sprite.play_walking_animation(velocity.normalized())
-		current_time += delta
-		if (current_time >= time_to_move):
-			current_time = 0
-			move_to_cell(player.current_cell)
-			disable_collision_and_ghost()
+	if (inflation == 0):
+		if (in_transit == false):
+			collision_info = move_and_collide(velocity*delta)
+			print(velocity*delta)
+			if (collision_info != null):
+				velocity = velocity * -1
+				print(velocity)
+				sprite.play_walking_animation(velocity.normalized())
+			current_time += delta
+			if (current_time >= time_to_move):
+				current_time = 0
+				move_to_cell(player.current_cell)
+				disable_collision_and_ghost()
+				update_position()
+		else:
 			update_position()
-	else:
-		update_position()
-		if (arrived()):
-			enable_collision_and_unghost()
-			velocity = Vector2(1,0)
+			if (arrived()):
+				enable_collision_and_unghost()
+				velocity = Vector2(1,0)
 
 func disable_collision_and_ghost():
 	print("tried and true")
