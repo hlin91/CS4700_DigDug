@@ -8,6 +8,18 @@ enum DIR {
 	RIGHT
 }
 
+func set_to_walk():
+	play("walking")
+
+func set_to_ghost():
+	play("ghosting")
+	
+func set_to_pumped():
+	play("hurting")
+
+func change_scale(scale_vector):
+	scale += scale_vector
+
 func play_walking_animation(direction):
 	match direction:
 		Vector2(-1,0):

@@ -3,7 +3,7 @@ extends "res://scripts/GridKinematics.gd"
 # Declare member variables here. Examples:
 export var player_path = "../Player"
 export var pump_reset_time = 1.5
-export var pumps_to_kill = 3
+export var pumps_to_kill = 8
 export var enemy_layer = 2
 var collision_info
 var player
@@ -11,6 +11,8 @@ var inflation = 0
 var time_to_move = 300
 var current_time = 0
 var time_until_reset_pump = pump_reset_time
+var is_hunting = false
+var pump_scale_factor = 1.5 / pumps_to_kill
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,10 +21,11 @@ func _ready():
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)
 	player = get_node("../Player")
-	velocity = Vector2(0,0)
+	walk_speed = 0
+	velocity = Vector2(walk_speed,0)
 	print(player)
 	in_transit = false
-	walk_speed = 50
+	sprite.set_to_walk()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -32,24 +35,36 @@ func _process(delta):
 			time_until_reset_pump = pump_reset_time
 			print("Decreasing inflation")
 			inflation -= 1
+			sprite.change_scale(Vector2(-1*pump_scale_factor,-1*pump_scale_factor))
 			if inflation == 0: # Get out of pumping state
 				print("No longer pumped.")
 				get_node(player_path).pumping = null
 			
 func _physics_process(delta):
 	if (inflation == 0):
-		if (in_transit == false):
-			collision_info = move_and_collide(velocity*delta)
-			if (collision_info != null):
-				velocity = velocity * -1
-				sprite.play_walking_animation(velocity.normalized())
-			current_time += delta
-			if (current_time >= time_to_move):
-				current_time = 0
-				move_to_cell(player.current_cell)
-				disable_collision_and_ghost()
-				update_position()
-		else:
+		if (in_transit == false): #case for standard "non-ghosting" movement
+			if (!is_hunting):
+				collision_info = move_and_collide(velocity*delta)
+				if (collision_info != null):
+					velocity = velocity * -1
+					sprite.play_walking_animation(velocity.normalized())
+				current_time += delta
+				if (current_time >= time_to_move):
+					current_time = 0
+					move_to_cell(player.current_cell)
+					disable_collision_and_ghost()
+					update_position()
+			else: #using grid movement to go to player tile.
+				pass
+				#TODO: get the moveable tiles of the monster
+				#NOTE: figure out some flag to not keep getting the moveable tiles
+				#as it might be expensive and is definitely unnecessary
+					#If there are no moveable tiles?
+						#go ghost
+					#else:
+						#move to that tile by moving to cell
+						#update position
+		else: #case for being a ghost in transit
 			update_position()
 			if (arrived()):
 				enable_collision_and_unghost()
@@ -59,12 +74,12 @@ func disable_collision_and_ghost():
 	print("tried and true")
 	$TerrainCollision.set_deferred("disabled",true)
 	$RedBaddieHurtArea.set_deferred("disabled",true)
-	sprite.play_ghosting_animation()
+	sprite.set_to_ghost()
 
 func enable_collision_and_unghost():
 	$TerrainCollision.set_deferred("disabled",false)
 	$RedBaddieHurtArea.set_deferred("disabled",false)
-	sprite.play_monster_animation()
+	sprite.set_to_walk()
 	
 func move_and_process(velocity):
 	move_and_slide(velocity)
@@ -77,6 +92,7 @@ func pump():
 	inflation += 1
 	print("I'm getting pumped!")
 	print("Current inflation: " + str(inflation))
+	sprite.change_scale(Vector2(pump_scale_factor,pump_scale_factor))
 	if inflation >= pumps_to_kill:
 		print("I am dead.")
 		queue_free()
