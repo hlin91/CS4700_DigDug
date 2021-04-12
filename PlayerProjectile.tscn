@@ -25,11 +25,10 @@ script = ExtResource( 1 )
 
 [node name="PlayerProjectileSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-frame = 3
+frame = 1
 playing = true
 
 [node name="PlayerProjectileCollision" type="CollisionShape2D" parent="."]
-position = Vector2( 0.505363, 0.0561562 )
 rotation = 1.5708
 shape = SubResource( 2 )
 

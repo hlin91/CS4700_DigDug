@@ -8,6 +8,7 @@ extends "res://scripts/GridKinematics.gd"
 var game_over = false
 var bullet = preload("res://PlayerProjectile.tscn")
 var max_bullets = 1
+var pumping = null # Enemy the player is currently pumping
 	
 #func get_input():
 #	velocity = Vector2()
@@ -22,12 +23,18 @@ var max_bullets = 1
 #	velocity = velocity.normalized() * walk_speed
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if (!game_over):
+		if Input.is_action_just_pressed("shoot"):
+			if pumping != null:
+				pumping.pump()
+			else:
+				shoot()
+
 func _physics_process(delta):
 	if (!game_over):
 		get_input()
 		update_position()
-		if Input.is_action_just_pressed("shoot"):
-			shoot()
 
 func move_and_process(velocity):
 	move_and_slide(velocity)
