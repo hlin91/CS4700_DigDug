@@ -31,8 +31,8 @@ func move(position): # Sets the target position
 	move_direction = (target_position - current_position).normalized()
 
 func move_to_cell(cell): # Sets the target position based on cell
+	move_cell_hook(cell)
 	target_cell = cell
-	move_tiles.add_dug_cell(cell)
 	move(move_tiles.map_to_world(cell) + (move_tiles.cell_size / 2))
 	
 func move_and_process(velocity): # Move and slide the body and process all collisions
@@ -54,6 +54,9 @@ func arrived():
 	return (target_position - current_position).length() <= epsilon
 
 func arrived_hook():
+	pass
+	
+func move_cell_hook(cell):
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

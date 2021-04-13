@@ -46,6 +46,14 @@ func move_and_process(velocity):
 			var tile_pos = collision.collider.world_to_map(collision_pos)
 #			print("Tile pos: " + str(tile_pos))
 			collision.collider.set_cellv(tile_pos, -1)
+			move_tiles.add_dug_cell(tile_pos)
+		else: # Collided with a rock. Stop movement
+			in_transit = false
+			move_direction = Vector2()
+			arrived_hook()
+
+func move_cell_hook(cell):
+	move_tiles.add_moved_to_cell(cell)
 
 func shoot():
 	if get_tree().get_nodes_in_group("bullets").size() < max_bullets:
@@ -84,4 +92,4 @@ func arrived_hook():
 			sprite.clear_animation()
 
 func _on_PlayerHurtbox_area_entered(area):
-	game_over = true
+	pass

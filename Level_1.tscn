@@ -548,6 +548,7 @@ shape = SubResource( 1 )
 [node name="PlayerSprite" type="AnimatedSprite" parent="Player"]
 frames = SubResource( 9 )
 animation = "hero_walking"
+frame = 2
 playing = true
 script = ExtResource( 2 )
 
