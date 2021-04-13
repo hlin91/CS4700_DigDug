@@ -17,7 +17,7 @@ func add_moved_to_cell(cell):
 #		print("Moved to cell " + str(cell))
 	
 func is_cell_dug(cell):
-	if cell.y > 0 and cell.y <= 8: # Topmost level is always dug out
+	if cell.y == 0: # Topmost level is always dug out
 		return true
 	return cell in dugged_cells
 	
