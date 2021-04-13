@@ -25,7 +25,7 @@ var pumping = null # Enemy the player is currently pumping
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if (!game_over):
-		if Input.is_action_just_pressed("shoot"):
+		if !in_transit && Input.is_action_just_pressed("shoot"):
 			if pumping != null:
 				pumping.pump()
 			else:
@@ -57,18 +57,22 @@ func shoot():
 func get_input():
 	if !in_transit:
 		if Input.is_action_pressed("move_right"):
+			pumping = null
 			move_to_cell(Vector2(current_cell.x+1, current_cell.y))
 			sprite.move_animation(sprite.DIR.RIGHT)
 			set_rotation_degrees(0)
 		elif Input.is_action_pressed("move_left"):
+			pumping = null
 			move_to_cell(Vector2(current_cell.x-1, current_cell.y))
 			sprite.move_animation(sprite.DIR.LEFT)
 			set_rotation_degrees(-180)
 		elif Input.is_action_pressed("move_down"):
+			pumping = null
 			move_to_cell(Vector2(current_cell.x, current_cell.y+1))
 			sprite.move_animation(sprite.DIR.DOWN)
 			set_rotation_degrees(-270)
 		elif Input.is_action_pressed("move_up"):
+			pumping = null
 			move_to_cell(Vector2(current_cell.x,current_cell.y-1))
 			sprite.move_animation(sprite.DIR.UP)
 			set_rotation_degrees(-90)
