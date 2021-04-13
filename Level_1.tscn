@@ -585,7 +585,7 @@ shape = SubResource( 32 )
 
 [node name="RedBaddieHurtArea" type="Area2D" parent="RedBaddie"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RedBaddie/RedBaddieHurtArea"]
+[node name="RedBaddieHurtAreaCollision" type="CollisionShape2D" parent="RedBaddie/RedBaddieHurtArea"]
 shape = SubResource( 33 )
 
 [node name="MoveTiles" type="TileMap" parent="."]

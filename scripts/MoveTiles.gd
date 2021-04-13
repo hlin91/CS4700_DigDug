@@ -17,7 +17,7 @@ func add_moved_to_cell(cell):
 		print("Moved to cell " + str(cell))
 	
 func is_cell_dug(cell):
-	if cell.y == 0: # Topmost level is always dug out
+	if cell.y > 0 and cell.y <= 8: # Topmost level is always dug out
 		return true
 	return cell in dugged_cells
 	
@@ -29,8 +29,8 @@ func get_moveable_neighbors(cell):
 	neighbors.append(cell+Vector2(0,-1))
 	neighbors.append(cell+Vector2(0,1))
 	for neighbor in neighbors:
-		if is_cell_dug(neighbor):
-			moveable_neighbors.append(neighbor)
+		#if is_cell_dug(neighbor):
+		moveable_neighbors.append(neighbor)
 	return moveable_neighbors
 
 func get_nearest_neighbor(neighbors, cell):

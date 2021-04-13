@@ -59,7 +59,9 @@ func hunt_motion():
 	if (!in_transit):
 		moveable_neighbors = move_tiles.get_moveable_neighbors(current_cell)
 	collision_info = move_and_collide(velocity*0)
-	if (moveable_neighbors.size() == 0 or collision_info): #case for being trapped in cell at hunt time
+	if (moveable_neighbors.size() == 0): #case for being trapped in cell at hunt time
+		#And also for being snagged on a dirttile
+		move_to_cell(player.current_cell)
 		disable_collision_and_ghost()
 	else:
 		if (!in_transit):
@@ -82,17 +84,16 @@ func _physics_process(delta):
 		else: #case for being a ghost in transit
 			ghost_motion()
 
-
 func disable_collision_and_ghost():
 	is_ghosting = true
 	$TerrainCollision.set_deferred("disabled",true)
-	$RedBaddieHurtArea.set_deferred("disabled",true)
+	$RedBaddieHurtArea/RedBaddieHurtAreaCollision.set_deferred("disabled",true)
 	sprite.set_to_ghost()
 
 func enable_collision_and_unghost():
 	is_ghosting = false
 	$TerrainCollision.set_deferred("disabled",false)
-	$RedBaddieHurtArea.set_deferred("disabled",false)
+	$RedBaddieHurtArea/RedBaddieHurtAreaCollision.set_deferred("disabled",false)
 	sprite.set_to_walk()
 	
 func move_and_process(velocity):

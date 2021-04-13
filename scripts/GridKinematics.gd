@@ -4,7 +4,7 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export (float) var walk_speed = 10
+export (float) var walk_speed = 10000
 export var move_tiles_path = "../MoveTiles"
 export var sprite_path = "./PlayerSprite"
 var velocity = Vector2()
