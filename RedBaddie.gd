@@ -8,11 +8,15 @@ export var enemy_layer = 2
 var collision_info
 var player
 var inflation = 0
-var time_to_move = 300
+var time_to_ghost_threshold = 300
+var time_to_hunt_threshold = 10
 var current_time = 0
 var time_until_reset_pump = pump_reset_time
 var is_hunting = false
+var is_ghosting = false
+var is_walking = false
 var pump_scale_factor = 1.5 / pumps_to_kill
+var moveable_neighbors
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,7 +25,7 @@ func _ready():
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)
 	player = get_node("../Player")
-	walk_speed = 0
+	walk_speed = 50
 	velocity = Vector2(walk_speed,0)
 	print(player)
 	in_transit = false
@@ -39,44 +43,54 @@ func _process(delta):
 			if inflation == 0: # Get out of pumping state
 				print("No longer pumped.")
 				get_node(player_path).pumping = null
-			
+
+
+func normal_motion(delta):
+	collision_info = move_and_collide(velocity*delta)
+	if (collision_info != null):
+		velocity = velocity * -1
+		sprite.play_walking_animation(velocity.normalized())
+	current_time += delta
+	if (current_time >= time_to_hunt_threshold):
+		current_time = 0
+		is_hunting = true
+
+func hunt_motion():
+	if (!in_transit):
+		moveable_neighbors = move_tiles.get_moveable_neighbors(current_cell)
+	collision_info = move_and_collide(velocity*0)
+	if (moveable_neighbors.size() == 0 or collision_info): #case for being trapped in cell at hunt time
+		disable_collision_and_ghost()
+	else:
+		if (!in_transit):
+			move_to_cell(move_tiles.get_nearest_neighbor(moveable_neighbors,player.current_cell))
+		update_position()
+
+func ghost_motion():
+	update_position()
+	if (arrived()):
+		enable_collision_and_unghost()
+		velocity = Vector2(1,0)
+	
 func _physics_process(delta):
 	if (inflation == 0):
-		if (in_transit == false): #case for standard "non-ghosting" movement
-			if (!is_hunting):
-				collision_info = move_and_collide(velocity*delta)
-				if (collision_info != null):
-					velocity = velocity * -1
-					sprite.play_walking_animation(velocity.normalized())
-				current_time += delta
-				if (current_time >= time_to_move):
-					current_time = 0
-					move_to_cell(player.current_cell)
-					disable_collision_and_ghost()
-					update_position()
+		if (is_ghosting == false): #case for standard "non-ghosting" movement
+			if (is_hunting):
+				hunt_motion()
 			else: #using grid movement to go to player tile.
-				pass
-				#TODO: get the moveable tiles of the monster
-				#NOTE: figure out some flag to not keep getting the moveable tiles
-				#as it might be expensive and is definitely unnecessary
-					#If there are no moveable tiles?
-						#go ghost
-					#else:
-						#move to that tile by moving to cell
-						#update position
+				normal_motion(delta)
 		else: #case for being a ghost in transit
-			update_position()
-			if (arrived()):
-				enable_collision_and_unghost()
-				velocity = Vector2(1,0)
+			ghost_motion()
+
 
 func disable_collision_and_ghost():
-	print("tried and true")
+	is_ghosting = true
 	$TerrainCollision.set_deferred("disabled",true)
 	$RedBaddieHurtArea.set_deferred("disabled",true)
 	sprite.set_to_ghost()
 
 func enable_collision_and_unghost():
+	is_ghosting = false
 	$TerrainCollision.set_deferred("disabled",false)
 	$RedBaddieHurtArea.set_deferred("disabled",false)
 	sprite.set_to_walk()
