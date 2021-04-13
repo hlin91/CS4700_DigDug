@@ -9,12 +9,12 @@ var moved_to_cells = {} # Cells that the player has explicitly moved to
 func add_dug_cell(cell):
 	if !cell in dugged_cells:
 		dugged_cells[cell] = true
-		print("Dug cell " + str(cell))
+#		print("Dug cell " + str(cell))
 
 func add_moved_to_cell(cell):
 	if !cell in moved_to_cells:
 		moved_to_cells[cell] = true
-		print("Moved to cell " + str(cell))
+#		print("Moved to cell " + str(cell))
 	
 func is_cell_dug(cell):
 	if cell.y > 0 and cell.y <= 8: # Topmost level is always dug out
