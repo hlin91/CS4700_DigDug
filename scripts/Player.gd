@@ -45,7 +45,7 @@ func move_and_process(velocity):
 #			print("Collision pos:" + str(collision_pos))
 			var tile_pos = collision.collider.world_to_map(collision_pos)
 #			print("Tile pos: " + str(tile_pos))
-			if !move_tiles.is_cell_dug(tile_pos):
+			if !move_tiles.is_cell_movable(tile_pos):
 				collision.collider.set_cellv(tile_pos, -1)
 				move_tiles.add_dug_cell(tile_pos)
 		else: # Collided with a rock. Stop movement
@@ -91,6 +91,9 @@ func arrived_hook():
 	if !(Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left") ||
 		 Input.is_action_pressed("move_down") || Input.is_action_pressed("move_up")):
 			sprite.clear_animation()
+
+func squish():
+	print("Player has been squashed")
 
 func _on_PlayerHurtbox_area_entered(area):
 	pass

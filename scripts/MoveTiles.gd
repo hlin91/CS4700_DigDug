@@ -3,6 +3,10 @@ extends TileMap
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+export var min_x = 0 # Min horizontal index for cells
+export var max_x = 100 # Max horizontal index for cells
+export var min_y = 100 # Min vertical index for cells
+export var max_y = 100 # Max vertical index for cells
 var dugged_cells = {} # Cells that the player has dug
 var moved_to_cells = {} # Cells that the player has explicitly moved to
 
@@ -16,7 +20,7 @@ func add_moved_to_cell(cell):
 		moved_to_cells[cell] = true
 #		print("Moved to cell " + str(cell))
 	
-func is_cell_dug(cell):
+func is_cell_movable(cell):
 	if cell.y == 0: # Topmost level is always dug out
 		return true
 	return cell in dugged_cells
@@ -29,7 +33,7 @@ func get_moveable_neighbors(cell):
 	neighbors.append(cell+Vector2(0,-1))
 	neighbors.append(cell+Vector2(0,1))
 	for neighbor in neighbors:
-		#if is_cell_dug(neighbor):
+		#if is_cell_movable(neighbor):
 		moveable_neighbors.append(neighbor)
 	return moveable_neighbors
 

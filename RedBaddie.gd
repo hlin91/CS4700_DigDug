@@ -9,7 +9,7 @@ var collision_info
 var player
 var inflation = 0
 var time_to_ghost_threshold = 300
-var time_to_hunt_threshold = 10
+var time_to_hunt_threshold = 300
 var current_time = 0
 var time_until_reset_pump = pump_reset_time
 var is_hunting = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/Rock.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilesheet_complete.png" type="Texture" id=2]
@@ -15,8 +15,11 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 32.3997, 32.2903 )
+
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 31.6841, 6.48853 )
+extents = Vector2( 31.8355, 58.8295 )
 
 [node name="Rock" type="KinematicBody2D"]
 position = Vector2( 380.525, -163.607 )
@@ -27,8 +30,12 @@ script = ExtResource( 1 )
 [node name="RockSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )
+
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 0, 38.9864 )
+position = Vector2( 0, 26.9622 )
 shape = SubResource( 4 )
+[connection signal="area_shape_exited" from="Area2D" to="." method="_on_Area2D_area_shape_exited"]
