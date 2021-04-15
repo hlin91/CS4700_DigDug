@@ -60,8 +60,7 @@ func hunt_motion():
 		moveable_neighbors = move_tiles.get_moveable_neighbors(current_cell)
 	collision_info = move_and_collide(velocity*0)
 	if (moveable_neighbors.size() == 0 or collision_info): #case for being trapped in cell at hunt time
-		#And also for being snagged on a dirttile
-		move_to_cell(player.current_cell)
+		move_to_cell(move_tiles.get_random_moved_to_cell())
 		disable_collision_and_ghost()
 	else:
 		if (!in_transit):

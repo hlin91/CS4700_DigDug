@@ -23,7 +23,7 @@ func add_moved_to_cell(cell):
 func is_cell_movable(cell):
 	if cell.y == 0: # Topmost level is always dug out
 		return true
-	return cell in dugged_cells
+	return cell in moved_to_cells
 	
 func get_moveable_neighbors(cell):
 	var moveable_neighbors = []
@@ -33,8 +33,8 @@ func get_moveable_neighbors(cell):
 	neighbors.append(cell+Vector2(0,-1))
 	neighbors.append(cell+Vector2(0,1))
 	for neighbor in neighbors:
-		#if is_cell_movable(neighbor):
-		moveable_neighbors.append(neighbor)
+		if is_cell_movable(neighbor):
+			moveable_neighbors.append(neighbor)
 	return moveable_neighbors
 
 func get_nearest_neighbor(neighbors, cell):
@@ -48,11 +48,14 @@ func get_nearest_neighbor(neighbors, cell):
 
 func is_cell_moved_to(cell):
 	return cell in moved_to_cells
+	
+func get_random_moved_to_cell():
+	var values = moved_to_cells.keys()
+	return values[randi() % values.size()]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
