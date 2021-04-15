@@ -40,6 +40,9 @@ func arrived_hook():
 	# TODO: Play crumbling animation
 	queue_free()
 
+func cell_in_range(cell):
+	return tiles.is_cell_moved_to(cell) || tiles.is_cell_moved_to(cell+Vector2(-1, 0)) || tiles.is_cell_moved_to(cell+Vector2(1, 0))
+
 func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 	# Scan all cells below the rock for a cell the player has already traversed
 	# to fall down to
@@ -48,13 +51,13 @@ func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 	var candidate = null
 	while y_pos <= tiles.max_y:
 		candidate = Vector2(current_cell.x, y_pos)
-		if tiles.is_cell_moved_to(candidate) || tiles.is_cell_moved_to(candidate+Vector2(-1, 0)) || tiles.is_cell_moved_to(candidate+Vector2(1, 0)):
+		if cell_in_range(candidate):
 			cell = candidate
 			break
 		y_pos += 1
 	if cell != null:
 		candidate = Vector2(cell.x, cell.y+1)
-		while candidate.y <= tiles.max_y && tiles.is_cell_moved_to(candidate) || tiles.is_cell_moved_to(candidate+Vector2(-1, 0)) || tiles.is_cell_moved_to(candidate+Vector2(1, 0)):
+		while candidate.y <= tiles.max_y && cell_in_range(candidate):
 			cell = candidate
 			candidate.y += 1
 		# TODO: Play shaking animation
