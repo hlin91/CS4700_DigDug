@@ -45,12 +45,18 @@ func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 	# to fall down to
 	var cell = null
 	var y_pos = current_cell.y + 1
+	var candidate = null
 	while y_pos <= tiles.max_y:
-		var candidate = Vector2(current_cell.x, y_pos)
+		candidate = Vector2(current_cell.x, y_pos)
 		if tiles.is_cell_moved_to(candidate) || tiles.is_cell_moved_to(candidate+Vector2(-1, 0)) || tiles.is_cell_moved_to(candidate+Vector2(1, 0)):
 			cell = candidate
+			break
 		y_pos += 1
 	if cell != null:
+		candidate = Vector2(cell.x, cell.y+1)
+		while candidate.y <= tiles.max_y && tiles.is_cell_moved_to(candidate) || tiles.is_cell_moved_to(candidate+Vector2(-1, 0)) || tiles.is_cell_moved_to(candidate+Vector2(1, 0)):
+			cell = candidate
+			candidate.y += 1
 		# TODO: Play shaking animation
 		dropped = true
 		move_to_cell(cell)

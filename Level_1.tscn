@@ -13,7 +13,7 @@
 [ext_resource path="res://Rock.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 6.94129, 7.02253 )
+extents = Vector2( 4.93225, 4.9214 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
@@ -539,7 +539,7 @@ radius = 6.0
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" type="KinematicBody2D" parent="."]
-scale = Vector2( 7, 7 )
+scale = Vector2( 5, 5 )
 script = ExtResource( 3 )
 walk_speed = 50.0
 
@@ -549,7 +549,7 @@ shape = SubResource( 1 )
 [node name="PlayerSprite" type="AnimatedSprite" parent="Player"]
 frames = SubResource( 9 )
 animation = "hero_walking"
-frame = 2
+frame = 1
 playing = true
 script = ExtResource( 2 )
 
@@ -579,7 +579,6 @@ script = ExtResource( 5 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 33 )
 animation = "ghosting"
-frame = 1
 playing = true
 script = ExtResource( 7 )
 
