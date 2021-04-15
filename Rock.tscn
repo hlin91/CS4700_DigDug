@@ -19,7 +19,7 @@ animations = [ {
 extents = Vector2( 32.3997, 32.2903 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 31.8355, 34.7686 )
+extents = Vector2( 10.0134, 34.7686 )
 
 [node name="Rock" type="KinematicBody2D"]
 position = Vector2( 380.525, -163.607 )
