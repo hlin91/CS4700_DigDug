@@ -14,7 +14,9 @@ var current_time = 0
 var time_until_reset_pump = pump_reset_time
 var is_hunting = false
 var is_ghosting = false
-var is_walking = false
+#track is referring to the trail left behind by spaces the player has explicitly
+#moved to
+var is_on_track = false
 var pump_scale_factor = 1.5 / pumps_to_kill
 var moveable_neighbors
 
@@ -50,10 +52,17 @@ func normal_motion(delta):
 	if (collision_info != null):
 		velocity = velocity * -1
 		sprite.play_walking_animation(velocity.normalized())
-	current_time += delta
-	if (current_time >= time_to_hunt_threshold):
-		current_time = 0
-		is_hunting = true
+
+
+func on_track_motion(delta):
+	if (!in_transit):
+		var moveable_neighbors = move_tiles.get_moveable_neighbors(current_cell)	
+		var chosen_neighbor = moveable_neighbors[randi() % moveable_neighbors.size()]
+		move_to_cell(chosen_neighbor)
+		update_position()
+	else:
+		update_position()
+
 
 func hunt_motion():
 	if (!in_transit):
@@ -67,12 +76,14 @@ func hunt_motion():
 			move_to_cell(move_tiles.get_nearest_neighbor(moveable_neighbors,player.current_cell))
 		update_position()
 
+
 func ghost_motion():
 	update_position()
 	if (arrived()):
 		enable_collision_and_unghost()
 		velocity = Vector2(1,0)
-	
+
+
 func _physics_process(delta):
 	if (inflation == 0):
 		if (is_ghosting == false): #case for standard "non-ghosting" movement
