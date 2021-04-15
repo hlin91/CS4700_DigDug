@@ -9,7 +9,7 @@ var collision_info
 var player
 var inflation = 0
 var time_to_ghost_threshold = 300
-var time_to_hunt_threshold = 300
+var time_to_hunt_threshold = 5
 var current_time = 0
 var time_until_reset_pump = pump_reset_time
 var is_hunting = false
@@ -20,7 +20,7 @@ var moveable_neighbors
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_collision_layer(enemy_layer)
+	#set_collision_layer(enemy_layer)
 	sprite_path = "./RedBaddieSprite"
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)
@@ -59,7 +59,7 @@ func hunt_motion():
 	if (!in_transit):
 		moveable_neighbors = move_tiles.get_moveable_neighbors(current_cell)
 	collision_info = move_and_collide(velocity*0)
-	if (moveable_neighbors.size() == 0): #case for being trapped in cell at hunt time
+	if (moveable_neighbors.size() == 0 or collision_info): #case for being trapped in cell at hunt time
 		#And also for being snagged on a dirttile
 		move_to_cell(player.current_cell)
 		disable_collision_and_ghost()
@@ -85,15 +85,17 @@ func _physics_process(delta):
 			ghost_motion()
 
 func disable_collision_and_ghost():
+	print("going ghost!")
 	is_ghosting = true
 	$TerrainCollision.set_deferred("disabled",true)
-	$RedBaddieHurtArea/RedBaddieHurtAreaCollision.set_deferred("disabled",true)
+	$RedBaddieHurtArea/RedBaddieHurtAreaShape.set_deferred("disabled",true)
 	sprite.set_to_ghost()
 
 func enable_collision_and_unghost():
+	print("ungoing ghost!")
 	is_ghosting = false
 	$TerrainCollision.set_deferred("disabled",false)
-	$RedBaddieHurtArea/RedBaddieHurtAreaCollision.set_deferred("disabled",false)
+	$RedBaddieHurtArea/RedBaddieHurtAreaShape.set_deferred("disabled",false)
 	sprite.set_to_walk()
 	
 func move_and_process(velocity):
