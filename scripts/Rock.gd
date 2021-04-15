@@ -1,9 +1,8 @@
 extends "res://scripts/GridKinematics.gd"
 
-export var tiles_path = "../MoveTiles"
 export var player_layer_bit = 0
 export var enemy_layer_bit = 1
-var tiles
+export var tolerance = 3
 var dropped = false
 
 # Declare member variables here. Examples:
@@ -13,10 +12,10 @@ var dropped = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	tiles = get_node(tiles_path)
+	move_tiles = get_node(move_tiles_path)
 	current_position = position
 	target_position = position
-	current_cell = tiles.world_to_map(position)
+	current_cell = move_tiles.world_to_map(position)
 	target_cell = current_cell
 	set_collision_mask_bit(player_layer_bit, true)
 	set_collision_mask_bit(enemy_layer_bit, true)
@@ -41,7 +40,12 @@ func arrived_hook():
 	queue_free()
 
 func cell_in_range(cell):
-	return tiles.is_cell_moved_to(cell) || tiles.is_cell_moved_to(cell+Vector2(-1, 0)) || tiles.is_cell_moved_to(cell+Vector2(1, 0))
+	var x_offset = -tolerance
+	while x_offset <= tolerance:
+		if move_tiles.is_cell_moved_to(Vector2(cell.x + x_offset, cell.y)):
+			return true
+		x_offset += 1
+	return false
 
 func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 	# Scan all cells below the rock for a cell the player has already traversed
@@ -49,7 +53,7 @@ func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 	var cell = null
 	var y_pos = current_cell.y + 1
 	var candidate = null
-	while y_pos <= tiles.max_y:
+	while y_pos <= move_tiles.max_y:
 		candidate = Vector2(current_cell.x, y_pos)
 		if cell_in_range(candidate):
 			cell = candidate
@@ -57,9 +61,10 @@ func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 		y_pos += 1
 	if cell != null:
 		candidate = Vector2(cell.x, cell.y+1)
-		while candidate.y <= tiles.max_y && cell_in_range(candidate):
+		while candidate.y <= move_tiles.max_y && cell_in_range(candidate):
 			cell = candidate
 			candidate.y += 1
 		# TODO: Play shaking animation
 		dropped = true
+		print("Dropping to: " + str(cell))
 		move_to_cell(cell)
