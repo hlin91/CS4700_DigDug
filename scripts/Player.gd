@@ -47,7 +47,6 @@ func move_and_process(velocity):
 #			print("Tile pos: " + str(tile_pos))
 			if !move_tiles.is_cell_movable(tile_pos):
 				collision.collider.set_cellv(tile_pos, -1)
-				move_tiles.add_dug_cell(tile_pos)
 		else: # Collided with a rock. Stop movement
 			in_transit = false
 			move_direction = Vector2()

@@ -6,7 +6,7 @@
 [ext_resource path="res://Area2D.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4.93225, 4.9214 )
+extents = Vector2( 4.93225, 5.06871 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 3 )
@@ -63,7 +63,7 @@ shape = SubResource( 1 )
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 9 )
 animation = "hero_walking"
-frame = 1
+frame = 2
 playing = true
 script = ExtResource( 1 )
 

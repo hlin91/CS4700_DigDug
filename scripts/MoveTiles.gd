@@ -7,22 +7,19 @@ export var min_x = 0 # Min horizontal index for cells
 export var max_x = 100 # Max horizontal index for cells
 export var min_y = 100 # Min vertical index for cells
 export var max_y = 100 # Max vertical index for cells
-var dugged_cells = {} # Cells that the player has dug
+export var dirt_tiles_path = "../DirtTiles"
+var dirt_tiles
 var moved_to_cells = {} # Cells that the player has explicitly moved to
 
-func add_dug_cell(cell):
-	if !cell in dugged_cells:
-		dugged_cells[cell] = true
-#		print("Dug cell " + str(cell))
+func _ready():
+	dirt_tiles = get_node(dirt_tiles_path)
 
 func add_moved_to_cell(cell):
 	if !cell in moved_to_cells:
 		moved_to_cells[cell] = true
 	
 func is_cell_movable(cell):
-	if cell.y == 0: # Topmost level is always dug out
-		return true
-	return cell in moved_to_cells
+	return dirt_tiles.get_cellv(cell) == -1
 	
 func get_moveable_neighbors(cell):
 	var moveable_neighbors = []
@@ -51,11 +48,7 @@ func is_cell_moved_to(cell):
 func get_random_moved_to_cell():
 	var values = moved_to_cells.keys()
 	return values[randi() % values.size()]
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
+        
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
