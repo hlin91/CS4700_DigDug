@@ -29,7 +29,7 @@ func get_moveable_neighbors(cell):
 	neighbors.append(cell+Vector2(0,-1))
 	neighbors.append(cell+Vector2(0,1))
 	for neighbor in neighbors:
-		if is_cell_movable(neighbor):
+		if is_cell_moved_to(neighbor):
 			moveable_neighbors.append(neighbor)
 	return moveable_neighbors
 
@@ -48,7 +48,7 @@ func is_cell_moved_to(cell):
 func get_random_moved_to_cell():
 	var values = moved_to_cells.keys()
 	return values[randi() % values.size()]
-        
+		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

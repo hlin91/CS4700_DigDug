@@ -8,15 +8,17 @@ export var enemy_layer = 2
 var collision_info
 var player
 var inflation = 0
-var time_to_ghost_threshold = 300
-var time_to_hunt_threshold = 5
+var time_to_track = 0
+var time_to_track_threshold = 100
+var time_to_hunt = 0
+var time_to_hunt_threshold = 9
 var current_time = 0
 var time_until_reset_pump = pump_reset_time
 var is_hunting = false
 var is_ghosting = false
 #track is referring to the trail left behind by spaces the player has explicitly
 #moved to
-var is_on_track = false
+var is_tracking = false
 var pump_scale_factor = 1.5 / pumps_to_kill
 var moveable_neighbors
 
@@ -46,25 +48,40 @@ func _process(delta):
 				print("No longer pumped.")
 				get_node(player_path).pumping = null
 
-
 func normal_motion(delta):
 	collision_info = move_and_collide(velocity*delta)
 	if (collision_info != null):
 		velocity = velocity * -1
 		sprite.play_walking_animation(velocity.normalized())
-
-
+	time_to_hunt += delta
+	if (time_to_hunt >= time_to_hunt_threshold):
+		is_hunting = true
+		time_to_hunt = 0
+		print("starting to hunt")
+	
 func on_track_motion(delta):
 	if (!in_transit):
-		var moveable_neighbors = move_tiles.get_moveable_neighbors(current_cell)	
-		var chosen_neighbor = moveable_neighbors[randi() % moveable_neighbors.size()]
-		move_to_cell(chosen_neighbor)
+		var moveable_neighbors = move_tiles.get_moveable_neighbors(current_cell)
+		var chosen_neighbor
+		collision_info = move_and_collide(velocity*0)
+		if (moveable_neighbors.size() == 0 or collision_info):
+			chosen_neighbor = move_tiles.get_random_moved_to_cell()
+			disable_collision_and_ghost()
+			move_to_cell(chosen_neighbor)
+		else:
+			chosen_neighbor = moveable_neighbors[randi() % moveable_neighbors.size()]
+			move_to_cell(chosen_neighbor)
 		update_position()
 	else:
 		update_position()
+	time_to_hunt += delta
+	if (time_to_hunt >= time_to_hunt_threshold):
+		time_to_hunt = 0
+		is_hunting = true
+		is_tracking = false
+		print("starting to hunt")
 
-
-func hunt_motion():
+func naive_hunt_motion(delta):
 	if (!in_transit):
 		moveable_neighbors = move_tiles.get_moveable_neighbors(current_cell)
 	collision_info = move_and_collide(velocity*0)
@@ -75,24 +92,30 @@ func hunt_motion():
 		if (!in_transit):
 			move_to_cell(move_tiles.get_nearest_neighbor(moveable_neighbors,player.current_cell))
 		update_position()
+	time_to_track += delta
+	if (time_to_track >= time_to_track_threshold):
+		time_to_track = 0
+		is_tracking = true
+		is_hunting = false
+		print("starting to track")
 
-
-func ghost_motion():
+func ghost_motion(delta):
 	update_position()
 	if (arrived()):
 		enable_collision_and_unghost()
 		velocity = Vector2(1,0)
 
-
 func _physics_process(delta):
 	if (inflation == 0):
 		if (is_ghosting == false): #case for standard "non-ghosting" movement
 			if (is_hunting):
-				hunt_motion()
-			else: #using grid movement to go to player tile.
+				naive_hunt_motion(delta)
+			elif not is_tracking: #using grid movement to go to player tile.
 				normal_motion(delta)
+			else:
+				on_track_motion(delta)
 		else: #case for being a ghost in transit
-			ghost_motion()
+			ghost_motion(delta)
 
 func disable_collision_and_ghost():
 	print("going ghost!")
