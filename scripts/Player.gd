@@ -43,6 +43,10 @@ func _physics_process(delta):
 
 func move_and_process(velocity):
 	move_and_slide(velocity)
+	if get_slide_count() > 0:
+		in_transit = false
+		move_direction = Vector2()
+		arrived_hook()
 #	for i in range(get_slide_count()):
 #		var collision = get_slide_collision(i)
 #		if collision.collider is TileMap:

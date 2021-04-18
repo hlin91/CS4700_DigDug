@@ -26,6 +26,7 @@ position = Vector2( 380.525, -163.607 )
 collision_layer = 0
 collision_mask = 0
 script = ExtResource( 1 )
+walk_speed = 100.0
 
 [node name="RockSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
