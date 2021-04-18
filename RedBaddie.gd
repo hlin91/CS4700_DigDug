@@ -103,6 +103,7 @@ func on_track_motion(delta):
 func a_star_hunt_motion(delta):
 	if (!move_tiles.is_cell_moved_to(current_cell)):
 		print("going ghost")
+		move_to_cell(move_tiles.get_random_moved_to_cell())
 		is_ghosting = true
 		return
 	if current_path.size() == 0:
