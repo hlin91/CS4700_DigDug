@@ -32,8 +32,9 @@ func _ready():
 	player = get_node("../Player")
 	walk_speed = 50
 	velocity = Vector2(walk_speed,0)
-	print(player)
 	in_transit = false
+	current_cell = move_tiles.world_to_map(position)
+	print(current_cell)
 	sprite.set_to_walk()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -48,6 +49,7 @@ func _process(delta):
 			if inflation == 0: # Get out of pumping state
 				print("No longer pumped.")
 				get_node(player_path).pumping = null
+
 
 func normal_motion(delta):
 	collision_info = move_and_collide(velocity*delta)
@@ -104,11 +106,11 @@ func a_star_hunt_motion(delta):
 	if (!move_tiles.is_cell_moved_to(current_cell)):
 		print("going ghost")
 		move_to_cell(move_tiles.get_random_moved_to_cell())
+		disable_collision_and_ghost()
 		is_ghosting = true
 		return
 	if current_path.size() == 0:
 		current_path = a_star(current_cell, player.current_cell,move_tiles)
-		print(current_path)
 	else:
 		if !in_transit:
 			move_to_cell(current_path[0])
@@ -136,7 +138,6 @@ func a_star(starting_cell,player_cell,move_tiles_instance):
 	
 	while not frontier.empty():
 		var frontier_node = frontier.pop()
-		print(frontier_node)
 		to_visit = frontier_node.cell
 		
 		if to_visit in visited:
