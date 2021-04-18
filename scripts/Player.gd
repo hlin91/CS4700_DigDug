@@ -9,6 +9,7 @@ var game_over = false
 var bullet = preload("res://PlayerProjectile.tscn")
 var max_bullets = 1
 var pumping = null # Enemy the player is currently pumping
+var orientation
 	
 #func get_input():
 #	velocity = Vector2()
@@ -21,6 +22,10 @@ var pumping = null # Enemy the player is currently pumping
 #	elif Input.is_action_pressed("move_up"):
 #		velocity = Vector2(0, -1)
 #	velocity = velocity.normalized() * walk_speed
+
+func _ready():
+	._ready()
+	orientation = dirt_tiles.ORIENT.HORIZ
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -38,22 +43,23 @@ func _physics_process(delta):
 
 func move_and_process(velocity):
 	move_and_slide(velocity)
-	for i in range(get_slide_count()):
-		var collision = get_slide_collision(i)
-		if collision.collider is TileMap:
-			var collision_pos = collision.position - collision.normal * 1.0
-#			print("Collision pos:" + str(collision_pos))
-			var tile_pos = collision.collider.world_to_map(collision_pos)
-#			print("Tile pos: " + str(tile_pos))
-			if !move_tiles.is_cell_movable(tile_pos):
-				collision.collider.set_cellv(tile_pos, -1)
-		else: # Collided with a rock. Stop movement
-			in_transit = false
-			move_direction = Vector2()
-			arrived_hook()
+#	for i in range(get_slide_count()):
+#		var collision = get_slide_collision(i)
+#		if collision.collider is TileMap:
+#			var collision_pos = collision.position - collision.normal * 1.0
+##			print("Collision pos:" + str(collision_pos))
+#			var tile_pos = collision.collider.world_to_map(collision_pos)
+##			print("Tile pos: " + str(tile_pos))
+#			if !move_tiles.is_cell_movable(tile_pos):
+#				collision.collider.set_cellv(tile_pos, -1)
+#		else: # Collided with a rock. Stop movement
+#			in_transit = false
+#			move_direction = Vector2()
+#			arrived_hook()
 
 func move_cell_hook(cell):
 	move_tiles.add_moved_to_cell(cell)
+	dirt_tiles.dig_out(cell, orientation)
 
 func shoot():
 	if get_tree().get_nodes_in_group("bullets").size() < max_bullets:
@@ -65,21 +71,25 @@ func shoot():
 func get_input():
 	if !in_transit:
 		if Input.is_action_pressed("move_right"):
+			orientation = dirt_tiles.ORIENT.HORIZ
 			pumping = null
 			move_to_cell(Vector2(current_cell.x+1, current_cell.y))
 			sprite.move_animation(sprite.DIR.RIGHT)
 			set_rotation_degrees(0)
 		elif Input.is_action_pressed("move_left"):
+			orientation = dirt_tiles.ORIENT.HORIZ
 			pumping = null
 			move_to_cell(Vector2(current_cell.x-1, current_cell.y))
 			sprite.move_animation(sprite.DIR.LEFT)
 			set_rotation_degrees(-180)
 		elif Input.is_action_pressed("move_down"):
+			orientation = dirt_tiles.ORIENT.VERT
 			pumping = null
 			move_to_cell(Vector2(current_cell.x, current_cell.y+1))
 			sprite.move_animation(sprite.DIR.DOWN)
 			set_rotation_degrees(-270)
 		elif Input.is_action_pressed("move_up"):
+			orientation = dirt_tiles.ORIENT.VERT
 			pumping = null
 			move_to_cell(Vector2(current_cell.x,current_cell.y-1))
 			sprite.move_animation(sprite.DIR.UP)

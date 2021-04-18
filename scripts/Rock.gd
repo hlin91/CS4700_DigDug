@@ -65,6 +65,7 @@ func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 			cell = candidate
 			candidate.y += 1
 		# TODO: Play shaking animation
+		yield(get_tree().create_timer(.25), "timeout")
 		dropped = true
 		print("Dropping to: " + str(cell))
 		move_to_cell(cell)

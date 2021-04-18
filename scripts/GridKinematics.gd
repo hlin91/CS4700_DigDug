@@ -6,6 +6,7 @@ extends KinematicBody2D
 # var b = "text"
 export (float) var walk_speed = 10000
 export var move_tiles_path = "../MoveTiles"
+export var dirt_tiles_path = "../DirtTiles"
 export var sprite_path = "./PlayerSprite"
 var velocity = Vector2()
 var current_position = Vector2()
@@ -16,12 +17,14 @@ var target_cell = Vector2()
 var start_cell = Vector2()
 var epsilon = 1
 var move_tiles # Tile map that represents the move grid
+var dirt_tiles # Tile map that represents the dirt grid
 var sprite # Reference to the player sprite
 var in_transit = false # Is the player currently moving to a cell
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	move_tiles = get_node(move_tiles_path)
+	dirt_tiles = get_node(dirt_tiles_path)
 	sprite = get_node(sprite_path)
 	move_to_cell(start_cell)
 	
