@@ -33,6 +33,10 @@ func get_moveable_neighbors(cell):
 			moveable_neighbors.append(neighbor)
 	return moveable_neighbors
 
+func get_heuristic(cell, player_position):
+	return cell.distance_to(player_position)
+
+
 func get_nearest_neighbor(neighbors, cell):
 	var n
 	var min_distance = 9223372036854775807

@@ -438,47 +438,47 @@ points = PoolVector2Array( 30.9388, 16.0316, 15.3102, 31.102, 0.797943, 14.3571,
 20/z_index = 0
 
 [sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 1 )
-region = Rect2( 112, 32, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 1 )
-region = Rect2( 128, 32, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 1 )
-region = Rect2( 144, 32, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 1 )
-region = Rect2( 160, 32, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 1 )
-region = Rect2( 176, 32, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 1 )
-region = Rect2( 192, 32, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=21]
 atlas = ExtResource( 10 )
 region = Rect2( 0, 0, 20, 20 )
 
-[sub_resource type="AtlasTexture" id=22]
+[sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 10 )
 region = Rect2( 20, 0, 20, 20 )
 
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 1 )
+region = Rect2( 112, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 1 )
+region = Rect2( 128, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 1 )
+region = Rect2( 144, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 1 )
+region = Rect2( 160, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 1 )
+region = Rect2( 176, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 1 )
+region = Rect2( 192, 32, 16, 16 )
+
 [sub_resource type="SpriteFrames" id=23]
 animations = [ {
-"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
-"loop": true,
-"name": "walking",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 21 ), SubResource( 22 ) ],
+"frames": [ SubResource( 15 ), SubResource( 16 ) ],
 "loop": true,
 "name": "ghosting",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ) ],
+"loop": true,
+"name": "walking",
 "speed": 5.0
 } ]
 
@@ -510,7 +510,6 @@ script = ExtResource( 5 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 23 )
 animation = "ghosting"
-frame = 1
 playing = true
 script = ExtResource( 7 )
 
