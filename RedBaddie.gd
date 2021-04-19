@@ -29,10 +29,9 @@ var starting_block_down_to_up = 18
 var up_down_motion
 var right_or_down = true
 	
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#set_collision_layer(enemy_layer)
+	set_collision_layer(enemy_layer)
 	sprite_path = "./RedBaddieSprite"
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)

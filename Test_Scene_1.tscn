@@ -66,13 +66,13 @@ tunnel_radius = 5
 position = Vector2( 296.599, 72.1838 )
 
 [node name="RedBaddie" parent="." instance=ExtResource( 7 )]
-position = Vector2( 452.348, 155.62 )
+position = Vector2( 452.348, 78.1123 )
 
 [node name="RedBaddie2" parent="." instance=ExtResource( 7 )]
 position = Vector2( 452.78, 235.246 )
 
 [node name="RedBaddie3" parent="." instance=ExtResource( 7 )]
-position = Vector2( 452.78, 83.793 )
+position = Vector2( 453.671, 153.283 )
 
 [node name="RedBaddie4" parent="." instance=ExtResource( 7 )]
 position = Vector2( 163.238, 232.573 )
