@@ -10,11 +10,13 @@ var player
 var inflation = 0
 var time_until_reset_pump = pump_reset_time
 
+#Variables for the state of the baddie
 var is_hunting = false
 var is_ghosting = false
 var is_wandering = false
 var is_starting = true
 
+#values for determining when to leave starting state
 var starting_to_ghost_threshold = 8
 var starting_to_ghost_value = 0
 
@@ -39,7 +41,8 @@ func _ready():
 	walk_speed = 50
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
-	print(current_cell)
+
+	#use the dimensions of the starting block to determine orientation
 	if starting_block_left_to_right > starting_block_down_to_up:
 		up_down_motion = false
 	create_starter_room(starting_block_left_to_right,starting_block_down_to_up)
