@@ -14,6 +14,9 @@ enum ORIENT {
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
+
+func atomic_dig_out(cell):
+	set_cellv(cell,-1)
 	
 func dig_out(cell, orient):
 	var offset = 0

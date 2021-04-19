@@ -23,6 +23,10 @@ var pump_scale_factor = 1.5 / pumps_to_kill
 var moveable_neighbors
 var current_path = []
 
+var starting_block_length = 14
+var starting_block_width = 7
+var starting_block_is_vertical = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#set_collision_layer(enemy_layer)
@@ -35,6 +39,7 @@ func _ready():
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
 	print(current_cell)
+	create_starter_room(starting_block_is_vertical,starting_block_length,starting_block_width)
 	sprite.set_to_walk()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -49,7 +54,17 @@ func _process(delta):
 			if inflation == 0: # Get out of pumping state
 				print("No longer pumped.")
 				get_node(player_path).pumping = null
-
+				
+func create_starter_room(is_vertical,length,width):
+	var cell
+	for l in range(length*-1,length):
+		for w in range(width*-1,width):
+			cell = Vector2(l,w) + current_cell
+			print(cell)
+			if cell.x < 0 or cell.y < 0:
+				continue
+			dirt_tiles.atomic_dig_out(cell)
+	
 
 func normal_motion(delta):
 	collision_info = move_and_collide(velocity*delta)
@@ -61,7 +76,8 @@ func normal_motion(delta):
 		is_hunting = true
 		time_to_hunt = 0
 		print("starting to hunt")
-	
+
+
 func on_track_motion(delta):
 	if (!in_transit):
 		var moveable_neighbors = move_tiles.get_moveable_neighbors(current_cell)

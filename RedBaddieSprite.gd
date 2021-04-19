@@ -28,16 +28,6 @@ func play_walking_animation(direction):
 		Vector2(1,0):
 			set_flip_h(true)
 			rotation_degrees = 0
-		Vector2(0,-1):
-			if flip_h:
-				rotation_degrees = -90
-			else:
-				rotation_degrees = 90
-		Vector2(0,1):
-			if flip_h:
-				rotation_degrees = 90
-			else:
-				rotation_degrees = -90
 
 
 # Called when the node enters the scene tree for the first time.

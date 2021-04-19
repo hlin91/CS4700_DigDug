@@ -455,4 +455,3 @@ script = ExtResource( 6 )
 
 [node name="Rock" parent="." instance=ExtResource( 11 )]
 position = Vector2( 237.598, 96.0509 )
-walk_speed = 100.0
