@@ -8,24 +8,26 @@ export var enemy_layer = 2
 var collision_info
 var player
 var inflation = 0
-var time_to_track = 0
-var time_to_track_threshold = 100
-var time_to_hunt = 0
-var time_to_hunt_threshold = 3
-var current_time = 0
 var time_until_reset_pump = pump_reset_time
+
 var is_hunting = false
 var is_ghosting = false
-#track is referring to the trail left behind by spaces the player has explicitly
-#moved to
-var is_tracking = false
+var is_wandering = false
+var is_starting = true
+
+var starting_to_ghost_threshold = 5
+var starting_to_ghost_value = 0
+
 var pump_scale_factor = 1.5 / pumps_to_kill
 var moveable_neighbors
 var current_path = []
 
-var starting_block_length = 14
-var starting_block_width = 7
-var starting_block_is_vertical = true
+#Length is referring to left_right size of block
+var starting_block_length = 7
+#width is referring to up_down size of block
+var starting_block_width = 18
+var up_down_motion
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -39,7 +41,9 @@ func _ready():
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
 	print(current_cell)
-	create_starter_room(starting_block_is_vertical,starting_block_length,starting_block_width)
+	if starting_block_length > starting_block_width:
+		up_down_motion = true
+	create_starter_room(starting_block_length,starting_block_width)
 	sprite.set_to_walk()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -55,84 +59,50 @@ func _process(delta):
 				print("No longer pumped.")
 				get_node(player_path).pumping = null
 				
-func create_starter_room(is_vertical,length,width):
+func create_starter_room(length,width):
 	var cell
-	for l in range(length*-1,length):
-		for w in range(width*-1,width):
+	for w in range((width*-1)/2,width/2):
+		for l in range((length*-1)/2,length/2):
 			cell = Vector2(l,w) + current_cell
 			print(cell)
 			if cell.x < 0 or cell.y < 0:
 				continue
 			dirt_tiles.atomic_dig_out(cell)
+
+func starter_motion(delta):
+	if not in_transit:
+		if (up_down_motion):
+			move_to_cell(Vector2(current_cell.x,current_cell.y+1))
+		else:
+			move_to_cell(Vector2(current_cell.x+1,current_cell.y))
+	update_position()
+	starting_to_ghost_value += delta
+	if (starting_to_ghost_value >= starting_to_ghost_threshold):
+		disable_collision_and_ghost()
+		is_hunting = true
+		move_to_cell(move_tiles.get_random_moved_to_cell())
 	
 
-func normal_motion(delta):
-	collision_info = move_and_collide(velocity*delta)
-	if (collision_info != null):
-		velocity = velocity * -1
-		sprite.play_walking_animation(velocity.normalized())
-	time_to_hunt += delta
-	if (time_to_hunt >= time_to_hunt_threshold):
-		is_hunting = true
-		time_to_hunt = 0
-		print("starting to hunt")
-
-
-func on_track_motion(delta):
-	if (!in_transit):
-		var moveable_neighbors = move_tiles.get_moveable_neighbors(current_cell)
-		var chosen_neighbor
-		collision_info = move_and_collide(velocity*0)
-		if (moveable_neighbors.size() == 0 or collision_info):
-			chosen_neighbor = move_tiles.get_random_moved_to_cell()
-			disable_collision_and_ghost()
-			move_to_cell(chosen_neighbor)
-		else:
-			chosen_neighbor = moveable_neighbors[randi() % moveable_neighbors.size()]
-			move_to_cell(chosen_neighbor)
-		update_position()
-	else:
-		update_position()
-	time_to_hunt += delta
-	if (time_to_hunt >= time_to_hunt_threshold):
-		time_to_hunt = 0
-		is_hunting = true
-		is_tracking = false
-		print("starting to hunt")
-
-#func naive_hunt_motion(delta):
-#	if (!in_transit):
-#		moveable_neighbors = move_tiles.get_moveable_neighbors(current_cell)
-#	collision_info = move_and_collide(velocity*0)
-#	if (moveable_neighbors.size() == 0 or collision_info): #case for being trapped in cell at hunt time
-#		move_to_cell(move_tiles.get_random_moved_to_cell())
-#		disable_collision_and_ghost()
-#	else:
-#		if (!in_transit):
-#			move_to_cell(move_tiles.get_nearest_neighbor(moveable_neighbors,player.current_cell))
-#		update_position()
-#	time_to_track += delta
-#	if (time_to_track >= time_to_track_threshold):
-#		time_to_track = 0
-#		is_tracking = true
-#		is_hunting = false
-#		print("starting to track")
-
-func a_star_hunt_motion(delta):
+func a_star_motion(delta):
 	if (!move_tiles.is_cell_moved_to(current_cell)):
 		print("going ghost")
 		move_to_cell(move_tiles.get_random_moved_to_cell())
 		disable_collision_and_ghost()
-		is_ghosting = true
 		return
 	if current_path.size() == 0:
-		current_path = a_star(current_cell, player.current_cell,move_tiles)
+		var dest_cell
+		if is_hunting:
+			dest_cell = player.current_cell
+		elif is_wandering:
+			dest_cell = move_tiles.get_random_moved_to_cell()
+		current_path = a_star(current_cell, dest_cell, move_tiles)
 	else:
 		if !in_transit:
 			move_to_cell(current_path[0])
 			current_path.remove(0)
 		else:
 			update_position()
+			
 
 func ghost_motion(delta):
 	update_position()
@@ -140,56 +110,15 @@ func ghost_motion(delta):
 		enable_collision_and_unghost()
 		velocity = Vector2(1,0)
 
-func a_star(starting_cell,player_cell,move_tiles_instance):
-	var frontier = preload("res://pq.gd").new()
-	frontier.make()
-	var previous = {starting_cell:null}
-	var costs = {starting_cell:0}
-	var visited = {}
-	var potential_cost
-	var to_visit
-	var position
-	var path
-	frontier.push({cell=starting_cell,pqval=0})
-	
-	while not frontier.empty():
-		var frontier_node = frontier.pop()
-		to_visit = frontier_node.cell
-		
-		if to_visit in visited:
-			continue
-		
-		visited[to_visit] = true
-		
-		if(to_visit == player_cell):
-			path = []
-			position = to_visit
-			path.append(position)
-			while previous[position] != null:
-				path.insert(0,previous[position])
-				position = previous[position]
-			return path
-			
-		for neighbor in move_tiles_instance.get_moveable_neighbors(to_visit):
-			potential_cost = costs[to_visit] + 1
-			if neighbor in costs and costs[neighbor] <= potential_cost:
-				continue
-			costs[neighbor] = potential_cost
-			previous[neighbor] = to_visit
-			frontier.push({cell=neighbor,pqval=potential_cost+move_tiles_instance.get_heuristic(neighbor,player_cell)})
-			
-		
 func _physics_process(delta):
 	if (inflation == 0):
-		if (is_ghosting == false): #case for standard "non-ghosting" movement
-			if (is_hunting):
-				a_star_hunt_motion(delta)
-			elif not is_tracking: #using grid movement to go to player tile.
-				normal_motion(delta)
-			else:
-				on_track_motion(delta)
-		else: #case for being a ghost in transit
+		if is_ghosting:
 			ghost_motion(delta)
+		elif is_hunting or is_wandering:
+			a_star_motion(delta)
+		elif is_starting:
+			starter_motion(delta)
+			
 
 func disable_collision_and_ghost():
 	print("going ghost!")
@@ -229,4 +158,41 @@ func _on_RedBaddieHurtArea_area_shape_entered(area_id, area, area_shape, self_sh
 		#increment inflation
 		#check if inflation meets threshold for death
 			#self.queue_free()
+
+func a_star(starting_cell,player_cell,move_tiles_instance):
+	var frontier = preload("res://pq.gd").new()
+	frontier.make()
+	var previous = {starting_cell:null}
+	var costs = {starting_cell:0}
+	var visited = {}
+	var potential_cost
+	var to_visit
+	var position
+	var path
+	frontier.push({cell=starting_cell,pqval=0})
+	
+	while not frontier.empty():
+		var frontier_node = frontier.pop()
+		to_visit = frontier_node.cell
 		
+		if to_visit in visited:
+			continue
+		
+		visited[to_visit] = true
+		
+		if(to_visit == player_cell):
+			path = []
+			position = to_visit
+			path.append(position)
+			while previous[position] != null:
+				path.insert(0,previous[position])
+				position = previous[position]
+			return path
+			
+		for neighbor in move_tiles_instance.get_moveable_neighbors(to_visit):
+			potential_cost = costs[to_visit] + 1
+			if neighbor in costs and costs[neighbor] <= potential_cost:
+				continue
+			costs[neighbor] = potential_cost
+			previous[neighbor] = to_visit
+			frontier.push({cell=neighbor,pqval=potential_cost+move_tiles_instance.get_heuristic(neighbor,player_cell)})
