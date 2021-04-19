@@ -15,7 +15,7 @@ var is_ghosting = false
 var is_wandering = false
 var is_starting = true
 
-var starting_to_ghost_threshold = 5
+var starting_to_ghost_threshold = 8
 var starting_to_ghost_value = 0
 
 var pump_scale_factor = 1.5 / pumps_to_kill
@@ -23,10 +23,11 @@ var moveable_neighbors
 var current_path = []
 
 #Length is referring to left_right size of block
-var starting_block_length = 7
+var starting_block_left_to_right = 7
 #width is referring to up_down size of block
-var starting_block_width = 18
+var starting_block_down_to_up = 18
 var up_down_motion
+var right_or_down = true
 	
 
 # Called when the node enters the scene tree for the first time.
@@ -37,13 +38,12 @@ func _ready():
 	sprite = get_node(sprite_path)
 	player = get_node("../Player")
 	walk_speed = 50
-	velocity = Vector2(walk_speed,0)
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
 	print(current_cell)
-	if starting_block_length > starting_block_width:
-		up_down_motion = true
-	create_starter_room(starting_block_length,starting_block_width)
+	if starting_block_left_to_right > starting_block_down_to_up:
+		up_down_motion = false
+	create_starter_room(starting_block_left_to_right,starting_block_down_to_up)
 	sprite.set_to_walk()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -61,20 +61,27 @@ func _process(delta):
 				
 func create_starter_room(length,width):
 	var cell
-	for w in range((width*-1)/2,width/2):
-		for l in range((length*-1)/2,length/2):
-			cell = Vector2(l,w) + current_cell
-			print(cell)
+	for l in range((length*-1)/2,length/2):
+		for w in range((width*-1)/2,width/2):
+			cell = Vector2(w,l) + current_cell
 			if cell.x < 0 or cell.y < 0:
 				continue
 			dirt_tiles.atomic_dig_out(cell)
 
 func starter_motion(delta):
 	if not in_transit:
+		if dirt_tiles.get_cellv(current_cell) != -1:
+			right_or_down = not right_or_down
 		if (up_down_motion):
-			move_to_cell(Vector2(current_cell.x,current_cell.y+1))
+			if right_or_down:
+				move_to_cell(Vector2(current_cell.x,current_cell.y+1))
+			else:
+				move_to_cell(Vector2(current_cell.x,current_cell.y-1))
 		else:
-			move_to_cell(Vector2(current_cell.x+1,current_cell.y))
+			if right_or_down:
+				move_to_cell(Vector2(current_cell.x+1,current_cell.y))
+			else:
+				move_to_cell(Vector2(current_cell.x-1,current_cell.y))
 	update_position()
 	starting_to_ghost_value += delta
 	if (starting_to_ghost_value >= starting_to_ghost_threshold):
@@ -93,7 +100,11 @@ func a_star_motion(delta):
 		var dest_cell
 		if is_hunting:
 			dest_cell = player.current_cell
+			is_hunting = false
+			is_wandering = true
 		elif is_wandering:
+			is_hunting = true
+			is_wandering = false
 			dest_cell = move_tiles.get_random_moved_to_cell()
 		current_path = a_star(current_cell, dest_cell, move_tiles)
 	else:
