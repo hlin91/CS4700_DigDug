@@ -173,7 +173,7 @@ func _on_RedBaddieHurtArea_area_shape_entered(area_id, area, area_shape, self_sh
 			#self.queue_free()
 
 func a_star(starting_cell,player_cell,move_tiles_instance):
-	var frontier = preload("res://pq.gd").new()
+	var frontier = preload("res://scripts/pq.gd").new()
 	frontier.make()
 	var previous = {starting_cell:null}
 	var costs = {starting_cell:0}

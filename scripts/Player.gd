@@ -6,7 +6,7 @@ extends "res://scripts/GridKinematics.gd"
 # var b = "text"
 
 var game_over = false
-var bullet = preload("res://PlayerProjectile.tscn")
+var bullet = preload("res://scenes/PlayerProjectile.tscn")
 var max_bullets = 1
 var pumping = null # Enemy the player is currently pumping
 var orientation
