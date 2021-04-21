@@ -106,7 +106,11 @@ func arrived_hook():
 			sprite.clear_animation()
 
 func squish():
-	print("Player has been squashed")
+	kill()
 
 func _on_PlayerHurtbox_area_entered(area):
-	pass
+	kill()
+
+func kill():
+	print("Player died")
+	get_tree().change_scene("./Test_Scene_1.tscn")
