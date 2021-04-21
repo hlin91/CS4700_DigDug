@@ -20,6 +20,13 @@ var is_starting = true
 var starting_to_ghost_threshold = 8
 var starting_to_ghost_value = 0
 
+#variables to determine when to redirect ghost location
+var more_accurate_ghost_threshold = 2
+var more_accurate_ghost_value = 0
+
+var hunting_to_ghost_threshold = 8
+var hunting_to_ghost_value = 0
+
 var pump_scale_factor = 1.5 / pumps_to_kill
 var moveable_neighbors
 var current_path = []
@@ -100,6 +107,11 @@ func a_star_motion(delta):
 		return
 	if current_path.size() == 0:
 		var dest_cell
+		if (hunting_to_ghost_value >= hunting_to_ghost_threshold):
+			hunting_to_ghost_value = 0
+			move_to_cell(move_tiles.get_random_moved_to_cell())
+			disable_collision_and_ghost()
+			return
 		if is_hunting:
 			dest_cell = player.current_cell
 			is_hunting = false
@@ -115,13 +127,18 @@ func a_star_motion(delta):
 			current_path.remove(0)
 		else:
 			update_position()
+	hunting_to_ghost_value += delta
 			
 
 func ghost_motion(delta):
 	update_position()
 	if (arrived()):
 		enable_collision_and_unghost()
-		velocity = Vector2(1,0)
+		more_accurate_ghost_value = 0
+	more_accurate_ghost_value += delta
+	if (more_accurate_ghost_value >= more_accurate_ghost_threshold):
+		more_accurate_ghost_value = 0
+		move_to_cell(player.current_cell)
 
 func _physics_process(delta):
 	if (inflation == 0):
@@ -134,6 +151,7 @@ func _physics_process(delta):
 			
 
 func disable_collision_and_ghost():
+	walk_speed = 50
 	print("going ghost!")
 	is_ghosting = true
 	$TerrainCollision.set_deferred("disabled",true)
@@ -141,6 +159,7 @@ func disable_collision_and_ghost():
 	sprite.set_to_ghost()
 
 func enable_collision_and_unghost():
+	walk_speed = 100
 	print("ungoing ghost!")
 	is_ghosting = false
 	$TerrainCollision.set_deferred("disabled",false)
