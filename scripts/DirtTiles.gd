@@ -5,6 +5,7 @@ extends TileMap
 # var a = 2
 # var b = "text"
 export var tunnel_radius = 1
+export var dirt_layer = 3
 
 enum ORIENT {
 	VERT,
@@ -13,7 +14,7 @@ enum ORIENT {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	set_collision_layer(dirt_layer)
 
 func atomic_dig_out(cell):
 	set_cellv(cell,-1)

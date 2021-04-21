@@ -69,6 +69,7 @@ func move_cell_hook(cell):
 func shoot():
 	if get_tree().get_nodes_in_group("bullets").size() < max_bullets:
 		var b = bullet.instance()
+		b.set_collision_mask_bit(bullet_layer-1, true)
 		b.set_collision_layer_bit(0, false)
 		b.set_collision_mask_bit(0, false)
 		b.set_collision_layer_bit(bullet_layer-1, true)

@@ -34,11 +34,12 @@ var right_or_down = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_collision_layer(enemy_layer)
+	set_collision_mask_bit(2,false)
 	sprite_path = "./RedBaddieSprite"
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)
 	player = get_node("../Player")
-	walk_speed = 50
+	walk_speed = 100
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
 
