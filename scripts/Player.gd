@@ -5,7 +5,8 @@ extends "res://scripts/GridKinematics.gd"
 # var a = 2
 # var b = "text"
 
-export var bullet_layer = 2
+export var bullet_layer = 3
+export var enemy_layer = 2
 var game_over = false
 var bullet = preload("res://scenes/PlayerProjectile.tscn")
 var max_bullets = 1
@@ -69,11 +70,12 @@ func move_cell_hook(cell):
 func shoot():
 	if get_tree().get_nodes_in_group("bullets").size() < max_bullets:
 		var b = bullet.instance()
-		b.set_collision_mask_bit(bullet_layer-1, true)
 		b.set_collision_layer_bit(0, false)
 		b.set_collision_mask_bit(0, false)
 		b.set_collision_layer_bit(bullet_layer-1, true)
 		b.set_collision_mask_bit(bullet_layer-1, true)
+		b.set_collision_layer_bit(enemy_layer-1, true)
+		b.set_collision_mask_bit(enemy_layer-1, true)
 		b.start($Muzzle.global_position, rotation)
 		get_parent().add_child(b)
 
@@ -118,4 +120,4 @@ func _on_PlayerHurtbox_area_entered(area):
 
 func kill():
 	print("Player died")
-	get_tree().change_scene("./Test_Scene_1.tscn")
+	get_tree().change_scene("res://scenes/Test_Scene_1.tscn")

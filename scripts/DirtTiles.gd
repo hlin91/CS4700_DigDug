@@ -14,7 +14,10 @@ enum ORIENT {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_collision_layer(dirt_layer)
+	set_collision_layer_bit(0, false)
+	set_collision_mask_bit(0, false)
+	set_collision_layer_bit(dirt_layer-1, true)
+	set_collision_mask_bit(dirt_layer-1, true)
 
 func atomic_dig_out(cell):
 	set_cellv(cell,-1)
