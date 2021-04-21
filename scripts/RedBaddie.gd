@@ -25,16 +25,15 @@ var moveable_neighbors
 var current_path = []
 
 #Length is referring to left_right size of block
-var starting_block_left_to_right = 7
+export var starting_block_left_to_right = 7
 #width is referring to up_down size of block
-var starting_block_down_to_up = 18
-var up_down_motion
+export var starting_block_down_to_up = 18
+var up_down_motion = true
 var right_or_down = true
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_collision_layer(enemy_layer)
-	set_collision_mask_bit(2,false)
 	sprite_path = "./RedBaddieSprite"
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)
@@ -66,7 +65,7 @@ func create_starter_room(length,width):
 	var cell
 	for l in range((length*-1)/2,length/2):
 		for w in range((width*-1)/2,width/2):
-			cell = Vector2(w,l) + current_cell
+			cell = Vector2(l,w) + current_cell
 			if cell.x < 0 or cell.y < 0:
 				continue
 			dirt_tiles.atomic_dig_out(cell)
