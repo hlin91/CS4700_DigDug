@@ -25,9 +25,9 @@ var moveable_neighbors
 var current_path = []
 
 #Length is referring to left_right size of block
-export var starting_block_left_to_right = 7
+export var starting_block_left_to_right = 5
 #width is referring to up_down size of block
-export var starting_block_down_to_up = 18
+export var starting_block_down_to_up = 14
 var up_down_motion = true
 var right_or_down = true
 	
@@ -171,6 +171,10 @@ func _on_RedBaddieHurtArea_area_shape_entered(area_id, area, area_shape, self_sh
 		#increment inflation
 		#check if inflation meets threshold for death
 			#self.queue_free()
+
+func squish():
+	print("I am baddie and I am squished")
+	queue_free()
 
 func a_star(starting_cell,player_cell,move_tiles_instance):
 	var frontier = preload("res://scripts/pq.gd").new()

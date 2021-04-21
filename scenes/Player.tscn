@@ -53,7 +53,7 @@ animations = [ {
 radius = 7.08287
 
 [node name="Player" type="KinematicBody2D"]
-scale = Vector2( 5, 5 )
+scale = Vector2( 2.5, 2.5 )
 script = ExtResource( 2 )
 walk_speed = 100.0
 
@@ -63,7 +63,6 @@ shape = SubResource( 1 )
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 9 )
 animation = "hero_walking"
-frame = 2
 playing = true
 script = ExtResource( 1 )
 
