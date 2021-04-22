@@ -1,10 +1,17 @@
 extends "res://scripts/GridKinematics.gd"
 
 # Declare member variables here. Examples:
+
+signal baddie_died(base_score,current_cell)
+
 export var player_path = "../Player"
+export var score_path = "../Score"
 export var pump_reset_time = 1.5
 export var pumps_to_kill = 8
 export var enemy_layer = 2
+
+export var base_score = 100
+
 var collision_info
 var player
 var inflation = 0
@@ -29,7 +36,7 @@ var hunting_to_ghost_value = 0
 
 var pump_scale_factor = 1.5 / pumps_to_kill
 var moveable_neighbors
-var current_path
+var current_path = []
 
 #Length is referring to left_right size of block
 export var starting_block_left_to_right = 5
@@ -49,6 +56,7 @@ func _ready():
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
 	current_path = []
+	add_to_group("baddies")
 
 	#use the dimensions of the starting block to determine orientation
 	if starting_block_left_to_right > starting_block_down_to_up:
@@ -106,7 +114,7 @@ func a_star_motion(delta):
 		move_to_cell(move_tiles.get_random_moved_to_cell())
 		disable_collision_and_ghost()
 		return
-	if current_path.size() == 0:
+	if current_path == null or current_path.size() == 0:
 		var dest_cell
 		if (hunting_to_ghost_value >= hunting_to_ghost_threshold):
 			hunting_to_ghost_value = 0
@@ -185,19 +193,21 @@ func pump():
 	sprite.change_scale(Vector2(pump_scale_factor,pump_scale_factor))
 	if inflation >= pumps_to_kill:
 		print("I am dead.")
+		emit_signal("baddie_died",base_score,current_cell)
 		queue_free()
 	
-func _on_RedBaddieHurtArea_area_shape_entered(area_id, area, area_shape, self_shape):
-	pass # Replace with function body.
-	#case 1: it's the player
-		#do nothing
-	#case 2: it's a projectile
-		#increment inflation
-		#check if inflation meets threshold for death
-			#self.queue_free()
+#func _on_RedBaddieHurtArea_area_shape_entered(area_id, area, area_shape, self_shape):
+#	pass # Replace with function body.
+#	#case 1: it's the player
+#		#do nothing
+#	#case 2: it's a projectile
+#		#increment inflation
+#		#check if inflation meets threshold for death
+#			#self.queue_free()
 
 func squish():
 	print("I am baddie and I am squished")
+	emit_signal("baddie_died",base_score,current_cell)
 	queue_free()
 
 func a_star(starting_cell,player_cell,move_tiles_instance):
@@ -209,7 +219,7 @@ func a_star(starting_cell,player_cell,move_tiles_instance):
 	var potential_cost
 	var to_visit
 	var position
-	var path
+	var path = []
 	frontier.push({cell=starting_cell,pqval=0})
 	
 	while not frontier.empty():
