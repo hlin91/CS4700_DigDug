@@ -125,7 +125,8 @@ func a_star_motion(delta):
 	else:
 		if !in_transit:
 			move_to_cell(current_path[0])
-			current_path.remove(0)
+			if current_path.size() > 0:
+				current_path.remove(0)
 		else:
 			update_position()
 	hunting_to_ghost_value += delta
