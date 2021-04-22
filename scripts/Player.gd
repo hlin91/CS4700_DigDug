@@ -113,9 +113,11 @@ func arrived_hook():
 			sprite.clear_animation()
 
 func squish():
+	print("the player is squished :(")
 	kill()
 
-func _on_PlayerHurtbox_area_entered(area):
+func kill_by_mob():
+	print("the player was killed by a mob")
 	kill()
 
 func kill():

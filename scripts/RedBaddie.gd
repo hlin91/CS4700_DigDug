@@ -149,6 +149,12 @@ func _physics_process(delta):
 		elif is_starting:
 			starter_motion(delta)
 			
+func move_and_process(velocity):
+	move_and_slide(Vector2(0,0))
+	for i in range(get_slide_count()):
+		var collision = get_slide_collision(i)
+		if collision.collider.has_method("die_by_mob"):
+			collision.collider.die_by_mob() # Kill the player
 
 func disable_collision_and_ghost():
 	walk_speed = 50
@@ -164,13 +170,7 @@ func enable_collision_and_unghost():
 	is_ghosting = false
 	$TerrainCollision.set_deferred("disabled",false)
 	$RedBaddieHurtArea/RedBaddieHurtAreaShape.set_deferred("disabled",false)
-	#REMOVE WHEN DONE GETTING LEVEL TUNNELED OUT
-	$TerrainCollision.set_deferred("disabled",true)
-	$RedBaddieHurtArea/RedBaddieHurtAreaShape.set_deferred("disabled",true)
 	sprite.set_to_walk()
-	
-func move_and_process(velocity):
-	move_and_slide(velocity)
 	
 func hit():
 	get_node(player_path).pumping = self

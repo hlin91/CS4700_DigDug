@@ -28,7 +28,7 @@ position = Vector2( 805.229, 526.234 )
 [node name="MoveTiles" parent="." instance=ExtResource( 4 )]
 
 [node name="Rock" parent="." instance=ExtResource( 5 )]
-position = Vector2( 439.985, 69.4776 )
+position = Vector2( 439.735, 72.4776 )
 
 [node name="Rock2" parent="." instance=ExtResource( 5 )]
 position = Vector2( 857.397, 419.104 )
