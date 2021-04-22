@@ -45,7 +45,7 @@ func _ready():
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)
 	player = get_node("../Player")
-	walk_speed = 100
+	walk_speed = 50
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
 
@@ -159,11 +159,14 @@ func disable_collision_and_ghost():
 	sprite.set_to_ghost()
 
 func enable_collision_and_unghost():
-	walk_speed = 100
+	walk_speed = 50
 	print("ungoing ghost!")
 	is_ghosting = false
 	$TerrainCollision.set_deferred("disabled",false)
 	$RedBaddieHurtArea/RedBaddieHurtAreaShape.set_deferred("disabled",false)
+	#REMOVE WHEN DONE GETTING LEVEL TUNNELED OUT
+	$TerrainCollision.set_deferred("disabled",true)
+	$RedBaddieHurtArea/RedBaddieHurtAreaShape.set_deferred("disabled",true)
 	sprite.set_to_walk()
 	
 func move_and_process(velocity):

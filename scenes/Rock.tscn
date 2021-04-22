@@ -23,6 +23,7 @@ extents = Vector2( 10.0134, 34.7686 )
 
 [node name="Rock" type="KinematicBody2D"]
 position = Vector2( 380.525, -163.607 )
+scale = Vector2( 0.5, 0.5 )
 collision_layer = 0
 collision_mask = 0
 script = ExtResource( 1 )
