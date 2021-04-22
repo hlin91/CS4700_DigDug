@@ -14,6 +14,7 @@ export var base_score = 100
 
 var collision_info
 var player
+var score
 var inflation = 0
 var time_until_reset_pump = pump_reset_time
 
@@ -51,12 +52,14 @@ func _ready():
 	sprite_path = "./RedBaddieSprite"
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)
-	player = get_node("../Player")
+	player = get_node(player_path)
+	score = get_node(score_path)
 	walk_speed = 50
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
 	current_path = []
 	add_to_group("baddies")
+	
 
 	#use the dimensions of the starting block to determine orientation
 	if starting_block_left_to_right > starting_block_down_to_up:
@@ -194,7 +197,11 @@ func pump():
 	if inflation >= pumps_to_kill:
 		print("I am dead.")
 		emit_signal("baddie_died",base_score,current_cell)
+		update_score()
 		queue_free()
+
+func update_score():
+	score.update_score(base_score)
 	
 #func _on_RedBaddieHurtArea_area_shape_entered(area_id, area, area_shape, self_shape):
 #	pass # Replace with function body.
@@ -208,6 +215,7 @@ func pump():
 func squish():
 	print("I am baddie and I am squished")
 	emit_signal("baddie_died",base_score,current_cell)
+	update_score()
 	queue_free()
 
 func a_star(starting_cell,player_cell,move_tiles_instance):
