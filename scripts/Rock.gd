@@ -34,8 +34,9 @@ func move_and_process(velocity):
 		var collision = get_slide_collision(i)
 		if collision.collider.has_method("squish"):
 			collision.collider.squish() # squish players and enemies it collides with
+	drop_rock()
 
-func arrived_hook():
+func arrived_hook(cell):
 	# TODO: Play crumbling animation
 	queue_free()
 
@@ -50,6 +51,9 @@ func cell_in_range(cell):
 func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 	# Scan all cells below the rock for a cell the player has already traversed
 	# to fall down to
+	drop_rock()
+	
+func drop_rock():
 	var cell = null
 	var y_pos = current_cell.y + 1
 	var candidate = null
@@ -69,3 +73,4 @@ func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 		dropped = true
 		print("Dropping to: " + str(cell))
 		move_to_cell(cell)
+	return cell != null

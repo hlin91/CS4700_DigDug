@@ -47,7 +47,7 @@ func update_position():
 	if arrived():
 		in_transit = false
 		move_direction = Vector2()
-		arrived_hook()
+		arrived_hook(current_cell)
 	else:
 		move(target_position)
 	velocity = move_direction.normalized() * walk_speed
@@ -56,7 +56,7 @@ func update_position():
 func arrived():
 	return (target_position - current_position).length() <= epsilon
 
-func arrived_hook():
+func arrived_hook(cell):
 	pass
 	
 func move_cell_hook(cell):

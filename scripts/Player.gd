@@ -48,7 +48,7 @@ func move_and_process(velocity):
 	if get_slide_count() > 0:
 		in_transit = false
 		move_direction = Vector2()
-		arrived_hook()
+		arrived_hook(current_cell)
 #	for i in range(get_slide_count()):
 #		var collision = get_slide_collision(i)
 #		if collision.collider is TileMap:
@@ -64,8 +64,7 @@ func move_and_process(velocity):
 #			arrived_hook()
 
 func move_cell_hook(cell):
-	move_tiles.add_moved_to_cell(cell)
-	dirt_tiles.dig_out(cell, orientation)
+	pass
 
 func shoot():
 	if get_tree().get_nodes_in_group("bullets").size() < max_bullets:
@@ -106,7 +105,9 @@ func get_input():
 			sprite.move_animation(sprite.DIR.UP)
 			set_rotation_degrees(-90)
 
-func arrived_hook():
+func arrived_hook(cell):
+	move_tiles.add_moved_to_cell(cell)
+	dirt_tiles.dig_out(cell, orientation)
 	sprite.moving = false
 	if !(Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left") ||
 		 Input.is_action_pressed("move_down") || Input.is_action_pressed("move_up")):
