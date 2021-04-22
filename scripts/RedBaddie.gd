@@ -29,7 +29,7 @@ var hunting_to_ghost_value = 0
 
 var pump_scale_factor = 1.5 / pumps_to_kill
 var moveable_neighbors
-var current_path = []
+var current_path
 
 #Length is referring to left_right size of block
 export var starting_block_left_to_right = 5
@@ -48,6 +48,7 @@ func _ready():
 	walk_speed = 50
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
+	current_path = []
 
 	#use the dimensions of the starting block to determine orientation
 	if starting_block_left_to_right > starting_block_down_to_up:
@@ -148,9 +149,9 @@ func _physics_process(delta):
 			a_star_motion(delta)
 		elif is_starting:
 			starter_motion(delta)
-			
+
 func move_and_process(velocity):
-	move_and_slide(Vector2(0,0))
+	move_and_slide(velocity)
 	for i in range(get_slide_count()):
 		var collision = get_slide_collision(i)
 		if collision.collider.has_method("die_by_mob"):

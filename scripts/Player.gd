@@ -117,7 +117,7 @@ func squish():
 	print("the player is squished :(")
 	kill()
 
-func kill_by_mob():
+func die_by_mob():
 	print("the player was killed by a mob")
 	kill()
 
