@@ -5,10 +5,6 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 export (float) var walk_speed = 10000
-export var min_x = 2 # Min horizontal index for cells
-export var max_x = 126 # Max horizontal index for cells
-export var min_y = 2 # Min vertical index for cells
-export var max_y = 72 # Max vertical index for cells
 export var move_tiles_path = "../MoveTiles"
 export var dirt_tiles_path = "../DirtTiles"
 var velocity = Vector2()
@@ -35,9 +31,9 @@ func move(position): # Sets the target position
 	move_direction = (target_position - current_position).normalized()
 
 func move_to_cell(cell): # Sets the target position based on cell
-	if cell.x < min_x || cell.x > max_x:
+	if cell.x < move_tiles.min_x || cell.x > move_tiles.max_x:
 		return
-	if cell.y < min_y || cell.y > max_y:
+	if cell.y < move_tiles.min_y || cell.y > move_tiles.max_y:
 		return
 	move_cell_hook(cell)
 	target_cell = cell

@@ -3,6 +3,10 @@ extends TileMap
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+export var min_x = 2 # Min horizontal index for cells
+export var max_x = 126 # Max horizontal index for cells
+export var min_y = 2 # Min vertical index for cells
+export var max_y = 72 # Max vertical index for cells
 export var dirt_tiles_path = "../DirtTiles"
 export var top_level = 2 # Height of the open topmost level
 var dirt_tiles
@@ -44,7 +48,7 @@ func get_nearest_neighbor(neighbors, cell):
 	return n
 
 func is_cell_moved_to(cell):
-	return cell in moved_to_cells || cell.y == top_level
+	return cell in moved_to_cells || (cell.y == top_level && cell.x >= min_x && cell.x <= max_x)
 	
 func get_random_moved_to_cell():
 	var values = moved_to_cells.keys()

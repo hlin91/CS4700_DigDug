@@ -75,6 +75,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if (inflation == 0):
+		if is_ghosting:
+			ghost_motion(delta)
+		elif is_hunting or is_wandering:
+			a_star_motion(delta)
+		elif is_starting:
+			starter_motion(delta)
 	if inflation > 0: # Currently getting pumped
 		time_until_reset_pump -= delta
 		if time_until_reset_pump <= 0:
@@ -142,7 +149,7 @@ func a_star_motion(delta):
 				current_path.remove(0)
 		else:
 			update_position()
-		if  current_cell.distance_to(player.current_cell) > max_x/1.5:
+		if  current_cell.distance_to(player.current_cell) > move_tiles.max_x/1.5:
 			print("too far, going ghost")
 			current_path = []
 			move_to_cell(move_tiles.get_random_moved_to_cell())
@@ -173,15 +180,6 @@ func ghost_motion(delta):
 		move_to_cell(player.current_cell)
 	if (give_up_ghost_value >= give_up_ghost_threshold):
 		giving_up_ghost = true
-
-func _physics_process(delta):
-	if (inflation == 0):
-		if is_ghosting:
-			ghost_motion(delta)
-		elif is_hunting or is_wandering:
-			a_star_motion(delta)
-		elif is_starting:
-			starter_motion(delta)
 
 func move_and_process(velocity):
 	move_and_slide(velocity)

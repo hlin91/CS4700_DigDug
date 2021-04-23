@@ -57,7 +57,7 @@ func drop_rock():
 	var cell = null
 	var y_pos = current_cell.y + 1
 	var candidate = null
-	while y_pos <= max_y:
+	while y_pos <= move_tiles.max_y:
 		candidate = Vector2(current_cell.x, y_pos)
 		if cell_in_range(candidate):
 			cell = candidate
@@ -65,7 +65,7 @@ func drop_rock():
 		y_pos += 1
 	if cell != null:
 		candidate = Vector2(cell.x, cell.y+1)
-		while candidate.y <= max_y && cell_in_range(candidate):
+		while candidate.y <= move_tiles.max_y && cell_in_range(candidate):
 			cell = candidate
 			candidate.y += 1
 		# TODO: Play shaking animation
