@@ -10,6 +10,8 @@ export var enemy_layer = 2
 export var start_x = 2
 export var start_y = 2
 export var game_over_scene = "res://levels/level_1.tscn"
+export var sprite_path = "./PlayerSprite"
+var sprite = null
 var game_over = false
 var bullet = preload("res://scenes/PlayerProjectile.tscn")
 var max_bullets = 1
@@ -30,6 +32,7 @@ var orientation
 
 func _ready():
 	._ready()
+	sprite = get_node(sprite_path)
 	orientation = dirt_tiles.ORIENT.HORIZ
 	move_to_cell(Vector2(start_x, start_y))
 
