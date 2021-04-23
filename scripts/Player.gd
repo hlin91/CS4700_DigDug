@@ -126,4 +126,4 @@ func die_by_mob():
 
 func kill():
 	print("Player died")
-	get_tree().change_scene("res://scenes/Test_Scene_1.tscn")
+	get_tree().change_scene("res://levels/level_1.tscn")
