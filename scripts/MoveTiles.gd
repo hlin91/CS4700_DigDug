@@ -4,6 +4,7 @@ extends TileMap
 # var a = 2
 # var b = "text"
 export var dirt_tiles_path = "../DirtTiles"
+export var top_level = 2 # Height of the open topmost level
 var dirt_tiles
 var moved_to_cells = {} # Cells that the player has explicitly moved to
 
@@ -43,7 +44,7 @@ func get_nearest_neighbor(neighbors, cell):
 	return n
 
 func is_cell_moved_to(cell):
-	return cell in moved_to_cells
+	return cell in moved_to_cells || cell.y == top_level
 	
 func get_random_moved_to_cell():
 	var values = moved_to_cells.keys()
