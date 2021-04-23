@@ -6,7 +6,7 @@ signal baddie_died(base_score,current_cell)
 
 export var player_path = "../Player"
 export var score_path = "../Score"
-export var pump_reset_time = 1.5
+export var pump_reset_time = .5
 export var pumps_to_kill = 8
 export var enemy_layer = 2
 
@@ -29,11 +29,16 @@ var starting_to_ghost_threshold = 8
 var starting_to_ghost_value = 0
 
 #variables to determine when to redirect ghost location
-var more_accurate_ghost_threshold = 2
+var more_accurate_ghost_threshold = 6
 var more_accurate_ghost_value = 0
 
 var hunting_to_ghost_threshold = 8
 var hunting_to_ghost_value = 0
+
+var give_up_ghost_threshold = 4
+var give_up_ghost_value = 0
+
+var giving_up_ghost = false
 
 var pump_scale_factor = 1.5 / pumps_to_kill
 var moveable_neighbors
@@ -111,8 +116,8 @@ func starter_motion(delta):
 	
 
 func a_star_motion(delta):
-	if (!move_tiles.is_cell_moved_to(current_cell)):
-		print("going ghost")
+	if !move_tiles.is_cell_moved_to(current_cell):
+		print("going ghost, current cell not in moved to set")
 		move_to_cell(move_tiles.get_random_moved_to_cell())
 		disable_collision_and_ghost()
 		return
@@ -135,6 +140,13 @@ func a_star_motion(delta):
 				current_path.remove(0)
 		else:
 			update_position()
+		if  current_cell.distance_to(player.current_cell) > max_x/1.5:
+			print("too far, going ghost")
+			current_path = []
+			move_to_cell(move_tiles.get_random_moved_to_cell())
+			disable_collision_and_ghost()
+			return
+			
 	hunting_to_ghost_value += delta
 			
 
@@ -143,10 +155,22 @@ func ghost_motion(delta):
 	if (arrived()):
 		enable_collision_and_unghost()
 		more_accurate_ghost_value = 0
+	elif giving_up_ghost:
+		var hovering_cell = move_tiles.world_to_map(position)
+		if hovering_cell in move_tiles.moved_to_cells:
+			print("ungoing ghost, giving up")
+			enable_collision_and_unghost()
+			give_up_ghost_value = 0
+			move_to_cell(hovering_cell)
+			while (in_transit):
+				update_position()
 	more_accurate_ghost_value += delta
+	give_up_ghost_value += delta
 	if (more_accurate_ghost_value >= more_accurate_ghost_threshold):
 		more_accurate_ghost_value = 0
 		move_to_cell(player.current_cell)
+	if (give_up_ghost_value >= give_up_ghost_threshold):
+		giving_up_ghost = true
 
 func _physics_process(delta):
 	if (inflation == 0):
@@ -175,6 +199,7 @@ func disable_collision_and_ghost():
 func enable_collision_and_unghost():
 	walk_speed = 50
 	print("ungoing ghost!")
+	giving_up_ghost = false
 	is_ghosting = false
 	$TerrainCollision.set_deferred("disabled",false)
 	$RedBaddieHurtArea/RedBaddieHurtAreaShape.set_deferred("disabled",false)
@@ -257,3 +282,5 @@ func a_star(starting_cell,player_cell,move_tiles_instance):
 			costs[neighbor] = potential_cost
 			previous[neighbor] = to_visit
 			frontier.push({cell=neighbor,pqval=potential_cost+move_tiles_instance.get_heuristic(neighbor,player_cell)})
+	
+	return path
