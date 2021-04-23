@@ -215,6 +215,7 @@ func pump():
 	inflation += 1
 	print("I'm getting pumped!")
 	print("Current inflation: " + str(inflation))
+	time_until_reset_pump = pump_reset_time
 	sprite.change_scale(Vector2(pump_scale_factor,pump_scale_factor))
 	if inflation >= pumps_to_kill:
 		print("I am dead.")
