@@ -6,6 +6,7 @@ signal baddie_died(base_score,current_cell)
 
 export var player_path = "../Player"
 export var score_path = "../Score"
+export var sprite_path = ""
 export var pump_reset_time = .5
 export var pumps_to_kill = 8
 export var enemy_layer = 2
@@ -14,6 +15,7 @@ export var base_score = 100
 
 var collision_info
 var player
+var sprite
 var score
 var inflation = 0
 var time_until_reset_pump = pump_reset_time
