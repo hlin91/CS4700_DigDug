@@ -193,6 +193,7 @@ func pump():
 		print("I am dead.")
 		emit_signal("baddie_died",base_score,current_cell)
 		update_score()
+		player.pumping = null
 		queue_free()
 
 func update_score():
