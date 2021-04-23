@@ -12,11 +12,11 @@ var dropped = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	move_tiles = get_node(move_tiles_path)
-	current_position = position
-	target_position = position
 	current_cell = move_tiles.world_to_map(position)
 	target_cell = current_cell
+	current_position = move_tiles.map_to_world(current_cell) + (move_tiles.cell_size/2)
+	target_position = current_position
+	position = current_position
 	set_collision_mask_bit(player_layer_bit, true)
 	set_collision_mask_bit(enemy_layer_bit, true)
 
