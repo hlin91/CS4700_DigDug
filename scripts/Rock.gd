@@ -71,6 +71,6 @@ func drop_rock():
 		# TODO: Play shaking animation
 		yield(get_tree().create_timer(.25), "timeout")
 		dropped = true
-		print("Dropping to: " + str(cell))
+#		print("Dropping to: " + str(cell))
 		move_to_cell(cell)
 	return cell != null
