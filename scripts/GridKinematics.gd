@@ -45,7 +45,8 @@ func move_to_cell(cell): # Sets the target position based on cell
 		return
 	move_cell_hook(cell)
 	target_cell = cell
-	move(move_tiles.map_to_world(cell) + (move_tiles.cell_size / 2))
+	if target_cell.x >= 0 && target_cell.y >= 0:
+		move(move_tiles.map_to_world(cell) + (move_tiles.cell_size / 2))
 	
 func move_and_process(velocity): # Move and slide the body and process all collisions
 	pass

@@ -59,7 +59,6 @@ func _ready():
 	current_cell = move_tiles.world_to_map(position)
 	current_path = []
 	add_to_group("baddies")
-	
 
 	#use the dimensions of the starting block to determine orientation
 	if starting_block_left_to_right > starting_block_down_to_up:
@@ -107,7 +106,7 @@ func starter_motion(delta):
 	starting_to_ghost_value += delta
 	if (starting_to_ghost_value >= starting_to_ghost_threshold):
 		disable_collision_and_ghost()
-		is_hunting = true
+		is_wandering = true
 		move_to_cell(move_tiles.get_random_moved_to_cell())
 	
 
@@ -126,11 +125,7 @@ func a_star_motion(delta):
 			return
 		if is_hunting:
 			dest_cell = player.current_cell
-			is_hunting = false
-			is_wandering = true
 		elif is_wandering:
-			is_hunting = true
-			is_wandering = false
 			dest_cell = move_tiles.get_random_moved_to_cell()
 		current_path = a_star(current_cell, dest_cell, move_tiles)
 	else:
@@ -201,7 +196,13 @@ func pump():
 		queue_free()
 
 func update_score():
+	get_tree().call_group("baddies","start_hunting")
 	score.update_score(base_score)
+
+func start_hunting():
+	print("now hunting")
+	is_hunting = true
+	is_wandering = false
 	
 #func _on_RedBaddieHurtArea_area_shape_entered(area_id, area, area_shape, self_shape):
 #	pass # Replace with function body.
