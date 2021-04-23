@@ -7,6 +7,8 @@ extends "res://scripts/GridKinematics.gd"
 
 export var bullet_layer = 3
 export var enemy_layer = 2
+export var start_x = 2
+export var start_y = 2
 var game_over = false
 var bullet = preload("res://scenes/PlayerProjectile.tscn")
 var max_bullets = 1
@@ -28,6 +30,7 @@ var orientation
 func _ready():
 	._ready()
 	orientation = dirt_tiles.ORIENT.HORIZ
+	move_to_cell(Vector2(start_x, start_y))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

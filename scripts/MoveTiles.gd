@@ -3,10 +3,6 @@ extends TileMap
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export var min_x = 0 # Min horizontal index for cells
-export var max_x = 100 # Max horizontal index for cells
-export var min_y = 100 # Min vertical index for cells
-export var max_y = 100 # Max vertical index for cells
 export var dirt_tiles_path = "../DirtTiles"
 var dirt_tiles
 var moved_to_cells = {} # Cells that the player has explicitly moved to
