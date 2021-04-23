@@ -75,13 +75,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if (inflation == 0):
-		if is_ghosting:
-			ghost_motion(delta)
-		elif is_hunting or is_wandering:
-			a_star_motion(delta)
-		elif is_starting:
-			starter_motion(delta)
 	if inflation > 0: # Currently getting pumped
 		time_until_reset_pump -= delta
 		if time_until_reset_pump <= 0:
@@ -92,7 +85,16 @@ func _process(delta):
 			if inflation == 0: # Get out of pumping state
 				print("No longer pumped.")
 				get_node(player_path).pumping = null
-				
+
+func _physics_process(delta):
+	if (inflation == 0):
+		if is_ghosting:
+			ghost_motion(delta)
+		elif is_hunting or is_wandering:
+			a_star_motion(delta)
+		elif is_starting:
+			starter_motion(delta)
+
 func create_starter_room(length,width):
 	var cell
 	for l in range((length*-1)/2,length/2):
