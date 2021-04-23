@@ -38,7 +38,6 @@ func move(position): # Sets the target position
 	move_direction = (target_position - current_position).normalized()
 
 func move_to_cell(cell): # Sets the target position based on cell
-	print(cell)
 	if cell.x < min_x || cell.x > max_x:
 		return
 	if cell.y < min_y || cell.y > max_y:

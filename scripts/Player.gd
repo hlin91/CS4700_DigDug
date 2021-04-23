@@ -9,6 +9,7 @@ export var bullet_layer = 3
 export var enemy_layer = 2
 export var start_x = 2
 export var start_y = 2
+export var game_over_scene = "res://levels/level_1.tscn"
 var game_over = false
 var bullet = preload("res://scenes/PlayerProjectile.tscn")
 var max_bullets = 1
@@ -126,4 +127,4 @@ func die_by_mob():
 
 func kill():
 	print("Player died")
-	get_tree().change_scene("res://levels/level_1.tscn")
+	get_tree().change_scene(game_over_scene)
