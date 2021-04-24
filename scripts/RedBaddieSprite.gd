@@ -16,6 +16,10 @@ func set_to_ghost():
 	
 func set_to_pumped():
 	play("hurting")
+	
+func set_to_exploding():
+	set_scale(Vector2(.1,.1))
+	play("exploding")
 
 func change_scale(scale_vector):
 	scale += scale_vector
