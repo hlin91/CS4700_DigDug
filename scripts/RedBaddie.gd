@@ -11,6 +11,8 @@ export var pump_reset_time = .5
 export var pumps_to_kill = 8
 export var enemy_layer = 2
 
+var original_walk_speed = 50
+
 export var base_score = 100
 
 var collision_info
@@ -61,7 +63,7 @@ func _ready():
 	sprite = get_node(sprite_path)
 	player = get_node(player_path)
 	score = get_node(score_path)
-	walk_speed = 50
+	walk_speed = original_walk_speed
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
 	current_path = []
@@ -104,7 +106,8 @@ func create_starter_room(length,width):
 			if cell.x < 0 or cell.y < 0:
 				continue
 			dirt_tiles.atomic_dig_out(cell)
-			move_tiles.add_moved_to_cell(cell)
+			if l == 0 or w == 0:
+				move_tiles.add_moved_to_cell(cell)
 
 func starter_motion(delta):
 	sprite.set_to_walk()
@@ -194,14 +197,14 @@ func move_and_process(velocity):
 			collision.collider.die_by_mob() # Kill the player
 
 func disable_collision_and_ghost():
-	walk_speed = 50
+	walk_speed = original_walk_speed / 2
 	print("going ghost!")
 	is_ghosting = true
 	$TerrainCollision.set_deferred("disabled",true)
 	sprite.set_to_ghost()
 
 func enable_collision_and_unghost():
-	walk_speed = 50
+	walk_speed = original_walk_speed
 	print("ungoing ghost!")
 	giving_up_ghost = false
 	is_ghosting = false

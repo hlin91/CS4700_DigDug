@@ -8,10 +8,11 @@ extends "res://scripts/RedBaddie.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	walk_speed = 50
+	original_walk_speed = 100
+	walk_speed = original_walk_speed
 	sprite_path = "./BlueBaddieSprite"
 	sprite = get_node(sprite_path)
-	pass # Replace with function body.
+	base_score = 400
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
