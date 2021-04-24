@@ -197,7 +197,7 @@ func move_and_process(velocity):
 			collision.collider.die_by_mob() # Kill the player
 
 func disable_collision_and_ghost():
-	walk_speed = original_walk_speed / 2
+	walk_speed = original_walk_speed / 1.3
 	print("going ghost!")
 	is_ghosting = true
 	$TerrainCollision.set_deferred("disabled",true)
