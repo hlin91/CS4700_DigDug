@@ -31,7 +31,7 @@ var starting_to_ghost_threshold = 8
 var starting_to_ghost_value = 0
 
 #variables to determine when to redirect ghost location
-var more_accurate_ghost_threshold = 6
+var more_accurate_ghost_threshold = 12
 var more_accurate_ghost_value = 0
 
 var hunting_to_ghost_threshold = 8
@@ -103,6 +103,8 @@ func create_starter_room(length,width):
 			if cell.x < 0 or cell.y < 0:
 				continue
 			dirt_tiles.atomic_dig_out(cell)
+			if l == 0 or w == 0:
+				move_tiles.add_moved_to_cell(cell)
 
 func starter_motion(delta):
 	if not in_transit:
@@ -124,7 +126,6 @@ func starter_motion(delta):
 		disable_collision_and_ghost()
 		is_wandering = true
 		move_to_cell(move_tiles.get_random_moved_to_cell())
-	
 
 func a_star_motion(delta):
 	if !move_tiles.is_cell_moved_to(current_cell):
@@ -147,6 +148,7 @@ func a_star_motion(delta):
 	else:
 		if !in_transit:
 			move_to_cell(current_path[0])
+			sprite.play_walking_animation(current_path[0]-current_cell)
 			if current_path.size() > 0:
 				current_path.remove(0)
 		else:

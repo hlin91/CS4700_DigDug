@@ -12,6 +12,8 @@
 script = ExtResource( 7 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( -1.41421, 0 )
+walk_speed = 75.0
 
 [node name="DirtTiles" parent="." instance=ExtResource( 1 )]
 
@@ -22,10 +24,14 @@ position = Vector2( 438.184, 361.232 )
 position = Vector2( 298.999, 507.152 )
 
 [node name="RedBaddie3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 645.839, 416.233 )
+position = Vector2( 740.591, 366.736 )
+starting_block_left_to_right = 14
+starting_block_down_to_up = 5
 
 [node name="RedBaddie4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 805.229, 526.234 )
+position = Vector2( 792.501, 520.577 )
+starting_block_left_to_right = 14
+starting_block_down_to_up = 5
 
 [node name="MoveTiles" parent="." instance=ExtResource( 4 )]
 
@@ -59,7 +65,9 @@ position = Vector2( 600.3, 273.299 )
 position = Vector2( 939.711, 344.01 )
 
 [node name="RedBaddie7" parent="." instance=ExtResource( 3 )]
-position = Vector2( 925.569, 146.02 )
+position = Vector2( 860.515, 93.694 )
+starting_block_left_to_right = 14
+starting_block_down_to_up = 5
 
 [node name="RedBaddie8" parent="." instance=ExtResource( 3 )]
 position = Vector2( 861.929, 260.571 )
