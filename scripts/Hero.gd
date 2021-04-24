@@ -33,6 +33,10 @@ func play_walking_animation(direction):
 func clear_animation():
 	play("hero_idl")
 
+func play_pumping_animation():
+	if (animation != "hero_pumping"):
+		play("hero_pumping")
+
 func move_animation(direction):
 	if !moving:
 		moving = true

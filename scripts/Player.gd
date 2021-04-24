@@ -40,10 +40,13 @@ func _ready():
 func _process(delta):
 	if (!game_over):
 		if !in_transit && Input.is_action_just_pressed("shoot"):
+			sprite.play_pumping_animation()
 			if pumping != null:
 				pumping.pump()
 			else:
 				shoot()
+	if pumping == null and sprite.animation == "hero_pumping":
+		sprite.clear_animation()
 
 func _physics_process(delta):
 	if (!game_over):
@@ -118,7 +121,8 @@ func arrived_hook(cell):
 	sprite.moving = false
 	if !(Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left") ||
 		 Input.is_action_pressed("move_down") || Input.is_action_pressed("move_up")):
-			sprite.clear_animation()
+			if sprite.animation != "hero_pumping":
+				sprite.clear_animation()
 
 func squish():
 	print("the player is squished :(")

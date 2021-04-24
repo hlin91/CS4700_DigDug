@@ -71,7 +71,8 @@ func _ready():
 	if starting_block_left_to_right > starting_block_down_to_up:
 		up_down_motion = false
 	create_starter_room(starting_block_left_to_right,starting_block_down_to_up)
-	sprite.set_to_walk()
+	if sprite != null:
+		sprite.set_to_walk()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -103,10 +104,10 @@ func create_starter_room(length,width):
 			if cell.x < 0 or cell.y < 0:
 				continue
 			dirt_tiles.atomic_dig_out(cell)
-			if l == 0 or w == 0:
-				move_tiles.add_moved_to_cell(cell)
+			move_tiles.add_moved_to_cell(cell)
 
 func starter_motion(delta):
+	sprite.set_to_walk()
 	if not in_transit:
 		if dirt_tiles.get_cellv(current_cell) != -1:
 			right_or_down = not right_or_down
@@ -197,7 +198,6 @@ func disable_collision_and_ghost():
 	print("going ghost!")
 	is_ghosting = true
 	$TerrainCollision.set_deferred("disabled",true)
-	$RedBaddieHurtArea/RedBaddieHurtAreaShape.set_deferred("disabled",true)
 	sprite.set_to_ghost()
 
 func enable_collision_and_unghost():
@@ -206,7 +206,6 @@ func enable_collision_and_unghost():
 	giving_up_ghost = false
 	is_ghosting = false
 	$TerrainCollision.set_deferred("disabled",false)
-	$RedBaddieHurtArea/RedBaddieHurtAreaShape.set_deferred("disabled",false)
 	sprite.set_to_walk()
 	
 func hit():
