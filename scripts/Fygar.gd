@@ -15,7 +15,7 @@ export var bullet_layer = 3
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	._ready()
-	original_walk_speed = 50
+	original_walk_speed = 75
 	walk_speed = original_walk_speed
 	sprite_path = "./FygarSprite"
 	sprite = get_node(sprite_path)
@@ -31,19 +31,20 @@ func breathe_fire():
 	self.add_child(t)
 	breathing_fire = true
 	t.start()
+	sprite.play_firing()
 	yield(t, "timeout")
 	get_parent().add_child(f)
 	t.set_wait_time(2.5)
 	t.start()
 	yield(t, "timeout")
+	sprite.set_to_walk()
 	t.queue_free()
 	breathing_fire = false
 	walk_speed = original_walk_speed
 
 func _physics_process(delta):
-	if (!breathing_fire):
-		._physics_process(delta)
-	else:
+	
+	if breathing_fire:
 		walk_speed = 0
 	if (!is_ghosting):
 		fire_value += delta
