@@ -25,7 +25,7 @@ animations = [ {
 
 [node name="FygarFire" type="KinematicBody2D"]
 position = Vector2( 382.2, 52.6541 )
-scale = Vector2( 7, 4 )
+scale = Vector2( 14, 4 )
 script = ExtResource( 2 )
 
 [node name="FygarFireCollision" type="CollisionShape2D" parent="."]
@@ -36,5 +36,4 @@ shape = SubResource( 1 )
 [node name="FygarFireSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -8.4757, -2.86102e-06 )
 frames = SubResource( 4 )
-frame = 1
 playing = true
