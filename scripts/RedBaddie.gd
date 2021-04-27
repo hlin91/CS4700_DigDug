@@ -51,9 +51,9 @@ var moveable_neighbors
 var current_path = []
 
 #Length is referring to left_right size of block
-export var starting_block_left_to_right = 5
+export var starting_cell_height = 1
 #width is referring to up_down size of block
-export var starting_block_down_to_up = 14
+export var starting_cell_width = 7
 var up_down_motion = true
 var right_or_down = true
 	
@@ -74,9 +74,9 @@ func _ready():
 	add_to_group("baddies")
 
 	#use the dimensions of the starting block to determine orientation
-	if starting_block_left_to_right > starting_block_down_to_up:
+	if starting_cell_width < starting_cell_height:
 		up_down_motion = false
-	create_starter_room(starting_block_left_to_right,starting_block_down_to_up)
+	create_starter_room(starting_cell_width, starting_cell_height)
 	if sprite != null:
 		sprite.set_to_walk()
 
@@ -105,17 +105,26 @@ func _physics_process(delta):
 		elif is_starting:
 			starter_motion(delta)
 
-func create_starter_room(length,width):
-	var cell
-	for l in range((length*-1)/2,length/2):
-		for w in range((width*-1)/2,width/2):
-			cell = Vector2(l,w) + current_cell
-			if cell.x < 0 or cell.y < 0:
-				continue
-			dirt_tiles.atomic_dig_out(cell)
-			if l == 0 or w == 0:
-				move_tiles.add_moved_to_cell(cell)
+#func create_starter_room(length,width):
+#	var cell
+#	for l in range((length*-1)/2,length/2):
+#		for w in range((width*-1)/2,width/2):
+#			cell = Vector2(l,w) + current_cell
+#			if cell.x < 0 or cell.y < 0:
+#				continue
+#			dirt_tiles.atomic_dig_out(cell)
+#			if l == 0 or w == 0:
+#				move_tiles.add_moved_to_cell(cell)
 
+func create_starter_room(width, length):
+	for w in range(0, width):
+		for l in range(0, length):
+			var cell = dirt_tiles.world_to_map(position)
+			dirt_tiles.dig_out(cell + Vector2(l, w), dirt_tiles.ORIENT.HORIZ)
+			move_tiles.add_moved_to_cell(cell + Vector2(l, w))
+			dirt_tiles.dig_out(cell + Vector2(-l, -w), dirt_tiles.ORIENT.HORIZ)
+			move_tiles.add_moved_to_cell(cell + Vector2(-l, -w))
+			
 func starter_motion(delta):
 	sprite.set_to_walk()
 	if not in_transit:
