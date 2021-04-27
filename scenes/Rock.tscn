@@ -41,4 +41,4 @@ shape = SubResource( 3 )
 position = Vector2( 0, 26.9622 )
 shape = SubResource( 4 )
 
-[connection signal="area_shape_exited" from="Area2D" to="." method="_on_Area2D_area_shape_exited"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

@@ -3,6 +3,8 @@ extends "res://scripts/GridKinematics.gd"
 export var player_layer_bit = 0
 export var enemy_layer_bit = 1
 export var tolerance = 3
+export var player_path = "../Player"
+var player
 var dropped = false
 
 # Declare member variables here. Examples:
@@ -19,6 +21,7 @@ func _ready():
 	position = current_position
 	set_collision_mask_bit(player_layer_bit, true)
 	set_collision_mask_bit(enemy_layer_bit, true)
+	player = get_node(player_path)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -47,11 +50,6 @@ func cell_in_range(cell):
 			return true
 		x_offset += 1
 	return false
-
-func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
-	# Scan all cells below the rock for a cell the player has already traversed
-	# to fall down to
-	drop_rock()
 	
 func drop_rock():
 	var cell = null
@@ -74,3 +72,8 @@ func drop_rock():
 #		print("Dropping to: " + str(cell))
 		move_to_cell(cell)
 	return cell != null
+
+
+func _on_Area2D_body_exited(body):
+	if body == player:
+		drop_rock()
