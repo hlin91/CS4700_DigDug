@@ -11,24 +11,15 @@ export var start_x = 2
 export var start_y = 2
 export var game_over_scene = "res://levels/level_1.tscn"
 export var sprite_path = "./PlayerSprite"
+export var normal_walk_speed = 75
+export var power_up_duration = 10
+var walk_speed_reset_time = power_up_duration
 var sprite = null
 var game_over = false
 var bullet = preload("res://scenes/PlayerProjectile.tscn")
 var max_bullets = 1
 var pumping = null # Enemy the player is currently pumping
 var orientation
-	
-#func get_input():
-#	velocity = Vector2()
-#	if Input.is_action_pressed("move_right"):
-#		velocity = Vector2(1, 0)
-#	elif Input.is_action_pressed("move_left"):
-#		velocity = Vector2(-1, 0)
-#	elif Input.is_action_pressed("move_down"):
-#		velocity = Vector2(0, 1)
-#	elif Input.is_action_pressed("move_up"):
-#		velocity = Vector2(0, -1)
-#	velocity = velocity.normalized() * walk_speed
 
 func _ready():
 	._ready()
@@ -47,6 +38,11 @@ func _process(delta):
 				shoot()
 	if pumping == null and sprite.animation == "hero_pumping":
 		sprite.clear_animation()
+	if walk_speed != normal_walk_speed:
+		walk_speed_reset_time -= delta
+		if walk_speed_reset_time <= 0:
+			walk_speed = normal_walk_speed
+			walk_speed_reset_time = power_up_duration
 
 func _physics_process(delta):
 	if (!game_over):
@@ -59,19 +55,6 @@ func move_and_process(velocity):
 		in_transit = false
 		move_direction = Vector2()
 		arrived_hook(current_cell)
-#	for i in range(get_slide_count()):
-#		var collision = get_slide_collision(i)
-#		if collision.collider is TileMap:
-#			var collision_pos = collision.position - collision.normal * 1.0
-##			print("Collision pos:" + str(collision_pos))
-#			var tile_pos = collision.collider.world_to_map(collision_pos)
-##			print("Tile pos: " + str(tile_pos))
-#			if !move_tiles.is_cell_movable(tile_pos):
-#				collision.collider.set_cellv(tile_pos, -1)
-#		else: # Collided with a rock. Stop movement
-#			in_transit = false
-#			move_direction = Vector2()
-#			arrived_hook()
 
 func move_cell_hook(cell):
 	pass
