@@ -84,7 +84,7 @@ func _ready():
 func _process(delta):
 	update_walk_speed(delta)
 	if inflation > 0: # Currently getting pumped
-		$TerrainCollision.set_deferred("disabled",true)
+		#$TerrainCollision.set_deferred("disabled",true)
 		time_until_reset_pump -= delta
 		if time_until_reset_pump <= 0:
 			time_until_reset_pump = pump_reset_time
@@ -93,7 +93,7 @@ func _process(delta):
 			sprite.change_scale(Vector2(-1*pump_scale_factor,-1*pump_scale_factor))
 			if inflation == 0: # Get out of pumping state
 				print("No longer pumped.")
-				$TerrainCollision.set_deferred("disabled",false)
+				#$TerrainCollision.set_deferred("disabled",false)
 				get_node(player_path).pumping = null
 
 func _physics_process(delta):
