@@ -1,13 +1,12 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/DirtTiles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/RedBaddie.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/MoveTiles.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Rock.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scripts/Score.gd" type="Script" id=6]
 [ext_resource path="res://scripts/GameManager.gd" type="Script" id=7]
-[ext_resource path="res://scenes/BlueBaddie.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/Fygar.tscn" type="PackedScene" id=9]
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource( 7 )
@@ -17,22 +16,6 @@ position = Vector2( -1.41421, 0 )
 walk_speed = 75.0
 
 [node name="DirtTiles" parent="." instance=ExtResource( 1 )]
-
-[node name="RedBaddie" parent="." instance=ExtResource( 3 )]
-position = Vector2( 438.184, 361.232 )
-
-[node name="RedBaddie2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 298.999, 507.152 )
-
-[node name="RedBaddie3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 740.591, 366.736 )
-starting_block_left_to_right = 14
-starting_block_down_to_up = 5
-
-[node name="RedBaddie4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 792.501, 520.577 )
-starting_block_left_to_right = 14
-starting_block_down_to_up = 5
 
 [node name="MoveTiles" parent="." instance=ExtResource( 4 )]
 
@@ -59,24 +42,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RedBaddie5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 600.3, 273.299 )
-
-[node name="RedBaddie6" parent="." instance=ExtResource( 3 )]
-position = Vector2( 939.711, 344.01 )
-
-[node name="RedBaddie7" parent="." instance=ExtResource( 3 )]
-position = Vector2( 860.515, 93.694 )
-starting_block_left_to_right = 14
-starting_block_down_to_up = 5
-
-[node name="RedBaddie8" parent="." instance=ExtResource( 3 )]
-position = Vector2( 861.929, 260.571 )
-
 [node name="Rock5" parent="." instance=ExtResource( 5 )]
 position = Vector2( 598.314, 389.35 )
 
 [node name="Rock6" parent="." instance=ExtResource( 5 )]
 position = Vector2( 373.454, 259.243 )
 
-[node name="BlueBaddie" parent="." instance=ExtResource( 8 )]
+[node name="Fygar" parent="." instance=ExtResource( 9 )]
+position = Vector2( 264.565, 188.37 )
+starting_block_left_to_right = 10
+starting_block_down_to_up = 30

@@ -229,7 +229,7 @@ func pump():
 		player.pumping = null
 		sprite.set_to_exploding()
 		var t = Timer.new()
-		t.set_wait_time(1)
+		t.set_wait_time(.8)
 		t.set_one_shot(true)
 		self.add_child(t)
 		t.start()

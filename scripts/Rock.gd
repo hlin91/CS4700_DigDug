@@ -50,6 +50,11 @@ func cell_in_range(cell):
 			return true
 		x_offset += 1
 	return false
+
+func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
+	# Scan all cells below the rock for a cell the player has already traversed
+	# to fall down to
+	drop_rock()
 	
 func drop_rock():
 	var cell = null
