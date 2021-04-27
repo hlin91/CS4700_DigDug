@@ -11,6 +11,7 @@ export var start_x = 2
 export var start_y = 2
 export var game_over_scene = "res://levels/level_1.tscn"
 export var sprite_path = "./PlayerSprite"
+export var shoot_animation_persist = .25
 var sprite = null
 var game_over = false
 var bullet = preload("res://scenes/PlayerProjectile.tscn")
@@ -33,8 +34,9 @@ func _process(delta):
 				pumping.pump()
 			else:
 				shoot()
-	if pumping == null and sprite.animation == "hero_pumping":
-		sprite.clear_animation()
+		elif pumping == null and sprite.animation == "hero_pumping":
+			yield(get_tree().create_timer(shoot_animation_persist), "timeout")
+			sprite.clear_animation()
 	update_walk_speed(delta)
 
 func _physics_process(delta):
@@ -116,8 +118,8 @@ func arrived_hook(cell):
 	sprite.moving = false
 	if !(Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left") ||
 		 Input.is_action_pressed("move_down") || Input.is_action_pressed("move_up")):
-			if sprite.animation != "hero_pumping":
-				sprite.clear_animation()
+		if sprite.animation != "hero_pumping":
+			sprite.clear_animation()
 
 func squish():
 	print("the player is squished :(")
