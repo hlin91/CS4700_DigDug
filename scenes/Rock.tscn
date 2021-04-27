@@ -19,7 +19,7 @@ animations = [ {
 extents = Vector2( 40.8797, 40.9349 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 10.0134, 34.7686 )
+extents = Vector2( 10.0134, 46.8784 )
 
 [node name="Rock" type="KinematicBody2D"]
 position = Vector2( 380.525, -163.607 )
@@ -38,7 +38,7 @@ shape = SubResource( 3 )
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 0, 26.9622 )
+position = Vector2( -0.231018, 26.9622 )
 shape = SubResource( 4 )
 
 [connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
