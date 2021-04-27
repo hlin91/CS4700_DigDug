@@ -59,6 +59,7 @@ var right_or_down = true
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	._ready()
 	set_collision_layer(enemy_layer)
 	sprite_path = "./RedBaddieSprite"
 	move_tiles = get_node(move_tiles_path)
@@ -66,6 +67,7 @@ func _ready():
 	player = get_node(player_path)
 	score = get_node(score_path)
 	walk_speed = original_walk_speed
+	normal_walk_speed = original_walk_speed
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
 	current_path = []
@@ -80,6 +82,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	update_walk_speed(delta)
 	if inflation > 0: # Currently getting pumped
 		time_until_reset_pump -= delta
 		if time_until_reset_pump <= 0:

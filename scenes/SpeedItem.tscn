@@ -21,9 +21,9 @@ scale = Vector2( 0.124604, 0.124604 )
 frames = SubResource( 1 )
 script = ExtResource( 2 )
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="SpeedArea" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpeedArea"]
 shape = SubResource( 2 )
-[connection signal="area_shape_entered" from="Area2D" to="." method="_on_Area2D_area_shape_entered"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+
+[connection signal="body_entered" from="SpeedArea" to="." method="_on_SpeedArea_body_entered"]

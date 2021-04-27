@@ -35,11 +35,7 @@ func _process(delta):
 				shoot()
 	if pumping == null and sprite.animation == "hero_pumping":
 		sprite.clear_animation()
-	if walk_speed != normal_walk_speed:
-		walk_speed_reset_time -= delta
-		if walk_speed_reset_time <= 0:
-			walk_speed = normal_walk_speed
-			walk_speed_reset_time = power_up_duration
+	update_walk_speed(delta)
 
 func _physics_process(delta):
 	if (!game_over):

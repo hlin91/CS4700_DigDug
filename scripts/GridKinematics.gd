@@ -7,8 +7,8 @@ extends KinematicBody2D
 export (float) var walk_speed = 10000/2
 export var move_tiles_path = "../MoveTiles"
 export var dirt_tiles_path = "../DirtTiles"
-export var normal_walk_speed = 75
 export var power_up_duration = 10
+var normal_walk_speed = 75
 var walk_speed_reset_time = power_up_duration
 var velocity = Vector2()
 var current_position = Vector2()
@@ -27,6 +27,7 @@ func _ready():
 	move_tiles = get_node(move_tiles_path)
 	dirt_tiles = get_node(dirt_tiles_path)
 	move_to_cell(start_cell)
+	normal_walk_speed = walk_speed
 	
 func move(position): # Sets the target position
 	in_transit = true
@@ -66,6 +67,15 @@ func arrived_hook(cell):
 	
 func move_cell_hook(cell):
 	pass
+
+func update_walk_speed(delta):
+	if walk_speed == normal_walk_speed:
+		walk_speed_reset_time = power_up_duration
+	if walk_speed != normal_walk_speed:
+		walk_speed_reset_time -= delta
+		if walk_speed_reset_time <= 0:
+			walk_speed = normal_walk_speed
+			walk_speed_reset_time = power_up_duration
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

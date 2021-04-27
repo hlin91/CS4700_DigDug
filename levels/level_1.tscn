@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/DirtTiles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,26 @@
 [ext_resource path="res://scripts/Score.gd" type="Script" id=6]
 [ext_resource path="res://scripts/GameManager.gd" type="Script" id=7]
 [ext_resource path="res://scenes/Fygar.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/BlueBaddie.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/SpeedItem.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scripts/SlowEnemiesItem.gd" type="Script" id=10]
+[ext_resource path="res://assets/tilesheet_complete.png" type="Texture" id=11]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 11 )
+region = Rect2( 576, 320, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 19.6382
+height = 42.4489
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource( 7 )
@@ -52,3 +72,20 @@ position = Vector2( 373.454, 259.243 )
 position = Vector2( 264.565, 188.37 )
 starting_block_left_to_right = 10
 starting_block_down_to_up = 30
+[node name="BlueBaddie" parent="." instance=ExtResource( 8 )]
+
+[node name="SlowEnemiesItem" type="AnimatedSprite" parent="."]
+position = Vector2( 535.537, 26.9647 )
+scale = Vector2( 0.315301, 0.315301 )
+frames = SubResource( 2 )
+script = ExtResource( 10 )
+
+[node name="SlowEnemiesArea" type="Area2D" parent="SlowEnemiesItem"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlowEnemiesItem/SlowEnemiesArea"]
+shape = SubResource( 3 )
+
+[node name="SpeedItem" parent="." instance=ExtResource( 9 )]
+position = Vector2( 474.85, 25.9412 )
+
+[connection signal="body_entered" from="SlowEnemiesItem/SlowEnemiesArea" to="SlowEnemiesItem" method="_on_SlowEnemiesArea_body_entered"]

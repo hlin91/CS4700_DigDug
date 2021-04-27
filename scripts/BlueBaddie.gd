@@ -8,6 +8,7 @@ extends "res://scripts/RedBaddie.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	._ready()
 	original_walk_speed = 90
 	walk_speed = original_walk_speed
 	sprite_path = "./BlueBaddieSprite"
