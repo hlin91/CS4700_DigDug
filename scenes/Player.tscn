@@ -36,23 +36,23 @@ region = Rect2( 32, 144, 16, 16 )
 atlas = ExtResource( 3 )
 region = Rect2( 48, 144, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 3 )
 region = Rect2( 16, 48, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 3 )
 region = Rect2( 32, 48, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=18]
+[sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 3 )
 region = Rect2( 48, 48, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=19]
+[sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 3 )
 region = Rect2( 64, 48, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=20]
+[sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 3 )
 region = Rect2( 80, 48, 16, 16 )
 
@@ -68,7 +68,7 @@ animations = [ {
 "name": "hero_walking",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
 "loop": true,
 "name": "hero_pumping",
 "speed": 5.0
@@ -88,7 +88,7 @@ shape = SubResource( 1 )
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 14 )
 animation = "hero_pumping"
-frame = 3
+frame = 1
 playing = true
 script = ExtResource( 1 )
 
@@ -100,4 +100,5 @@ shape = SubResource( 15 )
 
 [node name="Muzzle" type="Position2D" parent="."]
 position = Vector2( 10.3, 0 )
+
 [connection signal="area_entered" from="PlayerHurtbox" to="." method="_on_PlayerHurtbox_area_entered"]

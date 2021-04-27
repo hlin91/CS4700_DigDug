@@ -89,31 +89,50 @@ func shoot():
 		get_parent().add_child(b)
 
 func get_input():
-	if !in_transit:
-		if Input.is_action_pressed("move_right"):
-			orientation = dirt_tiles.ORIENT.HORIZ
-			pumping = null
-			move_to_cell(Vector2(current_cell.x+1, current_cell.y))
-			sprite.move_animation(sprite.DIR.RIGHT)
-			set_rotation_degrees(0)
-		elif Input.is_action_pressed("move_left"):
-			orientation = dirt_tiles.ORIENT.HORIZ
-			pumping = null
-			move_to_cell(Vector2(current_cell.x-1, current_cell.y))
-			sprite.move_animation(sprite.DIR.LEFT)
-			set_rotation_degrees(-180)
-		elif Input.is_action_pressed("move_down"):
-			orientation = dirt_tiles.ORIENT.VERT
-			pumping = null
-			move_to_cell(Vector2(current_cell.x, current_cell.y+1))
-			sprite.move_animation(sprite.DIR.DOWN)
-			set_rotation_degrees(-270)
-		elif Input.is_action_pressed("move_up"):
-			orientation = dirt_tiles.ORIENT.VERT
-			pumping = null
-			move_to_cell(Vector2(current_cell.x,current_cell.y-1))
-			sprite.move_animation(sprite.DIR.UP)
-			set_rotation_degrees(-90)
+	if Input.is_action_pressed("move_right"):
+		move_right()
+	elif Input.is_action_pressed("move_left"):
+		move_left()
+	elif Input.is_action_pressed("move_down"):
+		move_down()
+	elif Input.is_action_pressed("move_up"):
+		move_up()
+
+func move_right():
+	if in_transit:
+		return
+	orientation = dirt_tiles.ORIENT.HORIZ
+	pumping = null
+	move_to_cell(Vector2(current_cell.x+1, current_cell.y))
+	sprite.move_animation(sprite.DIR.RIGHT)
+	set_rotation_degrees(0)
+
+func move_left():
+	if in_transit:
+		return
+	orientation = dirt_tiles.ORIENT.HORIZ
+	pumping = null
+	move_to_cell(Vector2(current_cell.x-1, current_cell.y))
+	sprite.move_animation(sprite.DIR.LEFT)
+	set_rotation_degrees(-180)
+
+func move_down():
+	if in_transit:
+		return
+	orientation = dirt_tiles.ORIENT.VERT
+	pumping = null
+	move_to_cell(Vector2(current_cell.x, current_cell.y+1))
+	sprite.move_animation(sprite.DIR.DOWN)
+	set_rotation_degrees(-270)
+
+func move_up():
+	if in_transit:
+		return
+	orientation = dirt_tiles.ORIENT.VERT
+	pumping = null
+	move_to_cell(Vector2(current_cell.x,current_cell.y-1))
+	sprite.move_animation(sprite.DIR.UP)
+	set_rotation_degrees(-90)
 
 func arrived_hook(cell):
 	move_tiles.add_moved_to_cell(cell)
