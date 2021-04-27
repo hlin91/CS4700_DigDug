@@ -1,7 +1,7 @@
 extends "res://scripts/RedBaddie.gd"
 
 var fire = preload("res://scenes/FygarFire.tscn")
-var fire_threshold = 4
+var fire_threshold = 10
 var fire_value = 0
 var breathing_fire = false
 
@@ -14,6 +14,7 @@ export var bullet_layer = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	._ready()
 	original_walk_speed = 50
 	walk_speed = original_walk_speed
 	sprite_path = "./FygarSprite"
@@ -24,12 +25,15 @@ func breathe_fire():
 	var f = fire.instance()
 	f.start($FirePosition.global_position, rotation)
 	f.set_collision_layer(enemy_layer)
-	get_parent().add_child(f)
 	var t = Timer.new()
-	t.set_wait_time(2)
+	t.set_wait_time(1.5)
 	t.set_one_shot(true)
 	self.add_child(t)
 	breathing_fire = true
+	t.start()
+	yield(t, "timeout")
+	get_parent().add_child(f)
+	t.set_wait_time(2.5)
 	t.start()
 	yield(t, "timeout")
 	t.queue_free()
