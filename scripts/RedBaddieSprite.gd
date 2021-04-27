@@ -25,12 +25,13 @@ func change_scale(scale_vector):
 	scale += scale_vector
 
 func play_walking_animation(direction):
+	pass
 	match direction:
 		Vector2(-1,0):
-			set_flip_h(false)
+			set_flip_v(false)
 			rotation_degrees = 0
 		Vector2(1,0):
-			set_flip_h(true)
+			set_flip_v(true)
 			rotation_degrees = 0
 
 

@@ -13,6 +13,8 @@ export var enemy_layer = 2
 
 var original_walk_speed = 50
 
+var facing_left = true
+
 export var base_score = 100
 
 var collision_info
@@ -153,6 +155,10 @@ func a_star_motion(delta):
 		if !in_transit:
 			move_to_cell(current_path[0])
 			sprite.play_walking_animation(current_path[0]-current_cell)
+			if current_path[0]-current_cell == Vector2(-1,0):
+				set_rotation_degrees(0)
+			elif current_path[0]-current_cell == Vector2(1,0):
+				set_rotation_degrees(180)
 			if current_path.size() > 0:
 				current_path.remove(0)
 		else:

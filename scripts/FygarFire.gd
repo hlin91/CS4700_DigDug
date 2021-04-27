@@ -22,10 +22,11 @@ func _physics_process(delta):
 	if (disappear_value >= disappear_threshold):
 		queue_free()
 		
-func start(pos, dir):
-	rotation = dir
+func start(pos, rotation):
 	position = pos
 	velocity = Vector2(0, 0).rotated(rotation)
+	if rotation != 0:
+		scale.x *= -1
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

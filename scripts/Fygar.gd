@@ -1,7 +1,7 @@
 extends "res://scripts/RedBaddie.gd"
 
 var fire = preload("res://scenes/FygarFire.tscn")
-var fire_threshold = 3
+var fire_threshold = 4
 var fire_value = 0
 var breathing_fire = false
 
@@ -23,7 +23,6 @@ func _ready():
 func breathe_fire():
 	var f = fire.instance()
 	f.start($FirePosition.global_position, rotation)
-	print(rotation)
 	f.set_collision_layer(enemy_layer)
 	get_parent().add_child(f)
 	var t = Timer.new()
