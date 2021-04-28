@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scenes/DirtTiles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://scenes/SpeedItem.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scripts/SlowEnemiesItem.gd" type="Script" id=10]
 [ext_resource path="res://assets/tilesheet_complete.png" type="Texture" id=11]
+[ext_resource path="res://scenes/RedBaddie.tscn" type="PackedScene" id=12]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 11 )
@@ -88,4 +89,10 @@ shape = SubResource( 3 )
 
 [node name="Fygar2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 567, 217 )
+
+[node name="RedBaddie" parent="." instance=ExtResource( 12 )]
+position = Vector2( 762.653, 342.027 )
+
+[node name="RedBaddie2" parent="." instance=ExtResource( 12 )]
+position = Vector2( 374.653, 483.027 )
 [connection signal="body_entered" from="SlowEnemiesItem/SlowEnemiesArea" to="SlowEnemiesItem" method="_on_SlowEnemiesArea_body_entered"]

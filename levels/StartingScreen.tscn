@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/NormalModeButton.gd" type="Script" id=1]
+[ext_resource path="res://scripts/RemixModeButton.gd" type="Script" id=2]
+
+[node name="StartingScreen" type="Node2D"]
+
+[node name="NormalModeButton" type="Button" parent="."]
+margin_left = 426.0
+margin_top = 172.0
+margin_right = 618.0
+margin_bottom = 245.0
+text = "Normal Mode"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RemixModeButton" type="Button" parent="."]
+margin_left = 424.782
+margin_top = 298.218
+margin_right = 624.782
+margin_bottom = 374.218
+text = "Remix Mode"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 383.086
+margin_top = 48.1085
+margin_right = 453.086
+margin_bottom = 68.1086
+rect_scale = Vector2( 5, 5 )
+text = "DIG DUG"
+__meta__ = {
+"_edit_use_anchors_": false
+}

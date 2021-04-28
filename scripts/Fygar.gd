@@ -33,7 +33,8 @@ func breathe_fire():
 	t.start()
 	sprite.play_firing()
 	yield(t, "timeout")
-	get_parent().add_child(f)
+	if (inflation != 0):
+		get_parent().add_child(f)
 	t.set_wait_time(2.5)
 	t.start()
 	yield(t, "timeout")
