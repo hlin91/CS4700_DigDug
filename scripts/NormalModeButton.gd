@@ -11,7 +11,7 @@ func _ready():
 	connect("pressed", self, "_button_pressed")
 	
 func _button_pressed():
-	get_tree().change_scene("./level_1.tscn")
+	get_tree().change_scene("res://levels/level_1.tscn")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

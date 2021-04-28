@@ -1,17 +1,14 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scenes/DirtTiles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/Fygar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/MoveTiles.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Rock.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scripts/Score.gd" type="Script" id=6]
 [ext_resource path="res://scripts/GameManager.gd" type="Script" id=7]
-[ext_resource path="res://scenes/BlueBaddie.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/SpeedItem.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scripts/SlowEnemiesItem.gd" type="Script" id=10]
 [ext_resource path="res://assets/tilesheet_complete.png" type="Texture" id=11]
-[ext_resource path="res://scenes/RedBaddie.tscn" type="PackedScene" id=12]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 11 )
@@ -44,7 +41,7 @@ walk_speed = 75.0
 position = Vector2( 439.735, 72.4776 )
 
 [node name="Rock2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 857.397, 419.104 )
+position = Vector2( 695.762, 349.511 )
 
 [node name="Rock3" parent="." instance=ExtResource( 5 )]
 position = Vector2( 106.507, 256.163 )
@@ -72,8 +69,6 @@ position = Vector2( 373.454, 259.243 )
 [node name="Fygar" parent="." instance=ExtResource( 9 )]
 position = Vector2( 264.565, 188.37 )
 
-[node name="BlueBaddie" parent="." instance=ExtResource( 8 )]
-
 [node name="SlowEnemiesItem" type="AnimatedSprite" parent="."]
 position = Vector2( 535.537, 26.9647 )
 scale = Vector2( 0.315301, 0.315301 )
@@ -86,13 +81,4 @@ script = ExtResource( 10 )
 shape = SubResource( 3 )
 
 [node name="SpeedItem" parent="." instance=ExtResource( 9 )]
-
-[node name="Fygar2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 567, 217 )
-
-[node name="RedBaddie" parent="." instance=ExtResource( 12 )]
-position = Vector2( 762.653, 342.027 )
-
-[node name="RedBaddie2" parent="." instance=ExtResource( 12 )]
-position = Vector2( 374.653, 483.027 )
 [connection signal="body_entered" from="SlowEnemiesItem/SlowEnemiesArea" to="SlowEnemiesItem" method="_on_SlowEnemiesArea_body_entered"]

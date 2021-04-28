@@ -4,7 +4,7 @@ extends TileMap
 # var a = 2
 # var b = "text"
 export var min_x = 2 # Min horizontal index for cells
-export var max_x = 126 # Max horizontal index for cells
+export var max_x = 100 # Max horizontal index for cells
 export var min_y = 2 # Min vertical index for cells
 export var max_y = 72 # Max vertical index for cells
 export var dirt_tiles_path = "../DirtTiles"
