@@ -53,7 +53,7 @@ var current_path = []
 #Length is referring to left_right size of block
 export var starting_cell_height = 1
 #width is referring to up_down size of block
-export var starting_cell_width = 7
+export var starting_cell_width = 4
 var up_down_motion = true
 var right_or_down = true
 	

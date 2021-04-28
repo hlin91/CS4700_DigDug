@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scenes/DirtTiles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scenes/SpeedItem.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scripts/SlowEnemiesItem.gd" type="Script" id=10]
 [ext_resource path="res://assets/tilesheet_complete.png" type="Texture" id=11]
+[ext_resource path="res://scenes/RedBaddie.tscn" type="PackedScene" id=12]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 11 )
@@ -28,6 +29,9 @@ height = 42.4489
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource( 7 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( -1.41421, 0 )
@@ -40,25 +44,8 @@ walk_speed = 75.0
 [node name="Rock" parent="." instance=ExtResource( 5 )]
 position = Vector2( 439.735, 72.4776 )
 
-[node name="Rock2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 695.762, 349.511 )
-
 [node name="Rock3" parent="." instance=ExtResource( 5 )]
 position = Vector2( 106.507, 256.163 )
-
-[node name="Rock4" parent="." instance=ExtResource( 5 )]
-position = Vector2( 717.071, 151.533 )
-
-[node name="Score" type="RichTextLabel" parent="."]
-margin_left = 199.0
-margin_top = 3.0
-margin_right = 410.0
-margin_bottom = 43.0
-text = "SDFFSADASDFADSFGASDGDSFGASDFSADFSDAF"
-script = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Rock5" parent="." instance=ExtResource( 5 )]
 position = Vector2( 598.314, 389.35 )
@@ -81,4 +68,17 @@ script = ExtResource( 10 )
 shape = SubResource( 3 )
 
 [node name="SpeedItem" parent="." instance=ExtResource( 9 )]
+
+[node name="RedBaddie" parent="." instance=ExtResource( 12 )]
+position = Vector2( 349.653, 357.027 )
+
+[node name="Score" type="RichTextLabel" parent="."]
+margin_left = 731.0
+margin_top = 66.0
+margin_right = 1020.0
+margin_bottom = 124.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="body_entered" from="SlowEnemiesItem/SlowEnemiesArea" to="SlowEnemiesItem" method="_on_SlowEnemiesArea_body_entered"]

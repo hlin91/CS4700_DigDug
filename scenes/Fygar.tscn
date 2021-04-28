@@ -162,6 +162,7 @@ shape = SubResource( 1 )
 [node name="FygarSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 28 )
 animation = "firing"
+frame = 1
 playing = true
 script = ExtResource( 2 )
 

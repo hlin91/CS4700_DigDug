@@ -1,0 +1,10 @@
+[gd_scene format=2]
+
+[node name="Lives" type="RichTextLabel"]
+margin_left = 726.0
+margin_top = 219.0
+margin_right = 1023.0
+margin_bottom = 289.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

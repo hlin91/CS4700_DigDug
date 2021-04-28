@@ -19,14 +19,9 @@ position = Vector2( 296.599, 72.1838 )
 
 [node name="RedBaddie" parent="." instance=ExtResource( 7 )]
 position = Vector2( 437.212, 147.066 )
-starting_block_left_to_right = 17
-starting_block_down_to_up = 7
 
 [node name="RedBaddie2" parent="." instance=ExtResource( 7 )]
 position = Vector2( 663.004, 231.882 )
-
-[node name="RedBaddie3" parent="." instance=ExtResource( 7 )]
-position = Vector2( 794.234, 231.486 )
 
 [node name="RedBaddie4" parent="." instance=ExtResource( 7 )]
 position = Vector2( 163.238, 232.573 )
