@@ -23,27 +23,46 @@ func atomic_dig_out(cell):
 	set_cellv(cell,-1)
 	
 func dig_out(cell, orient):
+	var dug_out_cell = false # Has a new cell been dug out this function call
 	var offset = 0
 	if orient == ORIENT.VERT:
 		# Dig out horizontally
 		while offset < tunnel_radius:
 			for y_offset in range(tunnel_radius):
+				if get_cellv(Vector2(cell.x + offset, cell.y + y_offset)) != -1:
+					dug_out_cell = true
 				set_cellv(Vector2(cell.x + offset, cell.y + y_offset), -1)
+				if get_cellv(Vector2(cell.x - offset, cell.y + y_offset)) != -1:
+					dug_out_cell = true
 				set_cellv(Vector2(cell.x - offset, cell.y + y_offset), -1)
+				if get_cellv(Vector2(cell.x + offset, cell.y - y_offset)) != -1:
+					dug_out_cell = true
 				set_cellv(Vector2(cell.x + offset, cell.y - y_offset), -1)
+				if get_cellv(Vector2(cell.x - offset, cell.y - y_offset)) != -1:
+					dug_out_cell = true
 				set_cellv(Vector2(cell.x - offset, cell.y - y_offset), -1)
 			offset += 1
 	elif orient == ORIENT.HORIZ:
 		# Dig out vertically
 		while offset < tunnel_radius:
 			for x_offset in range(tunnel_radius):
+				if get_cellv(Vector2(cell.x + x_offset, cell.y + offset)) != -1:
+					dug_out_cell = true
 				set_cellv(Vector2(cell.x + x_offset, cell.y + offset), -1)
+				if get_cellv(Vector2(cell.x + x_offset, cell.y - offset)) != -1:
+					dug_out_cell = true
 				set_cellv(Vector2(cell.x + x_offset, cell.y - offset), -1)
+				if get_cellv(Vector2(cell.x - x_offset, cell.y + offset)) != -1:
+					dug_out_cell = true
 				set_cellv(Vector2(cell.x - x_offset, cell.y + offset), -1)
+				if get_cellv(Vector2(cell.x - x_offset, cell.y - offset)) != -1:
+					dug_out_cell = true
 				set_cellv(Vector2(cell.x - x_offset, cell.y - offset), -1)
 			offset += 1
 	else:
 		print("DirtTiles: dig_out: invalid orientation passed")
+#	print("Dug dirt: " + str(dug_out_cell))
+	return dug_out_cell
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
