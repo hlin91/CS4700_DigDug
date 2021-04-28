@@ -1,8 +1,10 @@
 [gd_scene format=2]
 
-[node name="RichTextLabel" type="RichTextLabel"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="HighScore" type="RichTextLabel"]
+margin_left = 747.0
+margin_top = 41.0
+margin_right = 1023.0
+margin_bottom = 116.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
