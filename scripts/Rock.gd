@@ -5,9 +5,13 @@ export var enemy_layer_bit = 1
 export var tolerance = 3
 export var player_path = "../Player"
 export var sprite_path = "RockSprite"
+export var collision_path = "RockCollision"
+export var crumble_persist = 1
 var player
 var sprite
 var dropped = false
+var done = false
+var shook = false
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -35,15 +39,18 @@ func _physics_process(delta):
 		update_position()
 		
 func move_and_process(velocity):
-	move_and_slide(velocity)
-	for i in range(get_slide_count()):
-		var collision = get_slide_collision(i)
-		if collision.collider.has_method("squish"):
-			collision.collider.squish() # squish players and enemies it collides with
-	drop_rock()
+	if !done:
+		move_and_slide(velocity)
+		for i in range(get_slide_count()):
+			var collision = get_slide_collision(i)
+			if collision.collider.has_method("squish"):
+				collision.collider.squish() # squish players and enemies it collides with
+		done = !drop_rock()
 
 func arrived_hook(cell):
-	# TODO: Play crumbling animation
+	get_node(collision_path).set_deferred("disabled", true)
+	sprite.play("crumble")
+	yield(get_tree().create_timer(crumble_persist), "timeout")
 	queue_free()
 
 func cell_in_range(cell):
@@ -61,7 +68,7 @@ func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 	
 func drop_rock():
 	var cell = null
-	var y_pos = current_cell.y + 1
+	var y_pos = current_cell.y
 	var candidate = null
 	while y_pos <= move_tiles.max_y:
 		candidate = Vector2(current_cell.x, y_pos)
@@ -74,9 +81,10 @@ func drop_rock():
 		while candidate.y <= move_tiles.max_y && cell_in_range(candidate):
 			cell = candidate
 			candidate.y += 1
-		sprite.play("shake")
-		yield(get_tree().create_timer(.3), "timeout")
-#		sprite.play("default")
+		if !shook:
+			shook = true
+			sprite.play("shake")
+			yield(get_tree().create_timer(.3), "timeout")
 		dropped = true
 #		print("Dropping to: " + str(cell))
 		move_to_cell(cell)
