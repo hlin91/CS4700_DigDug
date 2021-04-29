@@ -24,6 +24,10 @@ config/name="DigDug"
 run/main_scene="res://levels/level_1.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+global="*res://scripts/global.gd"
+
 [gdnative]
 
 singletons=[ "res://git_api.gdnlib" ]
