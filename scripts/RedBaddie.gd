@@ -243,19 +243,22 @@ func pump():
 	sprite.change_scale(Vector2(pump_scale_factor,pump_scale_factor))
 	if inflation >= pumps_to_kill:
 		print("I am dead.")
-		emit_signal("baddie_died",base_score,current_cell)
-		$TerrainCollision.set_deferred("disabled",true)
-		update_score()
-		player.pumping = null
-		sprite.set_to_exploding()
-		var t = Timer.new()
-		t.set_wait_time(.8)
-		t.set_one_shot(true)
-		self.add_child(t)
-		t.start()
-		yield(t, "timeout")
-		t.queue_free()
+		explode()
 		queue_free()
+
+func explode():
+	emit_signal("baddie_died",base_score,current_cell)
+	$TerrainCollision.set_deferred("disabled",true)
+	update_score()
+	player.pumping = null
+	sprite.set_to_exploding()
+	var t = Timer.new()
+	t.set_wait_time(.8)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	t.queue_free()
 
 func update_score():
 	get_tree().call_group("baddies","start_hunting")
