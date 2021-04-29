@@ -5,6 +5,7 @@ extends AnimatedSprite
 # var b = "text"
 var moving = false
 var facing # Direction the sprite is currently facing
+var digging = false
 enum DIR {
 	UP,
 	DOWN,
@@ -36,11 +37,31 @@ func clear_animation():
 func play_pumping_animation():
 	if (animation != "hero_pumping"):
 		play("hero_pumping")
+	
+func play_shooting_animation():
+	play("hero_shoot")
+
+func play_dig_animation(direction):
+	match direction:
+		DIR.RIGHT:
+			set_flip_v(false)
+			facing = DIR.RIGHT
+		DIR.LEFT:
+			set_flip_v(true)
+			facing = DIR.LEFT
+		DIR.DOWN:
+			facing = DIR.DOWN
+		DIR.UP:
+			facing = DIR.UP
+	play("hero_dig")
 
 func move_animation(direction):
 	if !moving:
 		moving = true
-		play_walking_animation(direction)
+		if digging:
+			play_dig_animation(direction)
+		else:
+			play_walking_animation(direction)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
