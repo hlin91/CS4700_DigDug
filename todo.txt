@@ -1,0 +1,7 @@
+Nick's todos:
+[] beautify the score(s)
+[] implement high score
+[] implement lives
+[] implement switching between levels
+[] implement moving to the next level upon killing all enemies
+[] implement game over upon no more lives
