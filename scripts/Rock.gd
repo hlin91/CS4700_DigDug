@@ -4,7 +4,9 @@ export var player_layer_bit = 0
 export var enemy_layer_bit = 1
 export var tolerance = 3
 export var player_path = "../Player"
+export var sprite_path = "RockSprite"
 var player
+var sprite
 var dropped = false
 
 # Declare member variables here. Examples:
@@ -22,6 +24,7 @@ func _ready():
 	set_collision_mask_bit(player_layer_bit, true)
 	set_collision_mask_bit(enemy_layer_bit, true)
 	player = get_node(player_path)
+	sprite = get_node(sprite_path)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -71,8 +74,9 @@ func drop_rock():
 		while candidate.y <= move_tiles.max_y && cell_in_range(candidate):
 			cell = candidate
 			candidate.y += 1
-		# TODO: Play shaking animation
-		yield(get_tree().create_timer(.25), "timeout")
+		sprite.play("shake")
+		yield(get_tree().create_timer(.3), "timeout")
+#		sprite.play("default")
 		dropped = true
 #		print("Dropping to: " + str(cell))
 		move_to_cell(cell)
