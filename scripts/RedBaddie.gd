@@ -165,6 +165,10 @@ func a_star_motion(delta):
 		elif is_wandering:
 			dest_cell = move_tiles.get_random_moved_to_cell()
 		current_path = a_star(current_cell, dest_cell, move_tiles)
+		if (current_path.size() == 0):
+			move_to_cell(move_tiles.get_random_moved_to_cell())
+			disable_collision_and_ghost()
+			return
 	else:
 		if !in_transit:
 			move_to_cell(current_path[0])
