@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/DirtTiles.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/MoveTiles.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/RedBaddie.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Fygar.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/Rock.tscn" type="PackedScene" id=6]
+
+[node name="GameManager" type="Node2D"]
+
+[node name="MoveTiles" parent="." instance=ExtResource( 2 )]
+
+[node name="DirtTiles" parent="." instance=ExtResource( 1 )]
+
+[node name="RedBaddie" parent="." instance=ExtResource( 3 )]
+position = Vector2( 113.667, 470.235 )
+
+[node name="RedBaddie2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 336.585, 387.475 )
+
+[node name="RedBaddie3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 133.69, 314.059 )
+
+[node name="Fygar" parent="." instance=ExtResource( 4 )]
+position = Vector2( 540.61, 186.878 )
+
+[node name="Fygar2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 535.271, 480.542 )
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+
+[node name="Rock" parent="." instance=ExtResource( 6 )]
+position = Vector2( 229.688, 490.465 )
+
+[node name="Rock2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 599.439, 385.012 )
+
+[node name="Rock3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 431.249, 186.121 )
+
+[node name="Rock4" parent="." instance=ExtResource( 6 )]
+position = Vector2( 124.236, 127.388 )
