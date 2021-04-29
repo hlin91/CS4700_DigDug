@@ -10,6 +10,8 @@ var int_score = 0
 func _ready():
 	text = "Score: 0"
 	print(self)
+	self.rect_position = Vector2(768,64)
+	self.rect_size = Vector2(60,60)
 
 func update_score(additional_score):
 	int_score += additional_score

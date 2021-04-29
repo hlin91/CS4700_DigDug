@@ -3,6 +3,8 @@
 [ext_resource path="res://scripts/Score.gd" type="Script" id=1]
 
 [node name="Score" type="RichTextLabel"]
+anchor_left = 0.8
+anchor_right = 0.817
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )
