@@ -54,6 +54,7 @@ margin_left = 10.0
 margin_right = 70.0
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
+walk_speed = 50.0
 
 [node name="HighScore" parent="." instance=ExtResource( 8 )]
 

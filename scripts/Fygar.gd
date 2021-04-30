@@ -25,7 +25,7 @@ func breathe_fire():
 	f.start($FirePosition.global_position, rotation)
 	f.set_collision_layer(enemy_layer)
 	var t = Timer.new()
-	t.set_wait_time(1.5)
+	t.set_wait_time(1)
 	t.set_one_shot(true)
 	self.add_child(t)
 	breathing_fire = true
@@ -38,7 +38,7 @@ func breathe_fire():
 		sprite.set_to_walk()
 		breathing_fire = false
 		return
-	t.set_wait_time(2.5)
+	t.set_wait_time(1.5)
 	t.start()
 	yield(t, "timeout")
 	sprite.set_to_walk()

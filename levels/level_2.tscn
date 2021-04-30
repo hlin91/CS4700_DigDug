@@ -20,11 +20,9 @@
 
 [node name="RedBaddie" parent="." instance=ExtResource( 4 )]
 position = Vector2( 498.101, 408.832 )
-starting_cell_width = 7
 
 [node name="RedBaddie2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 97.6489, 225.959 )
-starting_cell_width = 7
 
 [node name="RedBaddie3" parent="." instance=ExtResource( 4 )]
 position = Vector2( 550.16, 161.887 )
