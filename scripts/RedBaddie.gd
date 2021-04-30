@@ -61,6 +61,7 @@ var right_or_down = true
 func _ready():
 	._ready()
 	set_collision_layer(enemy_layer)
+	print(get_instance_id())
 	sprite_path = "./RedBaddieSprite"
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)

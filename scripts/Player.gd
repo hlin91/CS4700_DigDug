@@ -11,6 +11,8 @@ export var start_x = 2
 export var start_y = 2
 export var game_over_scene = "res://levels/level_1.tscn"
 export var sprite_path = "./PlayerSprite"
+export var lives_path = "../Lives"
+var lives
 export var shoot_animation_persist = .1
 var sprite = null
 var game_over = false
@@ -21,6 +23,7 @@ var orientation
 
 func _ready():
 	._ready()
+	lives = get_node(lives_path)
 	sprite = get_node(sprite_path)
 	orientation = dirt_tiles.ORIENT.HORIZ
 	move_to_cell(Vector2(start_x, start_y))
@@ -132,4 +135,7 @@ func die_by_mob():
 
 func kill():
 	print("Player died")
-	get_tree().change_scene(game_over_scene)
+	current_cell = Vector2(start_x,start_y)
+	position = Vector2(start_x,start_y)
+	move_to_cell(Vector2(start_x,start_y))
+	lives.decrement_lives()
