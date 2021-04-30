@@ -6,6 +6,7 @@ Nick's todos:
 [x] implement moving to the next level upon killing all enemies
 [x] implement game over upon no more lives
 
+[] Change enemy movement logic to not ghost so much
 [] Get explosion sound effect
 [] implement explosion sound effect
 [] Wait on level before moving onto the next one
