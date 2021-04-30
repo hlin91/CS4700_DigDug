@@ -1,10 +1,11 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://scripts/RedBaddieSprite.gd" type="Script" id=1]
 [ext_resource path="res://scripts/RedBaddie.gd" type="Script" id=2]
-[ext_resource path="res://assets/Standard sprites upd.png" type="Texture" id=3]
+[ext_resource path="res://assets/flooba_1.png" type="Texture" id=3]
 [ext_resource path="res://assets/ghost.png" type="Texture" id=4]
 [ext_resource path="res://assets/explosion.png" type="Texture" id=5]
+[ext_resource path="res://assets/flooba_2.png" type="Texture" id=6]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -94,29 +95,15 @@ region = Rect2( 0, 0, 20, 20 )
 atlas = ExtResource( 4 )
 region = Rect2( 20, 0, 20, 20 )
 
-[sub_resource type="AtlasTexture" id=19]
+[sub_resource type="AtlasTexture" id=27]
+flags = 4
 atlas = ExtResource( 3 )
-region = Rect2( 112, 32, 16, 16 )
+region = Rect2( 0, 0, 48, 46 )
 
-[sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 3 )
-region = Rect2( 128, 32, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 3 )
-region = Rect2( 144, 32, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 3 )
-region = Rect2( 160, 32, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 3 )
-region = Rect2( 176, 32, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=24]
-atlas = ExtResource( 3 )
-region = Rect2( 192, 32, 16, 16 )
+[sub_resource type="AtlasTexture" id=28]
+flags = 4
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 48, 46 )
 
 [sub_resource type="SpriteFrames" id=25]
 animations = [ {
@@ -130,7 +117,7 @@ animations = [ {
 "name": "ghosting",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
+"frames": [ SubResource( 27 ), SubResource( 28 ) ],
 "loop": true,
 "name": "walking",
 "speed": 5.0
@@ -141,13 +128,13 @@ radius = 3.0
 
 [node name="RedBaddie" type="KinematicBody2D"]
 position = Vector2( 396.653, 286.027 )
-scale = Vector2( 3, 3 )
 script = ExtResource( 2 )
 
 [node name="RedBaddieSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 25 )
 animation = "walking"
+frame = 1
 playing = true
 script = ExtResource( 1 )
 
