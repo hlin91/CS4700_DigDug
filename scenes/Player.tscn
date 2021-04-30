@@ -69,4 +69,5 @@ shape = SubResource( 3 )
 
 [node name="Muzzle" type="Position2D" parent="."]
 position = Vector2( 10.3, 0 )
+
 [connection signal="area_entered" from="PlayerHurtbox" to="." method="_on_PlayerHurtbox_area_entered"]

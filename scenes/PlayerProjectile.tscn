@@ -1,16 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/PlayerProjectile.gd" type="Script" id=1]
-[ext_resource path="res://assets/laserBlue03.png" type="Texture" id=2]
-[ext_resource path="res://assets/laserBlue02.png" type="Texture" id=3]
-[ext_resource path="res://assets/laserBlue04.png" type="Texture" id=4]
-[ext_resource path="res://assets/laserBlue06.png" type="Texture" id=5]
-[ext_resource path="res://assets/laserBlue07.png" type="Texture" id=6]
-[ext_resource path="res://assets/laserBlue05.png" type="Texture" id=7]
+[ext_resource path="res://assets/pump.png" type="Texture" id=2]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 6 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "default",
 "speed": 10.0
@@ -34,4 +29,5 @@ shape = SubResource( 2 )
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 position = Vector2( 1.02435, 0.170731 )
 scale = Vector2( 1.88777, 0.675624 )
+
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

@@ -11,7 +11,7 @@ var disappear_value = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$PlayerProjectileSprite.set_rotation_degrees(90)
+#	$PlayerProjectileSprite.set_rotation_degrees(90)
 	add_to_group("bullets")
 
 func start(pos, dir):
