@@ -14,6 +14,11 @@ func _ready():
 func decrement_lives():
 	global.lives -= 1
 	text = "Lives: " + str(global.lives)
+	if global.lives == -1:
+		global.lives = 3
+		global.score = 0
+		global.current_level = 1
+		get_tree().change_scene("res://levels/StartingScreen.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

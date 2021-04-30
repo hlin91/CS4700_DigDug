@@ -59,7 +59,7 @@ var right_or_down = true
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	._ready()
+	global.num_baddies += 1
 	set_collision_layer(enemy_layer)
 	print(get_instance_id())
 	sprite_path = "./RedBaddieSprite"
@@ -268,6 +268,13 @@ func explode():
 func update_score():
 	get_tree().call_group("baddies","start_hunting")
 	score.update_score(base_score)
+	check_for_level_completion()
+
+func check_for_level_completion():
+	global.num_baddies -= 1
+	if (global.num_baddies == 0):
+		global.current_level += 1
+		get_tree().change_scene("res://levels/level_" + str(global.current_level) + ".tscn")
 
 func start_hunting():
 	print("now hunting")

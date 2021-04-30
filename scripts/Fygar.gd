@@ -14,7 +14,6 @@ export var bullet_layer = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	._ready()
 	original_walk_speed = 75
 	walk_speed = original_walk_speed
 	sprite_path = "./FygarSprite"
