@@ -1,7 +1,7 @@
 extends "res://scripts/RedBaddie.gd"
 
 var fire = preload("res://scenes/FygarFire.tscn")
-var fire_threshold = 10
+var fire_threshold = 8.5
 var fire_value = 0
 var breathing_fire = false
 

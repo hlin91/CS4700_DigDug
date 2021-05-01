@@ -12,6 +12,8 @@ export var pump_reset_time = .5
 export var pumps_to_kill = 8
 export var enemy_layer = 2
 
+var rng = RandomNumberGenerator.new()
+
 var original_walk_speed = 50
 
 var facing_left = true
@@ -61,9 +63,10 @@ var right_or_down = true
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	rng.randomize()
+	starting_to_ghost_threshold = rng.randf_range(6,12)
 	global.num_baddies += 1
 	set_collision_layer(enemy_layer)
-	print(get_instance_id())
 	sprite_path = "./RedBaddieSprite"
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)
@@ -196,6 +199,8 @@ func a_star_motion(delta):
 			
 
 func ghost_motion(delta):
+	if sprite.animation != "ghosting":
+		sprite.set_to_ghost()
 	update_position()
 	if (arrived()):
 		enable_collision_and_unghost()
@@ -253,12 +258,10 @@ func pump():
 	if inflation >= pumps_to_kill:
 		print("I am dead.")
 		explode()
-		queue_free()
 
 func explode():
 	emit_signal("baddie_died",base_score,current_cell)
 	$TerrainCollision.set_deferred("disabled",true)
-	update_score()
 	player.pumping = null
 	sprite.set_to_exploding()
 	var t = Timer.new()
@@ -268,10 +271,16 @@ func explode():
 	t.start()
 	yield(t, "timeout")
 	t.queue_free()
-
+	die()
+	
 func update_score():
 	get_tree().call_group("baddies","start_hunting")
 	score.update_score(base_score)
+	
+func die():
+	explode()
+	update_score()
+	queue_free()
 	check_for_level_completion()
 
 func check_for_level_completion():
@@ -297,8 +306,7 @@ func start_hunting():
 func squish():
 	print("I am baddie and I am squished")
 	emit_signal("baddie_died",base_score,current_cell)
-	update_score()
-	queue_free()
+	die()
 
 func a_star(starting_cell,player_cell,move_tiles_instance):
 	var frontier = preload("res://scripts/pq.gd").new()

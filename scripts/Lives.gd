@@ -14,7 +14,7 @@ func _ready():
 func decrement_lives():
 	global.lives -= 1
 	text = "Lives: " + str(global.lives)
-	if global.lives == -1:
+	if global.lives < 0:
 		global.lives = 3
 		global.score = 0
 		global.current_level = 1

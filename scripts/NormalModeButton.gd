@@ -11,6 +11,9 @@ func _ready():
 	connect("pressed", self, "_button_pressed")
 	
 func _button_pressed():
+	global.lives = 3
+	global.current_level = 1
+	global.is_remix = true
 	get_tree().change_scene("res://levels/level_1.tscn")
 
 

@@ -12,6 +12,9 @@ func _ready():
 
 func _button_pressed():
 	print("Hello world!")
+	global.lives = 3
+	global.current_level = 1
+	global.is_remix = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
