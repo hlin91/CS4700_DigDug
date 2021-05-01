@@ -6,7 +6,7 @@ extends KinematicBody2D
 # var b = "text"
 export (float) var speed = 300.0
 var velocity = Vector2(speed, 0)
-var disappear_threshold = .5
+var disappear_threshold = .25
 var disappear_value = 0
 
 # Called when the node enters the scene tree for the first time.

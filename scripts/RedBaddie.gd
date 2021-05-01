@@ -122,9 +122,9 @@ func create_starter_room(width, length):
 		for l in range(0, length):
 			var cell = dirt_tiles.world_to_map(position)
 			dirt_tiles.dig_out(cell + Vector2(l, w), dirt_tiles.ORIENT.HORIZ)
-			move_tiles.add_moved_to_cell(cell + Vector2(l, w))
+			#move_tiles.add_moved_to_cell(cell + Vector2(l, w))
 			dirt_tiles.dig_out(cell + Vector2(-l, -w), dirt_tiles.ORIENT.HORIZ)
-			move_tiles.add_moved_to_cell(cell + Vector2(-l, -w))
+			#move_tiles.add_moved_to_cell(cell + Vector2(-l, -w))
 			
 func starter_motion(delta):
 	sprite.set_to_walk()
@@ -166,10 +166,10 @@ func a_star_motion(delta):
 		elif is_wandering:
 			dest_cell = move_tiles.get_random_moved_to_cell()
 		current_path = a_star(current_cell, dest_cell, move_tiles)
-		if (current_path.size() == 0):
-			move_to_cell(move_tiles.get_random_moved_to_cell())
-			disable_collision_and_ghost()
-			return
+#		if (current_path.size() == 0):
+#			move_to_cell(move_tiles.get_random_moved_to_cell())
+#			disable_collision_and_ghost()
+#			return
 	else:
 		if !in_transit:
 			move_to_cell(current_path[0])
