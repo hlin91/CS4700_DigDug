@@ -49,6 +49,8 @@ func _physics_process(delta):
 		update_position()
 
 func move_and_process(velocity):
+	if sprite.digging:
+		$DirtParticles.turn_on()
 	move_and_slide(velocity)
 	if get_slide_count() > 0:
 		in_transit = false
