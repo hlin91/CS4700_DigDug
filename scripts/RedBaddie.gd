@@ -65,6 +65,7 @@ var right_or_down = true
 func _ready():
 	rng.randomize()
 	starting_to_ghost_threshold = rng.randf_range(6,12)
+	hunting_to_ghost_threshold = rng.randf_range(6,10)
 	global.num_baddies += 1
 	set_collision_layer(enemy_layer)
 	sprite_path = "./RedBaddieSprite"
