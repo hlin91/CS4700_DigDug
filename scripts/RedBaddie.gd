@@ -7,6 +7,7 @@ signal baddie_died(base_score,current_cell)
 export var player_path = "../Player"
 export var score_path = "../Score"
 export var sprite_path = ""
+export var camera_path = "../Camera"
 export var pump_reset_time = .5
 export var pumps_to_kill = 8
 export var enemy_layer = 2
@@ -19,6 +20,7 @@ export var base_score = 100
 
 var collision_info
 var player
+var camera
 var sprite
 var score
 var inflation = 0
@@ -66,6 +68,7 @@ func _ready():
 	move_tiles = get_node(move_tiles_path)
 	sprite = get_node(sprite_path)
 	player = get_node(player_path)
+	camera = get_node(camera_path)
 	score = get_node(score_path)
 	walk_speed = original_walk_speed
 	normal_walk_speed = original_walk_speed
@@ -241,6 +244,7 @@ func hit():
 	pump()
 
 func pump():
+	camera.small_shake()
 	inflation += 1
 	print("I'm getting pumped!")
 	print("Current inflation: " + str(inflation))

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/DirtTiles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scripts/GameManager.gd" type="Script" id=7]
 [ext_resource path="res://scenes/HighScore.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/Lives.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/Camera.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/RedBaddie.tscn" type="PackedScene" id=12]
 
 [node name="GameManager" type="Node2D"]
@@ -59,3 +60,7 @@ walk_speed = 50.0
 [node name="HighScore" parent="." instance=ExtResource( 8 )]
 
 [node name="Lives" parent="." instance=ExtResource( 9 )]
+
+[node name="Camera" parent="." instance=ExtResource( 10 )]
+anchor_mode = 0
+current = true
