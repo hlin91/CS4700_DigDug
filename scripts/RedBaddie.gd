@@ -12,6 +12,8 @@ export var pump_reset_time = .5
 export var pumps_to_kill = 8
 export var enemy_layer = 2
 
+var exploding_sound = preload("res://assets/sounds/explosion.wav")
+
 var rng = RandomNumberGenerator.new()
 
 var original_walk_speed = 50
@@ -264,6 +266,8 @@ func explode():
 	emit_signal("baddie_died",base_score,current_cell)
 	$TerrainCollision.set_deferred("disabled",true)
 	player.pumping = null
+	$AudioStreamPlayer.stream = exploding_sound
+	$AudioStreamPlayer.play()
 	sprite.set_to_exploding()
 	yield(sprite,"animation_finished")
 	die()

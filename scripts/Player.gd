@@ -5,6 +5,10 @@ extends "res://scripts/GridKinematics.gd"
 # var a = 2
 # var b = "text"
 
+var shoot_sound = preload("res://assets/sounds/shoot.wav")
+var pump_sound = preload("res://assets/sounds/pump.wav")
+var death_sound = preload("res://assets/sounds/death_sound.wav")
+
 export var bullet_layer = 3
 export var enemy_layer = 2
 export var start_x = 2
@@ -34,6 +38,8 @@ func _process(delta):
 		if !in_transit && Input.is_action_just_pressed("shoot"):
 			if pumping != null:
 				sprite.play_pumping_animation()
+				$AudioStreamPlayer.stream = pump_sound
+				$AudioStreamPlayer.play()
 				pumping.pump()
 			else:
 				sprite.play_shooting_animation()
@@ -62,6 +68,8 @@ func move_cell_hook(cell):
 
 func shoot():
 	if get_tree().get_nodes_in_group("bullets").size() < max_bullets:
+		$AudioStreamPlayer.stream = shoot_sound
+		$AudioStreamPlayer.play()
 		var b = bullet.instance()
 		b.set_collision_layer_bit(0, false)
 		b.set_collision_mask_bit(0, false)

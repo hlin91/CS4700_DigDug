@@ -18,6 +18,11 @@ extents = Vector2( 4.93225, 5.06871 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "hero_shoot",
+"speed": 2.0
+}, {
 "frames": [ ExtResource( 9 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "hero_dig",
@@ -28,19 +33,14 @@ animations = [ {
 "name": "hero_pumping",
 "speed": 2.0
 }, {
-"frames": [ ExtResource( 6 ), ExtResource( 8 ) ],
-"loop": true,
-"name": "hero_walking",
-"speed": 2.0
-}, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "hero_shoot",
-"speed": 2.0
-}, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "hero_idl",
+"speed": 2.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "hero_walking",
 "speed": 2.0
 } ]
 
@@ -97,4 +97,5 @@ local_coords = false
 process_material = SubResource( 4 )
 script = ExtResource( 7 )
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 [connection signal="area_entered" from="PlayerHurtbox" to="." method="_on_PlayerHurtbox_area_entered"]
