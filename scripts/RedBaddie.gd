@@ -13,6 +13,7 @@ export var pumps_to_kill = 8
 export var enemy_layer = 2
 
 var exploding_sound = preload("res://assets/sounds/explosion.wav")
+var level_complete_sound = preload("res://assets/sounds/level_complete.wav")
 
 var rng = RandomNumberGenerator.new()
 
@@ -284,6 +285,10 @@ func die():
 func check_for_level_completion():
 	global.num_baddies -= 1
 	if (global.num_baddies == 0):
+		print("level complete!")
+		$AudioStreamPlayer.stream = level_complete_sound
+		$AudioStreamPlayer.play()
+		yield($AudioStreamPlayer,"finished")
 		global.current_level += 1
 		get_tree().change_scene("res://levels/level_" + str(global.current_level) + ".tscn")
 
