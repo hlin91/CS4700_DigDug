@@ -9,6 +9,7 @@ func _ready():
 
 func pick_up():
 	global.lives += 1
+	get_node("../Lives").redraw()
 
 
 
