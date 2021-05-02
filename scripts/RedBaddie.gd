@@ -94,7 +94,7 @@ func _process(delta):
 	if inflation > 0: # Currently getting pumped
 		#$TerrainCollision.set_deferred("disabled",true)
 		time_until_reset_pump -= delta
-		if time_until_reset_pump <= 0:
+		if time_until_reset_pump <= 0 and inflation < pumps_to_kill:
 			time_until_reset_pump = pump_reset_time
 			print("Decreasing inflation")
 			inflation -= 1
@@ -265,13 +265,7 @@ func explode():
 	$TerrainCollision.set_deferred("disabled",true)
 	player.pumping = null
 	sprite.set_to_exploding()
-	var t = Timer.new()
-	t.set_wait_time(.8)
-	t.set_one_shot(true)
-	self.add_child(t)
-	t.start()
-	yield(t, "timeout")
-	t.queue_free()
+	yield(sprite,"animation_finished")
 	die()
 	
 func update_score():
@@ -279,7 +273,6 @@ func update_score():
 	score.update_score(base_score)
 	
 func die():
-	explode()
 	update_score()
 	queue_free()
 	check_for_level_completion()

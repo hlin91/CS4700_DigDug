@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/light_bassy_thump.wav-bedd3cbbf657af2ab95f7d58ea03be29.sample"
+
+[deps]
+
+source_file="res://assets/sounds/light_bassy_thump.wav"
+dest_files=[ "res://.import/light_bassy_thump.wav-bedd3cbbf657af2ab95f7d58ea03be29.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
