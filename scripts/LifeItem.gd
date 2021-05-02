@@ -11,8 +11,6 @@ func pick_up():
 	global.lives += 1
 	get_node("../Lives").redraw()
 
-
-
 func _on_Area2D_body_entered(body):
 	if body == player:
 		pick_up()
