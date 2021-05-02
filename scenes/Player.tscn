@@ -61,7 +61,6 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 radial_accel = 10.0
 radial_accel_random = 0.5
-scale = 3.0
 scale_random = 0.5
 color = Color( 0.45098, 0.352941, 0.333333, 1 )
 hue_variation = 0.04
@@ -92,7 +91,6 @@ shape = SubResource( 3 )
 position = Vector2( 10.3, 0 )
 
 [node name="DirtParticles" type="Particles2D" parent="."]
-emitting = false
 amount = 12
 lifetime = 0.7
 local_coords = false

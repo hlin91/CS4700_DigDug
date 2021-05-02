@@ -144,8 +144,16 @@ func die_by_mob():
 	kill()
 
 func kill():
-	print("Player died")
+	$PlayerCollision.set_deferred("disabled",true)
+	$AudioStreamPlayer.stream = death_sound
+	$AudioStreamPlayer.play()
+	$PlayerSprite.visible = false
 	current_cell = Vector2(start_x,start_y)
 	position = Vector2(start_x,start_y)
 	move_to_cell(Vector2(start_x,start_y))
+	yield($AudioStreamPlayer,"finished")
+	$PlayerCollision.set_deferred("disabled",false)
+	$PlayerSprite.visible = true
+	
+	
 	lives.decrement_lives()
