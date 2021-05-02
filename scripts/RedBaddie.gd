@@ -14,7 +14,7 @@ export var enemy_layer = 2
 
 var rng = RandomNumberGenerator.new()
 
-var original_walk_speed = 50
+var original_walk_speed = 60
 
 var facing_left = true
 
