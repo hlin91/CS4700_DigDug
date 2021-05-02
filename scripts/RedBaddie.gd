@@ -288,7 +288,12 @@ func check_for_level_completion():
 		print("level complete!")
 		$AudioStreamPlayer.stream = level_complete_sound
 		$AudioStreamPlayer.play()
-		yield($AudioStreamPlayer,"finished")
+		var timer = Timer.new()
+		timer.connect("timeout",self,"_on_timer_timeout")
+		timer.set_wait_time(3)
+		get_tree().root.add_child(timer)
+		timer.start()
+		timer.queue_free()
 		global.current_level += 1
 		get_tree().change_scene("res://levels/level_" + str(global.current_level) + ".tscn")
 
