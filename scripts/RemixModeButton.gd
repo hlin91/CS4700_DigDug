@@ -14,7 +14,8 @@ func _button_pressed():
 	print("Hello world!")
 	global.lives = 3
 	global.current_level = 1
-	global.is_remix = true
+	global.is_variant = true
+	get_tree().change_scene("res://levels/level_" + str(global.current_level) + ".tscn")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

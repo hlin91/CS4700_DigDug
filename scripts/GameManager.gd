@@ -1,7 +1,6 @@
 extends Node2D
 
 
-signal baddie_died(base_score,current_cell)
 
 # Declare member variables here. Examples:
 # var a = 2
