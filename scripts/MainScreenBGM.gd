@@ -10,7 +10,7 @@ var bgm = preload("res://assets/sounds/Chiptronical.ogg")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	stream = bgm
-	volume_db = -12
+	volume_db = -15
 	play() 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
