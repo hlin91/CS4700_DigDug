@@ -290,21 +290,15 @@ func update_score():
 	
 func die():
 	update_score()
-	queue_free()
 	check_for_level_completion()
+	queue_free()
 
 func check_for_level_completion():
 	global.num_baddies -= 1
 	if (global.num_baddies == 0):
 		print("level complete!")
-		$AudioStreamPlayer.stream = level_complete_sound
-		$AudioStreamPlayer.play()
-		var timer = Timer.new()
-		timer.connect("timeout",self,"_on_timer_timeout")
-		timer.set_wait_time(3)
-		get_tree().root.add_child(timer)
-		timer.start()
-		timer.queue_free()
+#		$AudioStreamPlayer.stream = level_complete_sound
+#		$AudioStreamPlayer.play()
 		global.current_level += 1
 		get_tree().change_scene("res://levels/level_" + str(global.current_level) + ".tscn")
 
