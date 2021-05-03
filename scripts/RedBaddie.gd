@@ -107,6 +107,7 @@ func _process(delta):
 			sprite.change_scale(Vector2(-1*pump_scale_factor,-1*pump_scale_factor))
 			if inflation == 0: # Get out of pumping state
 				print("No longer pumped.")
+				sprite.set_to_walk()
 				#$TerrainCollision.set_deferred("disabled",false)
 				get_node(player_path).pumping = null
 
@@ -271,6 +272,8 @@ func pump():
 	inflation += 1
 	print("I'm getting pumped!")
 	print("Current inflation: " + str(inflation))
+	if sprite.animation != "pumping":
+		sprite.set_to_pumped()
 	time_until_reset_pump = pump_reset_time
 	sprite.change_scale(Vector2(pump_scale_factor,pump_scale_factor))
 	if inflation >= pumps_to_kill:

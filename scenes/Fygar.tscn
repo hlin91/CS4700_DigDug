@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://assets/fygar_2.png" type="Texture" id=1]
 [ext_resource path="res://scripts/FygarSprite.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/explosion.png" type="Texture" id=4]
 [ext_resource path="res://assets/ghost.png" type="Texture" id=5]
 [ext_resource path="res://assets/fygar_1.png" type="Texture" id=6]
+[ext_resource path="res://assets/fygar_pump.png" type="Texture" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 13.0
@@ -16,14 +17,12 @@ atlas = ExtResource( 6 )
 region = Rect2( 0, 0, 48, 46 )
 
 [sub_resource type="AtlasTexture" id=3]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 48, 46 )
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 20, 20 )
 
 [sub_resource type="AtlasTexture" id=4]
-flags = 4
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 48, 46 )
+atlas = ExtResource( 5 )
+region = Rect2( 20, 0, 20, 20 )
 
 [sub_resource type="AtlasTexture" id=5]
 flags = 4
@@ -106,23 +105,30 @@ atlas = ExtResource( 4 )
 region = Rect2( 1200, 1200, 400, 400 )
 
 [sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 5 )
-region = Rect2( 0, 0, 20, 20 )
+flags = 4
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 48, 46 )
 
 [sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 5 )
-region = Rect2( 20, 0, 20, 20 )
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 48, 46 )
 
 [sub_resource type="SpriteFrames" id=23]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ) ],
-"loop": true,
-"name": "walking",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 4 ) ],
+"frames": [ SubResource( 2 ) ],
 "loop": true,
 "name": "firing",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "pumping",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "ghosting",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
@@ -132,7 +138,7 @@ animations = [ {
 }, {
 "frames": [ SubResource( 21 ), SubResource( 22 ) ],
 "loop": true,
-"name": "ghosting",
+"name": "walking",
 "speed": 5.0
 } ]
 
@@ -145,7 +151,7 @@ shape = SubResource( 1 )
 [node name="FygarSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 23 )
-animation = "firing"
+animation = "pumping"
 playing = true
 script = ExtResource( 2 )
 
