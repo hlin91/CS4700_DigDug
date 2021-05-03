@@ -95,11 +95,11 @@ region = Rect2( 0, 0, 20, 20 )
 atlas = ExtResource( 4 )
 region = Rect2( 20, 0, 20, 20 )
 
-[sub_resource type="AtlasTexture" id=23]
+[sub_resource type="AtlasTexture" id=19]
 atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 20, 20 )
 
-[sub_resource type="AtlasTexture" id=24]
+[sub_resource type="AtlasTexture" id=20]
 atlas = ExtResource( 4 )
 region = Rect2( 20, 0, 20, 20 )
 
@@ -115,14 +115,14 @@ animations = [ {
 "name": "exploding",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 23 ), SubResource( 24 ) ],
+"frames": [ SubResource( 19 ), SubResource( 20 ) ],
 "loop": true,
 "name": "ghosting",
 "speed": 5.0
 } ]
 
 [sub_resource type="CircleShape2D" id=22]
-radius = 3.0
+radius = 13.0
 
 [node name="RedBaddie" type="KinematicBody2D"]
 position = Vector2( 396.653, 286.027 )

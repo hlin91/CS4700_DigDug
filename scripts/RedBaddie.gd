@@ -51,6 +51,9 @@ var hunting_to_ghost_value = 0
 var give_up_ghost_threshold = 4
 var give_up_ghost_value = 0
 
+var recalculate_astar_threshold = 3
+var recalcuate_astar_value = 0
+
 var giving_up_ghost = false
 
 var pump_scale_factor = 1.5 / pumps_to_kill
@@ -67,7 +70,7 @@ var right_or_down = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
-	starting_to_ghost_threshold = rng.randf_range(6,12)
+	starting_to_ghost_threshold = rng.randf_range(3,9)
 	hunting_to_ghost_threshold = rng.randf_range(6,10)
 	global.num_baddies += 1
 	set_collision_layer(enemy_layer)
@@ -111,10 +114,10 @@ func _physics_process(delta):
 	if (inflation == 0):
 		if is_ghosting:
 			ghost_motion(delta)
-		elif is_hunting or is_wandering:
-			a_star_motion(delta)
 		elif is_starting:
 			starter_motion(delta)
+		elif is_hunting or is_wandering:
+			a_star_motion(delta)
 
 #func create_starter_room(length,width):
 #	var cell
@@ -132,9 +135,9 @@ func create_starter_room(width, length):
 		for l in range(0, length):
 			var cell = dirt_tiles.world_to_map(position)
 			dirt_tiles.dig_out(cell + Vector2(l, w), dirt_tiles.ORIENT.HORIZ)
-			#move_tiles.add_moved_to_cell(cell + Vector2(l, w))
+			move_tiles.add_moved_to_cell(cell + Vector2(l, w))
 			dirt_tiles.dig_out(cell + Vector2(-l, -w), dirt_tiles.ORIENT.HORIZ)
-			#move_tiles.add_moved_to_cell(cell + Vector2(-l, -w))
+			move_tiles.add_moved_to_cell(cell + Vector2(-l, -w))
 			
 func starter_motion(delta):
 	sprite.set_to_walk()
@@ -152,11 +155,10 @@ func starter_motion(delta):
 			else:
 				move_to_cell(Vector2(current_cell.x-1,current_cell.y))
 	update_position()
-	starting_to_ghost_value += delta
-	if (starting_to_ghost_value >= starting_to_ghost_threshold):
-		disable_collision_and_ghost()
-		is_wandering = true
-		move_to_cell(move_tiles.get_random_moved_to_cell())
+	if (is_hunting):
+		starting_to_ghost_value += delta
+		if (starting_to_ghost_value >= starting_to_ghost_threshold):
+			is_starting = false
 
 func a_star_motion(delta):
 	if !move_tiles.is_cell_moved_to(current_cell):
@@ -165,6 +167,7 @@ func a_star_motion(delta):
 		disable_collision_and_ghost()
 		return
 	if current_path == null or current_path.size() == 0:
+		print("calculating path")
 		var dest_cell
 		if (hunting_to_ghost_value >= hunting_to_ghost_threshold):
 			hunting_to_ghost_value = 0
@@ -176,10 +179,13 @@ func a_star_motion(delta):
 		elif is_wandering:
 			dest_cell = move_tiles.get_random_moved_to_cell()
 		current_path = a_star(current_cell, dest_cell, move_tiles)
-#		if (current_path.size() == 0):
-#			move_to_cell(move_tiles.get_random_moved_to_cell())
-#			disable_collision_and_ghost()
-#			return
+		if (current_path.size() > 0):
+			current_path.remove(0)
+		if (current_path.size() == 0):
+			print("can't get to destination: going ghost!")
+			current_path = []
+			move_to_cell(move_tiles.get_random_moved_to_cell())
+			disable_collision_and_ghost()
 	else:
 		if !in_transit:
 			move_to_cell(current_path[0])
@@ -198,6 +204,11 @@ func a_star_motion(delta):
 			move_to_cell(move_tiles.get_random_moved_to_cell())
 			disable_collision_and_ghost()
 			return
+	recalcuate_astar_value += delta
+	if (recalcuate_astar_value >= recalculate_astar_threshold):
+		print("clearing current path")
+		current_path = []
+		recalcuate_astar_value = 0
 			
 	hunting_to_ghost_value += delta
 			
