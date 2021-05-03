@@ -16,7 +16,7 @@ export var start_y = 2
 export var game_over_scene = "res://levels/level_1.tscn"
 export var sprite_path = "./PlayerSprite"
 export var lives_path = "../Lives"
-export var digs_til_powerup = 75
+export var digs_til_powerup = 50
 var digs = 0
 var lives
 export var shoot_animation_persist = .1
