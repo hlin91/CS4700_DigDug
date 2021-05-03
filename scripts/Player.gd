@@ -16,17 +16,27 @@ export var start_y = 2
 export var game_over_scene = "res://levels/level_1.tscn"
 export var sprite_path = "./PlayerSprite"
 export var lives_path = "../Lives"
+export var digs_til_powerup = 75
+var digs = 0
 var lives
 export var shoot_animation_persist = .1
 var sprite = null
 var game_over = false
 var bullet = preload("res://scenes/PlayerProjectile.tscn")
+var life_item = preload("res://scenes/LifeItem.tscn")
+var range_item = preload("res://scenes/RangeItem.tscn")
+var speed_item = preload("res://scenes/SpeedItem.tscn")
+var slow_enemies_item = preload("res://scenes/SlowEnemiesItem.tscn")
 var max_bullets = 1
 var pumping = null # Enemy the player is currently pumping
 var orientation
+var rng
+var bullet_extend = 0
 
 func _ready():
 	._ready()
+	rng = RandomNumberGenerator.new()
+	rng.randomize()
 	lives = get_node(lives_path)
 	sprite = get_node(sprite_path)
 	orientation = dirt_tiles.ORIENT.HORIZ
@@ -77,6 +87,7 @@ func shoot():
 		b.set_collision_mask_bit(bullet_layer-1, true)
 		b.set_collision_layer_bit(enemy_layer-1, true)
 		b.set_collision_mask_bit(enemy_layer-1, true)
+		b.disappear_threshold += bullet_extend
 		b.start($Muzzle.global_position, rotation)
 		get_parent().add_child(b)
 
@@ -130,10 +141,37 @@ func arrived_hook(cell):
 	move_tiles.add_moved_to_cell(cell)
 	sprite.digging = dirt_tiles.dig_out(cell, orientation)
 	sprite.moving = false
+	if global.is_variant: # Spawn powerups for variant
+		if sprite.digging:
+			digs += 1
+			if digs >= digs_til_powerup:
+				digs = 0
+				spawn_powerup()
 	if !(Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left") ||
 		 Input.is_action_pressed("move_down") || Input.is_action_pressed("move_up")):
 		if sprite.animation != "hero_shoot" && sprite.animation != "hero_pumping":
 			sprite.clear_animation()
+
+func spawn_powerup():
+	var rand_x = rng.randi_range(move_tiles.min_x, move_tiles.max_x)
+	var rand_y = rng.randi_range(move_tiles.min_y, move_tiles.max_y)
+	var powerup_choice = rng.randi_range(0, global.num_powerups-1)
+	var powerup
+	match powerup_choice:
+		0:
+			# Spawn LifeItem
+			powerup = life_item.instance()
+		1:
+			# Spawn RangeItem
+			powerup = range_item.instance()
+		2:
+			# Spawn SlowEnemiesItem
+			powerup = slow_enemies_item.instance()
+		3:
+			# Spawn SpeedItem
+			powerup = speed_item.instance()
+	powerup.position = move_tiles.map_to_world(Vector2(rand_x, rand_y))
+	get_parent().add_child(powerup)
 
 func squish():
 	print("the player is squished :(")
