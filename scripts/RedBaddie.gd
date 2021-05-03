@@ -300,7 +300,10 @@ func check_for_level_completion():
 #		$AudioStreamPlayer.stream = level_complete_sound
 #		$AudioStreamPlayer.play()
 		global.current_level += 1
-		get_tree().change_scene("res://levels/level_" + str(global.current_level) + ".tscn")
+		if global.current_level == 6:
+			get_tree().change_scene("res://levels/StartingScreen.tscn")
+		else:
+			get_tree().change_scene("res://levels/level_" + str(global.current_level) + ".tscn")
 
 func start_hunting():
 	print("now hunting")
