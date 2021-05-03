@@ -142,8 +142,11 @@ func create_starter_room(width, length):
 func starter_motion(delta):
 	sprite.set_to_walk()
 	if not in_transit:
-		if dirt_tiles.get_cellv(current_cell) != -1:
-			right_or_down = not right_or_down
+		for i in range(-2,3):
+			for j in range(-2,3):
+				if dirt_tiles.get_cellv(current_cell+Vector2(i,j)) != -1:
+					right_or_down = not right_or_down
+					break
 		if (up_down_motion):
 			if right_or_down:
 				move_to_cell(Vector2(current_cell.x,current_cell.y+1))

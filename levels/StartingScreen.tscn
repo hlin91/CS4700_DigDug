@@ -124,7 +124,6 @@ starting_cell_height = 5
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
 position = Vector2( 736.997, 207.724 )
 frames = SubResource( 2 )
-frame = 1
 playing = true
 flip_h = true
 
