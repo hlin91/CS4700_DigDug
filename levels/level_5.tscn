@@ -16,12 +16,12 @@
 [node name="GameManager" type="Node2D"]
 script = ExtResource( 10 )
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-walk_speed = 50.0
-
 [node name="DirtTiles" parent="." instance=ExtResource( 2 )]
 
 [node name="MoveTiles" parent="." instance=ExtResource( 3 )]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+walk_speed = 50.0
 
 [node name="Fygar" parent="." instance=ExtResource( 5 )]
 position = Vector2( 155.824, 338.617 )

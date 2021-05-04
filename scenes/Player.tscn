@@ -105,6 +105,7 @@ shape = SubResource( 4 )
 position = Vector2( 10.3, 0 )
 
 [node name="DirtParticles" type="Particles2D" parent="."]
+emitting = false
 amount = 12
 lifetime = 0.7
 local_coords = false
