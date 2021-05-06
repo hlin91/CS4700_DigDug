@@ -14,6 +14,7 @@ func _button_pressed():
 	global.lives = 3
 	global.current_level = 1
 	global.is_variant = false
+	global.num_baddies = 0
 	get_tree().change_scene("res://levels/level_1.tscn")
 
 
