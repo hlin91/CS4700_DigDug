@@ -108,7 +108,6 @@ position = Vector2( 322.525, 352.393 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 848.988, 327.6 )
 frames = SubResource( 1 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -124,13 +123,13 @@ starting_cell_height = 5
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
 position = Vector2( 736.997, 207.724 )
 frames = SubResource( 2 )
+frame = 1
 playing = true
 flip_h = true
 
 [node name="AnimatedSprite3" type="AnimatedSprite" parent="."]
 position = Vector2( 760.595, 328.844 )
 frames = SubResource( 3 )
-frame = 1
 playing = true
 flip_h = true
 script = ExtResource( 15 )

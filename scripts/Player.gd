@@ -27,6 +27,7 @@ var life_item = preload("res://scenes/LifeItem.tscn")
 var range_item = preload("res://scenes/RangeItem.tscn")
 var speed_item = preload("res://scenes/SpeedItem.tscn")
 var slow_enemies_item = preload("res://scenes/SlowEnemiesItem.tscn")
+var enemy_speed_item = preload("res://scenes/EnemySpeedItem.tscn")
 var max_bullets = 1
 var pumping = null # Enemy the player is currently pumping
 var orientation
@@ -155,7 +156,7 @@ func arrived_hook(cell):
 func spawn_powerup():
 	var rand_x = rng.randi_range(move_tiles.min_x, move_tiles.max_x)
 	var rand_y = rng.randi_range(move_tiles.min_y, move_tiles.max_y)
-	var powerup_choice = rng.randi_range(0, global.num_powerups-1)
+	var powerup_choice = rng.randi_range(0, global.num_powerups)
 	var powerup
 	match powerup_choice:
 		0:
@@ -170,6 +171,9 @@ func spawn_powerup():
 		3:
 			# Spawn SpeedItem
 			powerup = speed_item.instance()
+		4:
+			#Spawn enemy speed item
+			powerup = enemy_speed_item.instance()
 	powerup.position = move_tiles.map_to_world(Vector2(rand_x, rand_y))
 	get_parent().add_child(powerup)
 
