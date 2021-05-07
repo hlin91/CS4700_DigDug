@@ -8,7 +8,7 @@ export var increased_speed = 100
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-	
+
 func pick_up():
 	.pick_up()
 	var baddies = get_tree().get_nodes_in_group("baddies")

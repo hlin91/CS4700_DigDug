@@ -282,10 +282,25 @@ func pump():
 
 func explode():
 	die()
+
+func get_layer_value():
+	var increment = move_tiles.max_y/4
+	var y = current_cell.y
+	if (y < increment):
+		return 1
+	elif y < increment*2:
+		return 1.5
+	elif y < increment*3:
+		return 2
+	else:
+		return 2.5
+		
 	
+
 func update_score():
 	get_tree().call_group("baddies","start_hunting")
-	score.update_score(base_score)
+	print("awarding player with layer value ", get_layer_value())
+	score.update_score(base_score * get_layer_value())
 	
 func die():
 	$TerrainCollision.set_deferred("disabled",true)
@@ -314,15 +329,6 @@ func start_hunting():
 	print("now hunting")
 	is_hunting = true
 	is_wandering = false
-	
-#func _on_RedBaddieHurtArea_area_shape_entered(area_id, area, area_shape, self_shape):
-#	pass # Replace with function body.
-#	#case 1: it's the player
-#		#do nothing
-#	#case 2: it's a projectile
-#		#increment inflation
-#		#check if inflation meets threshold for death
-#			#self.queue_free()
 
 func squish():
 	print("I am baddie and I am squished")
@@ -339,16 +345,16 @@ func a_star(starting_cell,player_cell,move_tiles_instance):
 	var position
 	var path = []
 	frontier.push({cell=starting_cell,pqval=0})
-	
+
 	while not frontier.empty():
 		var frontier_node = frontier.pop()
 		to_visit = frontier_node.cell
 		
 		if to_visit in visited:
 			continue
-		
+
 		visited[to_visit] = true
-		
+
 		if(to_visit == player_cell):
 			path = []
 			position = to_visit
@@ -357,7 +363,7 @@ func a_star(starting_cell,player_cell,move_tiles_instance):
 				path.insert(0,previous[position])
 				position = previous[position]
 			return path
-			
+
 		for neighbor in move_tiles_instance.get_moveable_neighbors(to_visit):
 			potential_cost = costs[to_visit] + 1
 			if neighbor in costs and costs[neighbor] <= potential_cost:
@@ -365,5 +371,5 @@ func a_star(starting_cell,player_cell,move_tiles_instance):
 			costs[neighbor] = potential_cost
 			previous[neighbor] = to_visit
 			frontier.push({cell=neighbor,pqval=potential_cost+move_tiles_instance.get_heuristic(neighbor,player_cell)})
-	
+
 	return path
