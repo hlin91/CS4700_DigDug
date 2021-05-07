@@ -1,6 +1,7 @@
 extends AnimatedSprite
 
 
+var powerup_noise = preload("res://assets/sounds/powerup.wav")
 export var player_path = "../Player"
 var player
 
@@ -10,4 +11,6 @@ func _ready():
 
 # Function that gets called on pickup
 func pick_up():
-	pass
+	print("playing audio")
+	$AudioStreamPlayer.stream = powerup_noise
+	$AudioStreamPlayer.play()

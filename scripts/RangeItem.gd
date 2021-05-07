@@ -11,6 +11,7 @@ func _ready():
 	pass # Replace with function body.
 
 func pick_up():
+	.pick_up()
 	player.bullet_extend += extend_value
 
 
@@ -18,4 +19,7 @@ func pick_up():
 func _on_Area2D_body_entered(body):
 	if body == player:
 		pick_up()
+		$Area2D/CollisionShape2D.set_deferred("disabled",true)
+		hide()
+		yield(get_tree().create_timer(1), "timeout")
 		queue_free()

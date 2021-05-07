@@ -10,7 +10,7 @@ var bgm = preload("res://assets/sounds/Electronic Fantasy.ogg")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	stream = bgm
-	volume_db = -15
+	volume_db = -20
 	play() 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

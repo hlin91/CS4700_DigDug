@@ -281,13 +281,6 @@ func pump():
 		explode()
 
 func explode():
-	emit_signal("baddie_died",base_score,current_cell)
-	$TerrainCollision.set_deferred("disabled",true)
-	player.pumping = null
-	$AudioStreamPlayer.stream = exploding_sound
-	$AudioStreamPlayer.play()
-	sprite.set_to_exploding()
-	yield(sprite,"animation_finished")
 	die()
 	
 func update_score():
@@ -295,6 +288,12 @@ func update_score():
 	score.update_score(base_score)
 	
 func die():
+	$TerrainCollision.set_deferred("disabled",true)
+	player.pumping = null
+	$AudioStreamPlayer.stream = exploding_sound
+	$AudioStreamPlayer.play()
+	sprite.set_to_exploding()
+	yield(sprite,"animation_finished")
 	update_score()
 	check_for_level_completion()
 	queue_free()
@@ -327,7 +326,6 @@ func start_hunting():
 
 func squish():
 	print("I am baddie and I am squished")
-	emit_signal("baddie_died",base_score,current_cell)
 	die()
 
 func a_star(starting_cell,player_cell,move_tiles_instance):
