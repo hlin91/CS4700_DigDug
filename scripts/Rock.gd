@@ -20,9 +20,9 @@ var shook = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	current_cell = move_tiles.world_to_map(position)
+	current_cell = dirt_tiles.world_to_map(position)
 	target_cell = current_cell
-	current_position = move_tiles.map_to_world(current_cell) + (move_tiles.cell_size/2)
+	current_position = dirt_tiles.map_to_world(current_cell) + (move_tiles.cell_size/2)
 	target_position = current_position
 	position = current_position
 	set_collision_mask_bit(player_layer_bit, true)
@@ -56,7 +56,7 @@ func arrived_hook(cell):
 func cell_in_range(cell):
 	var x_offset = -tolerance
 	while x_offset <= tolerance:
-		if move_tiles.is_cell_moved_to(Vector2(cell.x + x_offset, cell.y)):
+		if dirt_tiles.is_cell_dug(Vector2(cell.x + x_offset, cell.y)):
 			return true
 		x_offset += 1
 	return false
