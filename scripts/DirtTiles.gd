@@ -22,6 +22,9 @@ func _ready():
 func atomic_dig_out(cell):
 	set_cellv(cell,-1)
 	
+func is_cell_dug(cell):
+	return get_cellv(Vector2(cell.x, cell.y)) == -1
+	
 func dig_out(cell, orient):
 	var dug_out_cell = false # Has a new cell been dug out this function call
 	var offset = 0
