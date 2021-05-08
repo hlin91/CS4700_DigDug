@@ -70,6 +70,7 @@ var right_or_down = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
+	pumps_to_kill += global.current_level
 	starting_to_ghost_threshold = rng.randf_range(3,9)
 	hunting_to_ghost_threshold = rng.randf_range(6,10)
 	global.num_baddies += 1

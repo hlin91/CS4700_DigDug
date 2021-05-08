@@ -111,6 +111,7 @@ position = Vector2( 322.525, 352.393 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 848.988, 327.6 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 flip_h = true
 
@@ -142,6 +143,7 @@ margin_left = 114.209
 margin_top = 55.6888
 margin_right = 190.209
 margin_bottom = 95.6888
+pressed = true
 script = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false

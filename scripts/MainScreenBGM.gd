@@ -11,7 +11,8 @@ var bgm = preload("res://assets/sounds/Chiptronical.ogg")
 func _ready():
 	stream = bgm
 	volume_db = -25
-	play() 
+	if global.music:
+		play() 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
