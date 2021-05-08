@@ -19,7 +19,7 @@
 [node name="DirtTiles" parent="." instance=ExtResource( 2 )]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-walk_speed = 50.0
+walk_speed = 60.0
 
 [node name="RedBaddie" parent="." instance=ExtResource( 4 )]
 position = Vector2( 498.101, 408.832 )
@@ -33,6 +33,9 @@ position = Vector2( 550.16, 161.887 )
 [node name="Fygar" parent="." instance=ExtResource( 5 )]
 position = Vector2( 168.19, 425.814 )
 starting_cell_height = 6
+
+[node name="Fygar2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 385.768, 512.578 )
 
 [node name="Rock" parent="." instance=ExtResource( 6 )]
 position = Vector2( 166.951, 475.781 )

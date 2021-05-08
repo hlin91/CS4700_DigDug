@@ -42,10 +42,10 @@ var starting_to_ghost_threshold = 8
 var starting_to_ghost_value = 0
 
 #variables to determine when to redirect ghost location
-var more_accurate_ghost_threshold = 12
+var more_accurate_ghost_threshold = 4
 var more_accurate_ghost_value = 0
 
-var hunting_to_ghost_threshold = 8
+var hunting_to_ghost_threshold = 60
 var hunting_to_ghost_value = 0
 
 var give_up_ghost_threshold = 4

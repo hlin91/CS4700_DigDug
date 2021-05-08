@@ -21,7 +21,7 @@ script = ExtResource( 10 )
 [node name="MoveTiles" parent="." instance=ExtResource( 3 )]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-walk_speed = 50.0
+walk_speed = 60.0
 
 [node name="Fygar" parent="." instance=ExtResource( 5 )]
 position = Vector2( 155.824, 338.617 )
@@ -33,6 +33,12 @@ position = Vector2( 531.899, 386.563 )
 position = Vector2( 503.431, 278.685 )
 starting_cell_height = 1
 starting_cell_width = 4
+
+[node name="Fygar4" parent="." instance=ExtResource( 5 )]
+position = Vector2( 492.943, 536.394 )
+
+[node name="Fygar5" parent="." instance=ExtResource( 5 )]
+position = Vector2( 133.349, 537.892 )
 
 [node name="RedBaddie" parent="." instance=ExtResource( 4 )]
 position = Vector2( 99.9882, 121.213 )

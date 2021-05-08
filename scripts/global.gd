@@ -7,3 +7,4 @@ var is_variant = true
 var num_baddies = 0
 var current_level = 1
 var num_powerups = 4
+var music = true
