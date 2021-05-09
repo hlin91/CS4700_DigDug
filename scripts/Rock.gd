@@ -56,10 +56,10 @@ func arrived_hook(cell):
 func cell_in_range(cell):
 	var x_offset = -tolerance
 	while x_offset <= tolerance:
-		if dirt_tiles.is_cell_dug(Vector2(cell.x + x_offset, cell.y)):
-			return true
+		if !dirt_tiles.is_cell_dug(Vector2(cell.x + x_offset, cell.y)):
+			return false
 		x_offset += 1
-	return false
+	return true
 
 func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 	# Scan all cells below the rock for a cell the player has already traversed
