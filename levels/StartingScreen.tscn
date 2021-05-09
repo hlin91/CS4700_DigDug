@@ -71,10 +71,10 @@ __meta__ = {
 }
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_left = 383.086
-margin_top = 48.1085
-margin_right = 453.086
-margin_bottom = 68.1086
+margin_left = 367.898
+margin_top = 44.2245
+margin_right = 428.898
+margin_bottom = 64.2245
 rect_scale = Vector2( 5, 5 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
@@ -111,7 +111,6 @@ position = Vector2( 322.525, 352.393 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 848.988, 327.6 )
 frames = SubResource( 1 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -139,9 +138,9 @@ flip_h = true
 script = ExtResource( 15 )
 
 [node name="MusicCheckButton" type="CheckButton" parent="."]
-margin_left = 114.209
+margin_left = 123.648
 margin_top = 55.6888
-margin_right = 190.209
+margin_right = 199.648
 margin_bottom = 95.6888
 pressed = true
 script = ExtResource( 16 )
