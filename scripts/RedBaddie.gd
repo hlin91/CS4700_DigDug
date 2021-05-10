@@ -166,6 +166,7 @@ func starter_motion(delta):
 			is_starting = false
 
 func a_star_motion(delta):
+	update_position()
 	if !move_tiles.is_cell_moved_to(current_cell):
 		print("going ghost, current cell not in moved to set")
 		move_to_cell(move_tiles.get_random_moved_to_cell())
@@ -184,12 +185,13 @@ func a_star_motion(delta):
 		elif is_wandering:
 			dest_cell = move_tiles.get_random_moved_to_cell()
 		current_path = a_star(current_cell, dest_cell, move_tiles)
+		print(current_path)
 		if (current_path.size() > 0):
 			current_path.remove(0)
 		if (current_path.size() == 0):
 			print("can't get to destination: going ghost!")
-			current_path = []
-			move_to_cell(move_tiles.get_random_moved_to_cell())
+			current_path.clear()
+			move_to_cell(dest_cell)
 			disable_collision_and_ghost()
 	else:
 		if !in_transit:
@@ -201,18 +203,16 @@ func a_star_motion(delta):
 				set_rotation_degrees(180)
 			if current_path.size() > 0:
 				current_path.remove(0)
-		else:
-			update_position()
-		if  current_cell.distance_to(player.current_cell) > move_tiles.max_x/1.5:
-			print("too far, going ghost")
-			current_path = []
-			move_to_cell(move_tiles.get_random_moved_to_cell())
-			disable_collision_and_ghost()
-			return
+#		if  current_cell.distance_to(player.current_cell) > move_tiles.max_x/1.5:
+#			print("too far, going ghost")
+#			current_path.clear()
+#			move_to_cell(move_tiles.get_random_moved_to_cell())
+#			disable_collision_and_ghost()
+#			return
 	recalcuate_astar_value += delta
 	if (recalcuate_astar_value >= recalculate_astar_threshold):
 		print("clearing current path")
-		current_path = []
+		current_path.clear()
 		recalcuate_astar_value = 0
 			
 	hunting_to_ghost_value += delta
@@ -371,6 +371,7 @@ func a_star(starting_cell,player_cell,move_tiles_instance):
 				continue
 			costs[neighbor] = potential_cost
 			previous[neighbor] = to_visit
-			frontier.push({cell=neighbor,pqval=potential_cost+move_tiles_instance.get_heuristic(neighbor,player_cell)})
+			frontier.push({cell=neighbor,pqval=0})
+			#frontier.push({cell=neighbor,pqval=-1*potential_cost+move_tiles_instance.get_heuristic(neighbor,player_cell)})
 
 	return path

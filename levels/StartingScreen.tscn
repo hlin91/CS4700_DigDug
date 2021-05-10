@@ -71,10 +71,10 @@ __meta__ = {
 }
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_left = 367.898
-margin_top = 44.2245
-margin_right = 428.898
-margin_bottom = 64.2245
+margin_left = 368.0
+margin_top = 56.0
+margin_right = 429.0
+margin_bottom = 74.0
 rect_scale = Vector2( 5, 5 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
@@ -111,6 +111,7 @@ position = Vector2( 322.525, 352.393 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 848.988, 327.6 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 flip_h = true
 

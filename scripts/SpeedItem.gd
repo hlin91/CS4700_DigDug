@@ -11,7 +11,7 @@ func pick_up():
 func _on_SpeedArea_body_entered(body):
 	if body == player:
 		pick_up()
-		$Area2D/CollisionShape2D.set_deferred("disabled",true)
+		$SpeedArea/CollisionShape2D.set_deferred("disabled",true)
 		hide()
 		yield(get_tree().create_timer(1), "timeout")
 		queue_free()

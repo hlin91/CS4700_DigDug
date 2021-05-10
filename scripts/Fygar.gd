@@ -23,7 +23,11 @@ func _ready():
 func breathe_fire():
 	var f = fire.instance()
 	f.start($FirePosition.global_position, rotation)
+	f.set_collision_layer_bit(0, true)
 	f.set_collision_layer(enemy_layer)
+	f.set_collision_mask_bit(0, true)
+	f.set_collision_layer_bit(1, false)
+	f.set_collision_mask_bit(1, false)
 	var t = Timer.new()
 	t.set_wait_time(1)
 	t.set_one_shot(true)
