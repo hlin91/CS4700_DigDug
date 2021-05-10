@@ -1,0 +1,78 @@
+{
+ "sample_rate": 44100,
+ "width": 1280,
+ "scale": 15,
+ "version": {
+  "openshot-qt": "2.5.1",
+  "libopenshot": "0.2.5"
+ },
+ "display_ratio": {
+  "num": 16,
+  "den": 9
+ },
+ "profile": "HD 720p 30 fps",
+ "duration": 300,
+ "channel_layout": 3,
+ "playhead_position": 0,
+ "history": {
+  "redo": [],
+  "undo": []
+ },
+ "height": 720,
+ "progress": [],
+ "clips": [],
+ "id": "ENEMI1SD56",
+ "export_path": "",
+ "tick_pixels": 100,
+ "files": [],
+ "pixel_ratio": {
+  "num": 1,
+  "den": 1
+ },
+ "effects": [],
+ "channels": 2,
+ "settings": {},
+ "markers": [],
+ "fps": {
+  "num": 30,
+  "den": 1
+ },
+ "import_path": "",
+ "layers": [
+  {
+   "id": "L1",
+   "number": 1000000,
+   "y": 0,
+   "label": "",
+   "lock": false
+  },
+  {
+   "id": "L2",
+   "number": 2000000,
+   "y": 0,
+   "label": "",
+   "lock": false
+  },
+  {
+   "id": "L3",
+   "number": 3000000,
+   "y": 0,
+   "label": "",
+   "lock": false
+  },
+  {
+   "id": "L4",
+   "number": 4000000,
+   "y": 0,
+   "label": "",
+   "lock": false
+  },
+  {
+   "id": "L5",
+   "number": 5000000,
+   "y": 0,
+   "label": "",
+   "lock": false
+  }
+ ]
+}
