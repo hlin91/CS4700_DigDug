@@ -45,6 +45,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	move_tiles.add_moved_to_cell(move_tiles.world_to_map(position))
 	if (!game_over):
 		if !in_transit && Input.is_action_just_pressed("shoot"):
 			if pumping != null:
@@ -193,6 +194,8 @@ func kill():
 	current_cell = Vector2(start_x,start_y)
 	position = Vector2(start_x,start_y)
 	move_to_cell(Vector2(start_x,start_y))
+	while (!arrived()):
+		update_position()
 	yield($AudioStreamPlayer,"finished")
 	$PlayerCollision.set_deferred("disabled",false)
 	$PlayerSprite.visible = true

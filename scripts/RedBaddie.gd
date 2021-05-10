@@ -72,7 +72,7 @@ func _ready():
 	rng.randomize()
 	pumps_to_kill += global.current_level
 	starting_to_ghost_threshold = rng.randf_range(3,9)
-	hunting_to_ghost_threshold = rng.randf_range(6,10)
+	hunting_to_ghost_threshold = rng.randf_range(18,24)
 	global.num_baddies += 1
 	set_collision_layer(enemy_layer)
 	sprite_path = "./RedBaddieSprite"
@@ -176,14 +176,13 @@ func a_star_motion(delta):
 		print("calculating path")
 		var dest_cell
 		if (hunting_to_ghost_value >= hunting_to_ghost_threshold):
+			print("going ghost on timer")
 			hunting_to_ghost_value = 0
 			move_to_cell(move_tiles.get_random_moved_to_cell())
 			disable_collision_and_ghost()
 			return
 		if is_hunting:
 			dest_cell = player.current_cell
-		elif is_wandering:
-			dest_cell = move_tiles.get_random_moved_to_cell()
 		current_path = a_star(current_cell, dest_cell, move_tiles)
 		print(current_path)
 		if (current_path.size() > 0):
@@ -239,8 +238,8 @@ func ghost_motion(delta):
 	if (more_accurate_ghost_value >= more_accurate_ghost_threshold):
 		more_accurate_ghost_value = 0
 		move_to_cell(player.current_cell)
-#	if (give_up_ghost_value >= give_up_ghost_threshold):
-#		giving_up_ghost = true
+	if (give_up_ghost_value >= give_up_ghost_threshold):
+		giving_up_ghost = true
 
 func move_and_process(velocity):
 	move_and_slide(velocity)
