@@ -135,7 +135,7 @@ func _physics_process(delta):
 func create_starter_room(width, length):
 	for w in range(0, width):
 		for l in range(0, length):
-			var cell = dirt_tiles.world_to_map(position)
+			var cell = current_cell
 			dirt_tiles.dig_out(cell + Vector2(l, w), dirt_tiles.ORIENT.HORIZ)
 			move_tiles.add_moved_to_cell(cell + Vector2(l, w))
 			dirt_tiles.dig_out(cell + Vector2(-l, -w), dirt_tiles.ORIENT.HORIZ)
@@ -235,12 +235,12 @@ func ghost_motion(delta):
 			while (in_transit):
 				update_position()
 	more_accurate_ghost_value += delta
-	give_up_ghost_value += delta
+#	give_up_ghost_value += delta
 	if (more_accurate_ghost_value >= more_accurate_ghost_threshold):
 		more_accurate_ghost_value = 0
 		move_to_cell(player.current_cell)
-	if (give_up_ghost_value >= give_up_ghost_threshold):
-		giving_up_ghost = true
+#	if (give_up_ghost_value >= give_up_ghost_threshold):
+#		giving_up_ghost = true
 
 func move_and_process(velocity):
 	move_and_slide(velocity)
