@@ -117,14 +117,14 @@ animations = [ {
 "name": "exploding",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 17 ), SubResource( 18 ) ],
-"loop": true,
-"name": "ghosting",
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), null ],
+"loop": false,
+"name": "exploding",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 19 ), SubResource( 20 ) ],
+"frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "walking",
+"name": "pumping",
 "speed": 5.0
 } ]
 

@@ -58,7 +58,7 @@ func _process(delta):
 			else:
 				sprite.play_shooting_animation()
 				shoot()
-		elif !animation_clear && (pumping == null && (sprite.animation == "hero_shoot" || sprite.animation == "hero_pumping")):
+		elif animation_clear && (pumping == null && (sprite.animation == "hero_shoot" || sprite.animation == "hero_pumping")):
 			yield(get_tree().create_timer(shoot_animation_persist), "timeout")
 			sprite.clear_animation()
 	update_walk_speed(delta)
