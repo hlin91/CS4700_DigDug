@@ -245,8 +245,8 @@ func move_and_process(velocity):
 	move_and_slide(velocity)
 	for i in range(get_slide_count()):
 		var collision = get_slide_collision(i)
-		if collision.collider.has_method("die_by_mob"):
-			collision.collider.die_by_mob() # Kill the player
+#		if collision.collider.has_method("die_by_mob"):
+#			collision.collider.die_by_mob() # Kill the player
 
 func disable_collision_and_ghost():
 	walk_speed = original_walk_speed / 1.3
@@ -281,6 +281,8 @@ func pump():
 		explode()
 
 func explode():
+	walk_speed = 0
+	walk_speed_reset_time = 999
 	die()
 
 func get_layer_value():
