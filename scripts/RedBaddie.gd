@@ -333,6 +333,7 @@ func start_hunting():
 	is_wandering = false
 
 func squish():
+	camera.small_shake()
 	print("I am baddie and I am squished")
 	die()
 
