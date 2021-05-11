@@ -33,6 +33,8 @@ var pumping = null # Enemy the player is currently pumping
 var orientation
 var rng
 var bullet_extend = 0
+var moved_to_center = false
+var animation_clear = false
 
 func _ready():
 	._ready()
@@ -56,13 +58,22 @@ func _process(delta):
 			else:
 				sprite.play_shooting_animation()
 				shoot()
-		elif pumping == null && (sprite.animation == "hero_shoot" || sprite.animation == "hero_pumping"):
+		elif !animation_clear && (pumping == null && (sprite.animation == "hero_shoot" || sprite.animation == "hero_pumping")):
 			yield(get_tree().create_timer(shoot_animation_persist), "timeout")
 			sprite.clear_animation()
 	update_walk_speed(delta)
 
 func _physics_process(delta):
-	if (!game_over):
+	if !moved_to_center:
+		if current_cell.x < move_tiles.max_x/2:
+			move_right()
+		elif current_cell.y < move_tiles.max_y/2:
+			move_down()
+		else:
+			animation_clear = true
+			moved_to_center = true
+		update_position()
+	elif (!game_over):
 		get_input()
 		update_position()
 
@@ -149,7 +160,7 @@ func arrived_hook(cell):
 			if digs >= digs_til_powerup:
 				digs = 0
 				spawn_powerup()
-	if !(Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left") ||
+	if animation_clear && !(Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left") ||
 		 Input.is_action_pressed("move_down") || Input.is_action_pressed("move_up")):
 		if sprite.animation != "hero_shoot" && sprite.animation != "hero_pumping":
 			sprite.clear_animation()

@@ -115,4 +115,5 @@ script = ExtResource( 7 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 script = ExtResource( 14 )
+
 [connection signal="area_entered" from="PlayerHurtbox" to="." method="_on_PlayerHurtbox_area_entered"]
