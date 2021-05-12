@@ -47,7 +47,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	move_tiles.add_moved_to_cell(move_tiles.world_to_map(position))
 	if (!game_over):
 		if !in_transit && Input.is_action_just_pressed("shoot"):
 			if pumping != null:

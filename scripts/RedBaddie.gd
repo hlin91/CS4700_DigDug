@@ -45,12 +45,15 @@ var starting_to_ghost_value = 0
 var more_accurate_ghost_threshold = 4
 var more_accurate_ghost_value = 0
 
+#variables to determine when to start ghosting
 var hunting_to_ghost_threshold = 60
 var hunting_to_ghost_value = 0
 
+#variables to determine when to give up and unghost at the first movetile
 var give_up_ghost_threshold = 4
 var give_up_ghost_value = 0
 
+#variables to recalculate the path
 var recalculate_astar_threshold = 3
 var recalcuate_astar_value = 0
 
@@ -70,7 +73,9 @@ var right_or_down = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
+	#make enemies on later levels harder
 	pumps_to_kill += global.current_level
+	#Randomize certain values
 	starting_to_ghost_threshold = rng.randf_range(3,9)
 	hunting_to_ghost_threshold = rng.randf_range(18,24)
 	global.num_baddies += 1
@@ -81,10 +86,12 @@ func _ready():
 	player = get_node(player_path)
 	camera = get_node(camera_path)
 	score = get_node(score_path)
+	#Set walk speed, which is altered by powerups
 	walk_speed = original_walk_speed
 	normal_walk_speed = original_walk_speed
 	in_transit = false
 	current_cell = move_tiles.world_to_map(position)
+	#initialize current path to nothing
 	current_path = []
 	add_to_group("baddies")
 
@@ -121,21 +128,11 @@ func _physics_process(delta):
 		elif is_hunting or is_wandering:
 			a_star_motion(delta)
 
-#func create_starter_room(length,width):
-#	var cell
-#	for l in range((length*-1)/2,length/2):
-#		for w in range((width*-1)/2,width/2):
-#			cell = Vector2(l,w) + current_cell
-#			if cell.x < 0 or cell.y < 0:
-#				continue
-#			dirt_tiles.atomic_dig_out(cell)
-#			if l == 0 or w == 0:
-#				move_tiles.add_moved_to_cell(cell)
-
 func create_starter_room(width, length):
 	for w in range(0, width):
 		for l in range(0, length):
 			var cell = current_cell
+			#dig out a cell and put it into move_tiles
 			dirt_tiles.dig_out(cell + Vector2(l, w), dirt_tiles.ORIENT.HORIZ)
 			move_tiles.add_moved_to_cell(cell + Vector2(l, w))
 			dirt_tiles.dig_out(cell + Vector2(-l, -w), dirt_tiles.ORIENT.HORIZ)
@@ -144,11 +141,14 @@ func create_starter_room(width, length):
 func starter_motion(delta):
 	sprite.set_to_walk()
 	if not in_transit:
+		#Use this range as a buffer to prevent clipping
 		for i in range(-2,3):
 			for j in range(-2,3):
+				#Switch the direction
 				if dirt_tiles.get_cellv(current_cell+Vector2(i,j)) != -1:
 					right_or_down = not right_or_down
 					break
+		#Move based on direction
 		if (up_down_motion):
 			if right_or_down:
 				move_to_cell(Vector2(current_cell.x,current_cell.y+1))
@@ -167,47 +167,52 @@ func starter_motion(delta):
 
 func a_star_motion(delta):
 	update_position()
+	#If an enemy ends up off grid, make them ghost randomly
 	if !move_tiles.is_cell_moved_to(current_cell):
 		print("going ghost, current cell not in moved to set")
 		move_to_cell(move_tiles.get_random_moved_to_cell())
 		disable_collision_and_ghost()
 		return
+	#If there's no path...
 	if current_path == null or current_path.size() == 0:
 		print("calculating path")
 		var dest_cell
+		#Go ghost on a timer
 		if (hunting_to_ghost_value >= hunting_to_ghost_threshold):
 			print("going ghost on timer")
 			hunting_to_ghost_value = 0
 			move_to_cell(move_tiles.get_random_moved_to_cell())
 			disable_collision_and_ghost()
 			return
+			#If hunting, path to the player
 		if is_hunting:
 			dest_cell = player.current_cell
+			move_tiles.add_moved_to_cell(dest_cell)
 		current_path = a_star(current_cell, dest_cell, move_tiles)
-		print(current_path)
+		#prevent backtracking
 		if (current_path.size() > 0):
 			current_path.remove(0)
+		#unable to get to destination, then go ghost
 		if (current_path.size() == 0):
 			print("can't get to destination: going ghost!")
 			current_path.clear()
 			move_to_cell(dest_cell)
 			disable_collision_and_ghost()
 	else:
+		#Eat through the path
 		if !in_transit:
 			move_to_cell(current_path[0])
 			sprite.play_walking_animation(current_path[0]-current_cell)
+			#Change directions
 			if current_path[0]-current_cell == Vector2(-1,0):
 				set_rotation_degrees(0)
 			elif current_path[0]-current_cell == Vector2(1,0):
 				set_rotation_degrees(180)
 			if current_path.size() > 0:
 				current_path.remove(0)
-#		if  current_cell.distance_to(player.current_cell) > move_tiles.max_x/1.5:
-#			print("too far, going ghost")
-#			current_path.clear()
-#			move_to_cell(move_tiles.get_random_moved_to_cell())
-#			disable_collision_and_ghost()
-#			return
+	
+	#Is it time to recalculate? If so, clear path for next run to generate
+	#path
 	recalcuate_astar_value += delta
 	if (recalcuate_astar_value >= recalculate_astar_threshold):
 		print("clearing current path")
@@ -216,14 +221,17 @@ func a_star_motion(delta):
 			
 	hunting_to_ghost_value += delta
 			
-
+			
 func ghost_motion(delta):
+	#Make sure sprite is ghost
 	if sprite.animation != "ghosting":
 		sprite.set_to_ghost()
 	update_position()
+	#If at the point, unghost
 	if (arrived()):
 		enable_collision_and_unghost()
 		more_accurate_ghost_value = 0
+	#If giving up, then unghost on the first cell that's available
 	elif giving_up_ghost:
 		var hovering_cell = move_tiles.world_to_map(position)
 		if hovering_cell in move_tiles.moved_to_cells:
@@ -234,7 +242,8 @@ func ghost_motion(delta):
 			while (in_transit):
 				update_position()
 	more_accurate_ghost_value += delta
-#	give_up_ghost_value += delta
+	give_up_ghost_value += delta
+	#Change direction if necessary
 	if (more_accurate_ghost_value >= more_accurate_ghost_threshold):
 		more_accurate_ghost_value = 0
 		move_to_cell(player.current_cell)
@@ -243,6 +252,7 @@ func ghost_motion(delta):
 
 func move_and_process(velocity):
 	move_and_slide(velocity)
+	#get collisions and if the collider is a player, kill them
 	for i in range(get_slide_count()):
 		var collision = get_slide_collision(i)
 		if collision.collider.has_method("die_by_mob"):
@@ -252,6 +262,7 @@ func disable_collision_and_ghost():
 	walk_speed = original_walk_speed / 1.3
 	print("going ghost!")
 	is_ghosting = true
+	#Disable hitbox and set sprite to ghost
 	$TerrainCollision.set_deferred("disabled",true)
 	sprite.set_to_ghost()
 
@@ -260,21 +271,24 @@ func enable_collision_and_unghost():
 	print("ungoing ghost!")
 	giving_up_ghost = false
 	is_ghosting = false
+	#Enable hitbox and go back to normal sprite
 	$TerrainCollision.set_deferred("disabled",false)
 	sprite.set_to_walk()
 	
 func hit():
+	#Set self to what the player is pumping and call pump
 	get_node(player_path).pumping = self
 	pump()
 
 func pump():
 	camera.small_shake()
 	inflation += 1
-	print("I'm getting pumped!")
 	print("Current inflation: " + str(inflation))
+	#Set animation if not set
 	if sprite.animation != "pumping":
 		sprite.set_to_pumped()
 	time_until_reset_pump = pump_reset_time
+	#Scale up
 	sprite.change_scale(Vector2(pump_scale_factor,pump_scale_factor))
 	if inflation >= pumps_to_kill:
 		print("I am dead.")
@@ -285,7 +299,9 @@ func explode():
 	walk_speed_reset_time = 999
 	die()
 
+#Function for getting a multiplier bonus for the terrain layer
 func get_layer_value():
+	#Split the dirt into 4 quadrants
 	var increment = move_tiles.max_y/4
 	var y = current_cell.y
 	if (y < increment):
@@ -300,27 +316,31 @@ func get_layer_value():
 	
 
 func update_score():
-	get_tree().call_group("baddies","start_hunting")
 	print("awarding player with layer value ", get_layer_value())
 	score.update_score(base_score * get_layer_value())
 	
 func die():
+	#disable collision
 	$TerrainCollision.set_deferred("disabled",true)
+	#unset the player as pumping something
 	player.pumping = null
+	#Play exploding sound and set sprite, wait till animation finishes
 	$AudioStreamPlayer.stream = exploding_sound
 	$AudioStreamPlayer.play()
 	sprite.set_to_exploding()
 	yield(sprite,"animation_finished")
 	update_score()
 	check_for_level_completion()
+	#Tell fellow enemies to start hunting
+	get_tree().call_group("baddies","start_hunting")
 	queue_free()
 
 func check_for_level_completion():
+	#decrement baddie count
 	global.num_baddies -= 1
 	if (global.num_baddies == 0):
 		print("level complete!")
-#		$AudioStreamPlayer.stream = level_complete_sound
-#		$AudioStreamPlayer.play()
+		#Go to the next level or back to the start screen
 		global.current_level += 1
 		if global.current_level == 6:
 			get_tree().change_scene("res://levels/StartingScreen.tscn")
@@ -335,6 +355,7 @@ func start_hunting():
 func squish():
 	camera.small_shake()
 	print("I am baddie and I am squished")
+	#This is set to immobilize the baddie
 	inflation = 999
 	die()
 
@@ -374,7 +395,6 @@ func a_star(starting_cell,player_cell,move_tiles_instance):
 				continue
 			costs[neighbor] = potential_cost
 			previous[neighbor] = to_visit
-			frontier.push({cell=neighbor,pqval=0})
-			#frontier.push({cell=neighbor,pqval=-1*potential_cost+move_tiles_instance.get_heuristic(neighbor,player_cell)})
+			frontier.push({cell=neighbor,pqval=-1*potential_cost+move_tiles_instance.get_heuristic(neighbor,player_cell)})
 
 	return path
